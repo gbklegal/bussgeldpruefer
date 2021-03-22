@@ -1,22 +1,60 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div class="text-primary">
+    <Header />
+    <main id="main">
+      <router-view/>
+      <Badge />
+      <BackToTop />
+    </main>
+    <Footer />
+  </div>
 </template>
 
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+import Header from './components/TheHeader.vue'
+import Footer from './components/TheFooter.vue'
+import Badge from './components/TheBadge.vue'
+import BackToTop from './components/TheBackToTop.vue'
 
-// This starter template is using Vue 3 experimental <script setup> SFCs
-// Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
+export default {
+  name: 'App',
+  components: {
+    Header,
+    Footer,
+    Badge,
+    BackToTop
+  }
+
+}
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: 'Roboto' sans-serif;
+  display: grid;
+  grid-template-rows: max-content 1fr auto;
+  min-height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+}
+
+#main {
+  max-width: 100%;
+  position: relative;
+}
+
+#nav .logo .router-link-exact-active {
+  background-color: #fff;
+}
+
+#nav .router-link-exact-active {
+  background-color: #5CC8C5;
+  color: #fff;
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 </style>
