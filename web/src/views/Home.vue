@@ -1,27 +1,26 @@
 <template>
-  <div class="home">
-    <header class="lg:flex lg:justify-between">
+  <div class="home overflow-hidden">
+
+    <header class="lg:flex w-full overflow-hidden">
         <div class="first-half my-20 lg:max-w-1/2 lg:grid">
             <div></div>
-            <div class="lg:container-half-left">
+            <div class="container lg:px-0 lg:container-half-left">
                 <h1 class="text-4xl md:text-5xl mb-6">Du bist nur 2 Minuten davon entfernt, deinen Bußgeldbescheid anzufechten.</h1>
                 <p class="text-xl">Hol dir jetzt die BussgeldPrüfer App, um eine unverbindliche Ersteinschätzung zu erhalten – komplett kostenlos.</p>
             </div>
         </div>
 
-        <div class="secondhalf bg-primary p-5 lg:max-w-1/2 my-2">
-            <div class="container-half-right grid">
-                <div>
-                    <div class="flex flex-col sm:flex-row justify-center text-white">
-                        <img class="w-56 self-center" src="../assets/img/iphone-x-splashscreen.webp" alt="BussgeldPrüfer App auf einem Handy.">
-                        <ul role="list" class="text-lg my-10 mb-3 self-center list-disc lg:ml-10 sm:ml-20">
-                        <li class="mb-5">Kostenlose Ersteinschätzung</li>
-                        <li class="mb-5">in 90 Sekunden zum Ergebnis</li>
-                        <li>Digital ausführbar</li>
-                        </ul>
-                    </div>
-                    <p class="text-center mt-4 text-white">überall - digital - verbunden</p>
+        <div class="second-half bg-primary w-full my-2 grid">
+            <div class="lg:px-0 container lg:container-half-right">
+                <div class="flex flex-col sm:flex-row justify-center text-white">
+                    <img class="w-56 self-center" src="../assets/img/iphone-x-splashscreen.webp" alt="BussgeldPrüfer App auf einem Handy.">
+                    <ul role="list" class="text-lg my-10 mb-3 self-center list-disc lg:ml-10 sm:ml-20">
+                    <li class="mb-5">Kostenlose Ersteinschätzung</li>
+                    <li class="mb-5">in 90 Sekunden zum Ergebnis</li>
+                    <li>Digital ausführbar</li>
+                    </ul>
                 </div>
+                <p class="text-center mt-4 text-white">überall - digital - verbunden</p>
                 <div></div>
             </div>
         </div>
@@ -40,7 +39,7 @@
           </ul>
         </div>
 
-        <div class="md:max-w-1/2 relative h-52 w-96">
+        <div class="md:max-w-1/2 relative mx-auto h-52 w-96">
           <div class="circle-one bg-white grid place-items-center absolute text-center rounded-full h-32 w-32 border-2 border-secondary">
             <p>Kostenlose Erstberatung</p>
           </div>
@@ -56,10 +55,10 @@
 
     <Steps />
 
-    <section class="success lg:flex lg:justify-between">
+    <section class="success lg:flex w-full overflow-hidden">
         <div class="first-half my-20 lg:max-w-1/2 lg:grid mb-20 lg:mb-0">
             <div></div>
-            <div class="lg:container-half-left">
+            <div class="container lg:pr-0 lg:container-half-left">
                 <h2 class="font-medium mb-10 text-3xl md:text-4xl">
                 Maximiere deine Erfolgsaussichten
                 </h2>
@@ -67,24 +66,23 @@
             </div>
         </div>
 
-      <div class="secondhalf bg-primary p-5 lg:max-w-1/2 my-2 text-secondary">
-        <div class="container-half-right grid">
-            <div class="sm:flex-row-reverse flex flex-col justify-center lg:pr-10">
-                <img class="w-56 mx-auto" src="../assets/img/iphone-x-splashscreen.webp" alt="BussgeldPrüfer App auf einem Handy.">
-                <ul role="list" class="mt-10 mb-3 mx-auto lg:mr-5 sm:self-center">
-                <li class="mb-5">Kompetente<br>Beratung</li>
-                <li class="mb-5">Vollständige<br>Entlastung</li>
-                <li>Schnell &amp;<br>Unkompliziert</li>
-                </ul>
-            </div>
-            <div></div>
+      <div class="second-half grid bg-primary w-full my-2 text-secondary">
+        <div class="container lg:pl-0 lg:container-half-right sm:flex-row-reverse flex flex-col justify-center">
+            <img class="w-56 mx-auto" src="../assets/img/iphone-x-splashscreen.webp" alt="BussgeldPrüfer App auf einem Handy.">
+            <ul role="list" class="mt-10 mb-3 mx-auto lg:mr-5 sm:self-center">
+            <li class="mb-5">Kompetente<br>Beratung</li>
+            <li class="mb-5">Vollständige<br>Entlastung</li>
+            <li>Schnell &amp;<br>Unkompliziert</li>
+            </ul>
         </div>
+        <div></div>
       </div>
     </section>
 
     <CTA title="Kostenlose Prüfung ob sich ein Einspruch gegen Deinen Bußgeldbescheid lohnt." />
 
     <!-- TODO: Blog / last 3 Blogposts -->
+
     <!-- TODO: Clientfeedback -->
 
     <SocialMedia />
@@ -143,21 +141,31 @@ export default {
 
 @media (min-width: 1024px) {
   .first-half {
-    grid-template-columns: calc(50vw - 512px) 512px;
+    grid-template-columns: calc(50vw - 512px) calc(512px - 1.5rem);
   }
 
   .second-half {
-    grid-template-columns: 512px calc(50vw - 512px);
+    grid-template-columns: calc(512px - 1.5rem) calc(50vw - 512px);
   }
 }
 
 @media (min-width: 1280px) {
   .first-half {
-    grid-template-columns: calc(50vw - 640px) 640px;
+    grid-template-columns: calc(50vw - 640px) calc(640px - 1.5rem);
   }
 
   .second-half {
-    grid-template-columns: 640px calc(50vw - 640px);
+    grid-template-columns: calc(640px - 1.5rem) calc(50vw - 640px);
+  }
+}
+
+@media (min-width: 1536px) {
+  .first-half {
+    grid-template-columns: calc(50vw - 768px) calc(768px - 1.5rem);
+  }
+
+  .second-half {
+    grid-template-columns: calc(768px - 1.5rem) calc(50vw - 768px);
   }
 }
 </style>
