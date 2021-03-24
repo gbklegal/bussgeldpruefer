@@ -6,7 +6,6 @@ import 'screens/camera.dart';
 import 'screens/home.dart';
 import 'screens/profile.dart';
 import 'screens/search.dart';
-import 'screens/information.dart';
 
 void main() => runApp(MaterialApp(home: MyApp()));
 
@@ -19,7 +18,7 @@ class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
 
   final List<Widget> _tabs = [
-    Home('Tobias'),
+    HomeScreen('Tobias'),
     Search(),
     Camera(),
     Profile(),

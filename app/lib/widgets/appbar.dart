@@ -44,7 +44,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       leading: _leadingContent(context),
       title: Image.asset(
         'assets/logo/BussgeldPruefer-Logo-small.png',
-        height: 40,
+        height: 30,
         fit: BoxFit.cover,
       ),
       actions: _actionsContent(context),
