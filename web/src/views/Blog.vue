@@ -18,7 +18,7 @@
 </template>
 <script>
 import BlogPreview from '../components/BlogPreview.vue'
-import BlogSearch from '../components/BlogSearchForm.vue'
+import BlogSearch from '../components/BasicSearchForm.vue'
 
 export default {
     components: {
