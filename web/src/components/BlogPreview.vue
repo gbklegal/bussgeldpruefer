@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col sm:flex-row text-left">
-        <img :src="imgsrc" :alt="imgalt">
-        <div>
+        <img :src="imgsrc" :alt="imgalt" class="rounded-sm object-cover h-44 w-full">
+        <div class="ml-6">
             <h3>{{ blogtitle }}</h3>
             <p>{{ previewtext }}</p>
         </div>

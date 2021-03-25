@@ -124,7 +124,7 @@
       <div class="container text-white text-center font-light">
         <h2 class="text-secondary font-normal mb-3">Bußgeld Ratgeber</h2>
         <p class="text-secondary mb-5">Aktuelle Neuigkeiten, Änderungen &amp; Urteile zum Thema Bußgeld</p>
-        <BlogPreview imgsrc="../assets/img/alcohol.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Alkoholkonsum" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein."/>
+        <BlogPreview imgsrc="/src/assets/img/alcohol.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Alkoholkonsum" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein."/>
       </div>
     </section>
 
