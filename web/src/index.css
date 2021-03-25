@@ -34,22 +34,6 @@
     nav li a {
         @apply rounded p-1 hover:underline focus:ring focus:border-primary focus:ring-primary focus:ring-opacity-50;
     }
-
-    summary {
-        list-style: none;
-    }
-
-    details summary {
-        @apply cursor-pointer bg-gray-200 p-2 my-2 rounded;
-    }
-
-    details summary > * {
-        @apply inline;
-    }
-
-    details[open] summary {
-        @apply mb-0;
-    }
 }
 
 @layer components {
