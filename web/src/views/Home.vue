@@ -1,5 +1,6 @@
 <template>
   <div class="home overflow-hidden">
+    <!-- HERO -->
     <header class="lg:flex w-full overflow-hidden">
       <div class="first-half my-20 lg:max-w-1/2 lg:grid">
         <div></div>
@@ -45,6 +46,7 @@
       subtitle="Punkte in Flensburg? Führerschein weg? Fahrverbot? MPU-Test? Geblitzt?"
     />
 
+    <!-- ? -->
     <section class="">
       <div
         class="container flex flex-col md:flex-row justify-center md:justify-between"
@@ -82,6 +84,7 @@
 
     <Steps />
 
+    <!-- ? -->
     <section class="success lg:flex w-full overflow-hidden">
       <div class="first-half my-20 lg:max-w-1/2 lg:grid mb-20 lg:mb-0">
         <div></div>
@@ -91,8 +94,8 @@
           </h2>
           <p class="">
             Mit dem BussgeldPrüfer erhöhst du deine Chance erfolgreich gegen
-            deinen Bußgeldbescheid vorzugehen. Klicke jetzt auf “Prüfung
-            Bußgeldbescheid” um deinen Bußgeldbescheid anzufechten.
+            deinen Bußgeldbescheid vorzugehen. Klicke jetzt auf <router-link to="/bussgeldbescheid-pruefen" class="underline">“Prüfung
+            Bußgeldbescheid”</router-link> um deinen Bußgeldbescheid anzufechten.
           </p>
         </div>
       </div>
@@ -120,6 +123,7 @@
       title="Kostenlose Prüfung ob sich ein Einspruch gegen Deinen Bußgeldbescheid lohnt."
     />
 
+    <!-- BLOG TEASER -->
     <section class="bg-primary my-1">
       <div class="container text-white text-center font-light">
         <h2 class="text-secondary font-normal mb-3">Bußgeld Ratgeber</h2>
@@ -138,8 +142,8 @@
     <!-- CLIENT FEEDBACK -->
     <section>
       <div class="container">
-        <h2 class="text-secondary text-center">Kundenfeedback</h2>
-        <div class="grid sm:grid-cols-3 gap-3 justify-center">
+        <h2 class="text-secondary text-center mb-10">Kundenfeedback</h2>
+        <div class="grid sm:grid-cols-3 gap-3 justify-center mb-8">
           <FeedbackStars :starLength="5" />
           <FeedbackStars :starLength="5" />
           <FeedbackStars :starLength="5" />
@@ -158,13 +162,13 @@
 </template>
 
 <script>
-import CTA from "../components/BasicCTA.vue";
-import Steps from "../components/BasicSteps.vue";
-import SocialMedia from "../components/BasicSocialMedia.vue";
-import Warrants from "../components/BasicWarrants.vue";
-import BlogPreview from "../components/BlogPreview.vue";
-import FeedbackStars from "../components/FeedbackStars.vue";
-import FeedbackText from "../components/FeedbackText.vue";
+import CTA from "../components/BasicCTA.vue"
+import Steps from "../components/BasicSteps.vue"
+import SocialMedia from "../components/BasicSocialMedia.vue"
+import Warrants from "../components/BasicWarrants.vue"
+import BlogPreview from "../components/BlogPreview.vue"
+import FeedbackStars from "../components/FeedbackStars.vue"
+import FeedbackText from "../components/FeedbackText.vue"
 
 export default {
   name: "Home",
@@ -175,7 +179,7 @@ export default {
     Warrants,
     BlogPreview,
     FeedbackStars,
-    FeedbackText,
+    FeedbackText
   },
 };
 </script>
