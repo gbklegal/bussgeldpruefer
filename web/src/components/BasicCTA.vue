@@ -1,9 +1,9 @@
 <template>
     <section class="bg-primary">
-        <div class="container text-center text-white">
-            <h2 class="mb-10 text-2xl md:text-3xl text-secondary">{{ title }}</h2>
+        <div class="container text-center text-white font-light">
+            <h2 class="mb-10 font-normal text-secondary">{{ title }}</h2>
             <p class="mb-10">{{ subtitle }}</p>
-            <router-link class="btn-primary text-white" to="/bussgeldbescheid-pruefen">
+            <router-link class="btn-primary text-white font-normal" to="/bussgeldbescheid-pruefen">
                 Bussgeldbescheid Prüfung
             </router-link>
         </div>
