@@ -128,10 +128,29 @@
         <BlogPreview imgsrc="/src/assets/img/alcohol.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Alkoholkonsum" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein."/>
 
         <BlogPreview imgsrc="/src/assets/img/alcohol.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Alkoholkonsum" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein."/>
+
+        <router-link class="btn-primary text-white font-normal inline-block mt-10" to="/ratgeber">
+          mehr erfahren
+        </router-link>
       </div>
     </section>
 
-    <!-- TODO: Clientfeedback -->
+    <!-- CLIENT FEEDBACK -->
+    <section>
+      <div class="container">
+        <h2 class="text-secondary text-center">Kundenfeedback</h2>
+        <div class="grid sm:grid-cols-3 gap-3 justify-center">
+          <FeedbackStars :starLength="5" />
+          <FeedbackStars :starLength="5" />
+          <FeedbackStars :starLength="5" />
+        </div>
+        <div>
+          <FeedbackText quote="Ich war anfangs total überfordert, aber das BussgeldPruefer hat mir den gesamten Prozess abgenommen." author="Melis Y." />
+          <FeedbackText quote="Ich war anfangs total überfordert, aber das BussgeldPruefer hat mir den gesamten Prozess abgenommen." author="Melis Y." />
+          <FeedbackText quote="Ich war anfangs total überfordert, aber das BussgeldPruefer hat mir den gesamten Prozess abgenommen." author="Melis Y." />
+        </div>        
+      </div>
+    </section>
 
     <SocialMedia />
     <Warrants />
@@ -144,6 +163,8 @@ import Steps from "../components/BasicSteps.vue";
 import SocialMedia from "../components/BasicSocialMedia.vue";
 import Warrants from "../components/BasicWarrants.vue";
 import BlogPreview from "../components/BlogPreview.vue";
+import FeedbackStars from "../components/FeedbackStars.vue";
+import FeedbackText from "../components/FeedbackText.vue";
 
 export default {
   name: "Home",
@@ -153,6 +174,8 @@ export default {
     SocialMedia,
     Warrants,
     BlogPreview,
+    FeedbackStars,
+    FeedbackText,
   },
 };
 </script>
