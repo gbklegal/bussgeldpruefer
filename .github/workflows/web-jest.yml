@@ -1,4 +1,3 @@
-name: [WEB] Jest Tests
 on:
   pull_request:
     branches:
