@@ -1,7 +1,7 @@
 <template>
     <section class="bg-primary">
-        <div class="container text-center text-white">
-            <h2 class="mb-10 text-2xl md:text-3xl text-secondary">
+        <div class="container text-center text-white font-light">
+            <h2 class="mb-10 text-2xl md:text-3xl text-secondary font-normal">
             Endlich wieder frei im Verkehr in 3 Schritten:
             </h2>
             <div class="md:grid md:grid-cols-3 xl:mx-auto">
