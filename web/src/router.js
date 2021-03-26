@@ -14,12 +14,13 @@ import Catalog from './views/Catalog.vue'
 import Blog from './views/Blog.vue'
 import FAQ from './views/FAQ.vue'
 import Topics from './views/Topics.vue'
+import SgnUp from './views/SignUp.vue'
 
 const history = createWebHistory()
 
 const routes = [
     { path: '/', component: Home },
-    { path: '/about', component: About },
+    { path: '/ueber-uns', component: About },
     { path: '/bussgeldbescheid-pruefen', component: Order },
     { path: '/partnerprogramm', component: Partners },
     { path: '/kontakt', component: Contact },
@@ -33,6 +34,7 @@ const routes = [
     { path: '/ratgeber', component: Blog },
     { path: '/faq', component: FAQ },
     { path: '/relevante-themen', component: Topics },
+    { path: '/signup', component: Signup }
 ]
 
 const router = createRouter({ history, routes })
