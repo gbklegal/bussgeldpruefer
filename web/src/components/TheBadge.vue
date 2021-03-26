@@ -1,5 +1,5 @@
 <template>
-    <transition name="fade">
+    <transition name="slide-fade">
         <div v-if="!hideBadge" @click="hideBadge = !hideBadge" class="ease-in-out transition-all duration-500 badge-container fixed bg-transparent w-full">
         <div class="badge shadow cursor-pointer bg-secondary  place-content-center gap-2 grid">
             <img class="w-28 m-2 rounded shadow" src="../assets/img/bgpapp-qrcode.png" alt="Hol dir die BussgeldPrüfer App via QR Code.">
@@ -45,11 +45,11 @@ export default {
     left: calc(var(--width) - 10px);
 }
 
-.fade-enter-active, .fade-leave-active {
+.fslide-ade-enter-active, .slide-fade-leave-active {
   transition: opacity 0.25s ease-out;
 }
 
-.fade-enter, .fade-leave-to {
+.slide-fade-enter, .slide-fade-leave-to {
   opacity: 0;
 }
 </style>

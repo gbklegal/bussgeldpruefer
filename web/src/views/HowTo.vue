@@ -46,18 +46,15 @@
         </section>
     </div>
     <CTA title="Kostenlose Prüfung ob sich ein Einspruch gegen Deinen Bußgeldbescheid lohnt." />
-    <Warrants />
 </template>
 
 <script>
 import CTA from '../components/BasicCTA.vue'
-import Warrants from '../components/BasicWarrants.vue'
 
 export default {
     name: 'Process',
     components: {
-        Warrants,
-        CTA,
+        CTA
     }
 }
 </script>

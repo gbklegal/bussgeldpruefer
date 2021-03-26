@@ -1,4 +1,5 @@
 <template>
+    <p class="text-xl">Themenübersicht</p>
     <div class="relative">
         <input type="text" name="search-text" id="searchText" placeholder="Nach welches Thema suchst Du?"
         class="w-72 mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50">

@@ -1,6 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from './views/Home.vue'
-import About from './views/About.vue'
 import Order from './views/Order.vue'
 import Partners from './views/Partners.vue'
 import Contact from './views/Contact.vue'
@@ -14,12 +13,12 @@ import Catalog from './views/Catalog.vue'
 import Blog from './views/Blog.vue'
 import FAQ from './views/FAQ.vue'
 import Topics from './views/Topics.vue'
+import SignUp from './views/SignUp.vue'
 
 const history = createWebHistory()
 
 const routes = [
     { path: '/', component: Home },
-    { path: '/about', component: About },
     { path: '/bussgeldbescheid-pruefen', component: Order },
     { path: '/partnerprogramm', component: Partners },
     { path: '/kontakt', component: Contact },
@@ -33,6 +32,7 @@ const routes = [
     { path: '/ratgeber', component: Blog },
     { path: '/faq', component: FAQ },
     { path: '/relevante-themen', component: Topics },
+    { path: '/registrieren', component: SignUp },
 ]
 
 const router = createRouter({ history, routes })

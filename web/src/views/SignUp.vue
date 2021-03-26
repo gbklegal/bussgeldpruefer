@@ -1,12 +1,28 @@
 <template>
     <!-- TODO: Logic, firebase -->
     <div class="container">
-        <h1>Login</h1>
+        <h1>Registrieren</h1>
         <section>
-            <p>Du hast noch keinen Account?</p>
-            <router-link to="/registrieren" class="underline mt-3 font-medium">Hier registrieren!</router-link>
+            <p>Du hast schon einen Account?</p>
+            <router-link to="/login" class="underline mt-3 font-medium">Hier anmelden!</router-link>
 
             <form id="contactform" @submit.prevent="redirect">
+                <div class="relative">
+                <input 
+                    class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                    type="text" name="firstname" id="firstname" required
+                    placeholder="Vorname">
+                <label class="absolute" for="firstname">Vorname</label>
+                </div>
+
+
+                <div class="relative">
+                    <input 
+                    class="mt-8 block mb-5 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                    type="text" name="lastname" id="lastname" required
+                    placeholder="Nachname">
+                    <label class="absolute" for="lastname">Nachname</label>
+                </div>
 
                 <div class="relative">
                     <input 
@@ -21,7 +37,7 @@
                     <button @click="togglePasswordVisibility" class="absolute">
                         <!-- icon if password is hidden -->
                         <svg v-if="hidden" class="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                             <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                         </svg>
                         <!-- icon if password is displayed -->
@@ -31,18 +47,19 @@
                         </svg>
                     </button>
                     <div class="relative">
-                        <input 
-                        :type="fieldType"
-                        class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                        name="password" id="password"
-                        placeholder="Passwort">
-                        <label class="absolute" for="password">Passwort</label>   
+                          <input 
+                          :type="fieldType"
+                          class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                          name="password" id="password"
+                          placeholder="Passwort">
+                          <label class="absolute" for="password">Passwort</label>
+                          <p class="text-sm">Das Passwort muss mindestens X Character lang sein und deiese Zeichen beeinhalten</p>
                     </div>
                 </div>
                 
                 <input 
                 class="btn-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50 mt-6"
-                type="submit" value="Login" />
+                type="submit" value="Registrieren" />
             </form>
         </section>
     </div>
@@ -62,7 +79,7 @@ export default {
             this.hidden = !this.hidden;
         },
         redirect() {
-            this.$router.push("/profil")
+          this.$router.push("/profil")
         }
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <details class="bg-gray-200 rounded my-4">
         <summary class="pl-7 cursor-pointer p-2 my-2 relative">{{ faqTitle }}</summary>
-        <!-- TODO: add animation -->
+        <!-- TODO: add animation https://css-tricks.com/how-to-animate-the-details-element-using-waapi/ -->
         <div class="text ml-7 pb-2" v-html="faqText"></div>
     </details>
 </template>
