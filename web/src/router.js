@@ -32,7 +32,7 @@ const routes = [
     { path: '/ratgeber', component: Blog },
     { path: '/faq', component: FAQ },
     { path: '/relevante-themen', component: Topics },
-    { path: '/signup', component: SignUp },
+    { path: '/registrieren', component: SignUp },
 ]
 
 const router = createRouter({ history, routes })
