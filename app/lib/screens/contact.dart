@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/appbar.dart';
+import 'package:app/widgets/appbar.dart';
 
 class ContactScreen extends StatelessWidget {
   @override

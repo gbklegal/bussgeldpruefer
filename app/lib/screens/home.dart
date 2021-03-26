@@ -1,42 +1,110 @@
-import 'package:app/functions/newscreen.dart';
-import 'package:app/screens/faq.dart';
+import 'package:app/screens/infokanzlei.dart';
+import 'package:app/screens/manual.dart';
+import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
 
-import '../functions/webview.dart';
+import 'package:app/functions/newscreen.dart';
 
 class HomeScreen extends StatelessWidget {
-  final String name;
+  _title(text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 32,
+      ),
+    );
+  }
 
-  HomeScreen(this.name);
+  _padding() {
+    return SizedBox(height: 12.0);
+  }
+
+  _simpleButton(text, [context, screen]) {
+    return Container(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () => {
+          if (context == null || screen == null)
+            {print('_simpleButton() pressed')}
+          else
+            {
+              newScreen(
+                context: context,
+                screen: screen,
+              )
+            }
+        },
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(text),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Welcome $name',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
+          Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(bottom: 12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _title('Fall-Prüfung'),
+                      _padding(),
+                      BigButtonWidget(
+                        title: 'Quick Check',
+                        text:
+                            'Kostenlose Ersteinschätzung in 90 Sekunden - ganz unverbindlich',
+                        image: 'assets/icons/fast-time.png',
+                      ),
+                      _padding(),
+                      BigButtonWidget(
+                        title: 'Prüfung Bußgeldbescheid',
+                        text:
+                            'Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden',
+                      ),
+                      _padding(),
+                      BigButtonWidget(
+                        title: 'Bußgeldbescheid erhalten?',
+                        text:
+                            'So gehst du vor, um erfolgreich Einspruch einzulegen',
+                      ),
+                      _padding(),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _title('Hinweise'),
+                      _padding(),
+                      _simpleButton('Bußgeldkatalog'),
+                      _simpleButton('Bußgeld Ratgeber'),
+                      _simpleButton(
+                        'Anleitung',
+                        context,
+                        ManualScreen(),
+                      ),
+                      _simpleButton(
+                        'Deine Experten Im Verkehrsrecht',
+                        context,
+                        InfoKanzleiScreen(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-          SizedBox(height: 12.0),
-          ElevatedButton(
-            onPressed: () => webView(
-              url: 'https://xn--bussgeldprfer-5ob.com/impressum/?app_mode',
-              context: context,
-            ),
-            child: Text('Impressum'),
-          ),
-          SizedBox(height: 12.0),
-          ElevatedButton(
-            onPressed: () => newScreen(
-              context: context,
-              screen: FaqScreen(),
-            ),
-            child: Text('FAQ'),
           ),
         ],
       ),

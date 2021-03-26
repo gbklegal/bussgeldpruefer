@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/appbar.dart';
+import 'package:app/widgets/appbar.dart';
 
-import 'screens/quickcheck.dart';
-import 'screens/home.dart';
-import 'screens/profile.dart';
+import 'package:app/screens/quickcheck.dart';
+import 'package:app/screens/home.dart';
+import 'package:app/screens/profile.dart';
 
-void main() => runApp(MaterialApp(
-    home: MyApp())); // In prod. MyApp() // for testing: FaqTestScreen()
+// only for development
+import 'package:app/screens/manual.dart';
+
+void main() => runApp(
+      MaterialApp(
+        home: ManualScreen(), // In prod. MyApp()
+        debugShowCheckedModeBanner: false,
+      ),
+    );
 
 class MyApp extends StatefulWidget {
   @override
@@ -19,7 +26,7 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _tabs = [
     Camera(),
-    HomeScreen('Tobias'),
+    HomeScreen(),
     Profile(),
   ];
 
@@ -28,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: AppBarWidget(
         isHome: true,
+        hideInfoButton: false,
       ),
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

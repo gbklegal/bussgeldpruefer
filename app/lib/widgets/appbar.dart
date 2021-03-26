@@ -2,9 +2,13 @@ import 'package:app/screens/information.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
-  final isHome;
+  final bool isHome;
+  final bool hideInfoButton;
 
-  AppBarWidget({this.isHome = true});
+  AppBarWidget({
+    this.isHome = false,
+    this.hideInfoButton = false,
+  });
 
   _leadingContent(context) {
     if (isHome) {
@@ -20,7 +24,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   }
 
   _actionsContent(context) {
-    if (!isHome) {
+    if (hideInfoButton) {
       return <Widget>[];
     }
     return <Widget>[

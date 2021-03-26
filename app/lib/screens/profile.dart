@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../functions/newscreen.dart';
+import 'package:app/functions/newscreen.dart';
 
-import '../widgets/appbar.dart';
+import 'package:app/widgets/appbar.dart';
 
 class Profile extends StatelessWidget {
   @override

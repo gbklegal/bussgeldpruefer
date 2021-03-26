@@ -3,10 +3,8 @@ import 'package:app/screens/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgets/appbar.dart';
-import '../widgets/pagetitle.dart';
-
-import '../functions/newscreen.dart';
+import 'package:app/widgets/appbar.dart';
+import 'package:app/widgets/pagetitle.dart';
 
 class InformationScreen extends StatelessWidget {
   _defaultText(text) {
