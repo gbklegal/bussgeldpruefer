@@ -59,6 +59,10 @@ export default {
   color: #fff;
 }
 
+.catalog nav .router-link-exact-active {
+  color: #5CC8C5;
+}
+
 @media screen and (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
