@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  http: ^0.12.2
   url_launcher: ^6.0.2
   webview_flutter: ^2.0.2
 

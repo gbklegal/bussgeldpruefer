@@ -90,7 +90,7 @@ class InformationScreen extends StatelessWidget {
                             child: IconButton(
                               icon: Icon(Icons.contact_support_outlined),
                               onPressed: () => newScreen(
-                                newScreen: ContactScreen(),
+                                screen: ContactScreen(),
                                 context: context,
                               ),
                               tooltip: 'Kontaktformular',

@@ -1,3 +1,5 @@
+import 'package:app/functions/newscreen.dart';
+import 'package:app/screens/faq.dart';
 import 'package:flutter/material.dart';
 
 import '../functions/webview.dart';
@@ -27,6 +29,14 @@ class HomeScreen extends StatelessWidget {
               context: context,
             ),
             child: Text('Impressum'),
+          ),
+          SizedBox(height: 12.0),
+          ElevatedButton(
+            onPressed: () => newScreen(
+              context: context,
+              screen: FaqScreen(),
+            ),
+            child: Text('FAQ'),
           ),
         ],
       ),

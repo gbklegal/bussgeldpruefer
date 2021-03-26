@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'widgets/appbar.dart';
 
-import 'screens/camera.dart';
+import 'screens/quickcheck.dart';
 import 'screens/home.dart';
 import 'screens/profile.dart';
-import 'screens/search.dart';
 
-void main() => runApp(MaterialApp(home: MyApp()));
+void main() => runApp(MaterialApp(
+    home: MyApp())); // In prod. MyApp() // for testing: FaqTestScreen()
 
 class MyApp extends StatefulWidget {
   @override
@@ -15,20 +15,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   final List<Widget> _tabs = [
-    HomeScreen('Tobias'),
-    Search(),
     Camera(),
+    HomeScreen('Tobias'),
     Profile(),
   ];
-  // final tabs = [
-  //   Center(child: Home()),
-  //   Center(child: Text('Search')),
-  //   Center(child: Text('Camera')),
-  //   Center(child: Text('Profile')),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,36 +31,32 @@ class _MyAppState extends State<MyApp> {
       ),
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          type: BottomNavigationBarType.fixed,
-          selectedFontSize: 12,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              // backgroundColor: Colors.blue,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-              // backgroundColor: Colors.red,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Camera',
-              // backgroundColor: Colors.green,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-              // backgroundColor: Colors.yellow,
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          }),
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        currentIndex: _currentIndex,
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: 12,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.check_circle_outline),
+            label: 'Quick Check',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Profil',
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
     );
   }
 }

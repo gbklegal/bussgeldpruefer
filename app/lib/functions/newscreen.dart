@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-void newScreen({context, newScreen}) {
+void newScreen({context, screen}) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => newScreen,
+      builder: (context) => screen,
     ),
   );
 }

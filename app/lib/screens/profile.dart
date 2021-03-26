@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../functions/newscreen.dart';
+
+import '../widgets/appbar.dart';
+
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,12 +14,10 @@ class Profile extends StatelessWidget {
           Text('Profile'),
           ElevatedButton(
             child: Text('Login'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
-              );
-            },
+            onPressed: () => newScreen(
+              context: context,
+              screen: LoginScreen(),
+            ),
           ),
         ],
       ),
@@ -27,8 +29,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login Screen'),
+      appBar: AppBarWidget(
+        isHome: false,
       ),
       body: Center(
         child: ElevatedButton(
