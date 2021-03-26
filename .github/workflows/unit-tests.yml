@@ -1,0 +1,52 @@
+name: Unit Tests
+on:
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  web-unit-tests:
+    name: Web
+    # Run this job only, when the branch starts with 'web'
+    if: startsWith(github.head_ref, 'web')
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: web
+
+    steps:
+      - uses: actions/checkout@v2
+      # Setup node at version 15 or newer see: https://github.com/actions/setup-node
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+          check-latest: true
+      # Install dependecies
+      - run: npm install
+      # Run unit tests using jest
+      - name: Run Jest Tests
+        run: npm run test
+
+  app-unit-tests:
+    name: App
+    # Run this job only, when the branch starts with 'app'
+    if: startsWith(github.head_ref, 'app')
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: app
+
+    steps:
+      - uses: actions/checkout@v2
+      # Setup latest stable release of flutter see: https://github.com/subosito/flutter-action
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      # Install app dependecies
+      - name: Install dependecies
+        run: flutter pub get
+      # Run unit Tests
+      - name: Run unit tests
+        run: flutter test
