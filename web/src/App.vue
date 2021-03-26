@@ -3,6 +3,8 @@
     <Header />
     <main id="main">
       <router-view/>
+      <SocialMedia />
+      <Warrants />
       <Badge />
       <BackToTop />
     </main>
@@ -15,6 +17,9 @@ import Header from './components/TheHeader.vue'
 import Footer from './components/TheFooter.vue'
 import Badge from './components/TheBadge.vue'
 import BackToTop from './components/TheBackToTop.vue'
+import SocialMedia from "./components/BasicSocialMedia.vue"
+import Warrants from "./components/BasicWarrants.vue"
+
 
 export default {
   name: 'App',
@@ -22,7 +27,9 @@ export default {
     Header,
     Footer,
     Badge,
-    BackToTop
+    BackToTop,
+    SocialMedia,
+    Warrants
   }
 
 }
