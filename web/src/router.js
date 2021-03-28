@@ -14,25 +14,99 @@ import Blog from './views/Blog.vue'
 import FAQ from './views/FAQ.vue'
 import Topics from './views/Topics.vue'
 import SignUp from './views/SignUp.vue'
+import CatalogSingleAlcohol from './views/CatalogSingleAlcohol.vue'
+import CatalogSingleElse from './views/CatalogSingleElse.vue'
 
 const history = createWebHistory()
 
 const routes = [
-    { path: '/', component: Home },
-    { path: '/bussgeldbescheid-pruefen', component: Order },
-    { path: '/partnerprogramm', component: Partners },
-    { path: '/kontakt', component: Contact },
-    { path: '/impressum', component: LegalContact },
-    { path: '/datenschutz', component: Privacy },
-    { path: '/rechtliche-hinweise', component: TermsOfService },
-    { path: '/login', component: Login },
-    { path: '/wie-funktionierts', component: HowTo },
-    { path: '/profil', component: Profile },
-    { path: '/bussgeldkatalog', component: Catalog },
-    { path: '/ratgeber', component: Blog },
-    { path: '/faq', component: FAQ },
-    { path: '/relevante-themen', component: Topics },
-    { path: '/registrieren', component: SignUp },
+    {
+        path: '/',
+        name: 'home',
+        component: Home
+    },
+    {
+        path: '/bussgeldbescheid-pruefen',
+        name: 'order',
+        component: Order
+    },
+    {
+        path: '/partnerprogramm',
+        name: 'partners',
+        component: Partners
+    },
+    {
+        path: '/kontakt',
+        name: 'contact',
+        component: Contact
+    },
+    {
+        path: '/impressum',
+        name: 'legalcontact',
+        component: LegalContact
+    },
+    {
+        path: '/datenschutz',
+        name: 'privacy',
+        component: Privacy
+    },
+    {
+        path: '/rechtliche-hinweise',
+        name: 'termsofservice',
+        component: TermsOfService
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login
+    },
+    {
+        path: '/wie-funktionierts',
+        name: 'howto',
+        component: HowTo
+    },
+    {
+        path: '/profil',
+        name: 'profile',
+        component: Profile
+    },
+    {
+        path: '/ratgeber',
+        name: 'blog',
+        component: Blog
+    },
+    {
+        path: '/faq',
+        name: 'faq',
+        component: FAQ
+    },
+    {
+        path: '/relevante-themen',
+        name: 'topics',
+        component: Topics
+    },
+    {
+        path: '/registrieren',
+        name: 'signup',
+        component: SignUp
+    },
+    {
+        path: '/bussgeldkatalog',
+        name: 'catalog',
+        component: Catalog,
+        children: [
+            {
+                path: '/bussgeldkatalog/alkohol',
+                name: 'alkohol',
+                component: CatalogSingleAlcohol
+            },
+            {
+                path: '/bussgeldkatalog/else',
+                name: 'else',
+                component: CatalogSingleElse
+            }
+        ]
+    },
 ]
 
 const router = createRouter({ history, routes })
