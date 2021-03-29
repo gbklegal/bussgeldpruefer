@@ -7,11 +7,11 @@ import 'package:app/screens/home.dart';
 import 'package:app/screens/profile.dart';
 
 // only for development
-import 'package:app/screens/manual.dart';
+// import 'package:app/screens/ablauf.dart';
 
 void main() => runApp(
       MaterialApp(
-        home: ManualScreen(), // In prod. MyApp()
+        home: MyApp(), // In prod. MyApp()
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -25,18 +25,15 @@ class _MyAppState extends State<MyApp> {
   int _currentIndex = 1;
 
   final List<Widget> _tabs = [
-    Camera(),
+    QuickCheckScreen(),
     HomeScreen(),
-    Profile(),
+    ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        isHome: true,
-        hideInfoButton: false,
-      ),
+      appBar: AppBarWidget(isHome: true),
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
@@ -47,15 +44,21 @@ class _MyAppState extends State<MyApp> {
         selectedFontSize: 12,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.check_circle_outline),
+            icon: _currentIndex == 0
+                ? Icon(Icons.check_circle)
+                : Icon(Icons.check_circle_outline),
             label: 'Quick Check',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: _currentIndex == 1
+                ? Icon(Icons.home)
+                : Icon(Icons.home_outlined),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: _currentIndex == 2
+                ? Icon(Icons.person)
+                : Icon(Icons.person_outline),
             label: 'Profil',
           ),
         ],
