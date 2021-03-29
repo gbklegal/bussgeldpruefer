@@ -16,6 +16,7 @@ import Topics from './views/Topics.vue'
 import SignUp from './views/SignUp.vue'
 import CatalogSingleAlcohol from './views/CatalogSingleAlcohol.vue'
 import CatalogSingleElse from './views/CatalogSingleElse.vue'
+import TopicsSingle from './views/TopicsSingle.vue'
 
 const history = createWebHistory()
 
@@ -107,6 +108,11 @@ const routes = [
             }
         ]
     },
+    {
+        path: '/topics-single',
+        name: 'topicssingle',
+        component: TopicsSingle
+    }
 ]
 
 const router = createRouter({ history, routes })
