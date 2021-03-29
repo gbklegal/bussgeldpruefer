@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Camera extends StatelessWidget {
+class QuickCheckScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

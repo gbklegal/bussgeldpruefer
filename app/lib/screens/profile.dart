@@ -4,7 +4,7 @@ import 'package:app/functions/newscreen.dart';
 
 import 'package:app/widgets/appbar.dart';
 
-class Profile extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

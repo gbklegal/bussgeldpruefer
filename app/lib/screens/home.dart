@@ -1,3 +1,5 @@
+import 'package:app/screens/bussgeldkatalog.dart';
+import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
@@ -88,8 +90,16 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       _title('Hinweise'),
                       _padding(),
-                      _simpleButton('Bußgeldkatalog'),
-                      _simpleButton('Bußgeld Ratgeber'),
+                      _simpleButton(
+                        'Bußgeldkatalog',
+                        context,
+                        BussgeldkatalogScreen(),
+                      ),
+                      _simpleButton(
+                        'Bußgeld Ratgeber',
+                        context,
+                        BussgeldratgeberScreen(),
+                      ),
                       _simpleButton(
                         'Anleitung',
                         context,
