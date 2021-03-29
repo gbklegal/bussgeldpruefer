@@ -1,11 +1,9 @@
 <template>
-    <label class="text-xs float-right" for="order-progress">{{ text }}</label>
     <progress id="order-progress" :value="percentage" max="100" class="bg-gray-200 block w-full rounded">{{ percentage }}%</progress>
 </template>
 <script>
 export default {
     props: {
-        text: String,
         percentage: Number,
     }
 }
