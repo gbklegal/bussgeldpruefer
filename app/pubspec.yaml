@@ -51,6 +51,10 @@ flutter:
   assets:
     - assets/logo/BussgeldPruefer-Logo-small.png
     - assets/icons/fast-time.png
+    - assets/icons/assignment.png
+    - assets/icons/communication.png
+    - assets/icons/innovation.png
+    - assets/icons/right.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
