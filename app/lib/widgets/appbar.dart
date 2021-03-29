@@ -1,3 +1,5 @@
+import 'package:app/functions/newscreen.dart';
+import 'package:app/screens/hiddendev.dart';
 import 'package:app/screens/information.dart';
 import 'package:flutter/material.dart';
 
@@ -46,10 +48,19 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       leading: _leadingContent(context),
-      title: Image.asset(
-        'assets/logo/BussgeldPruefer-Logo-small.png',
-        height: 30,
-        fit: BoxFit.cover,
+      title: Align(
+        alignment: Alignment.center,
+        child: GestureDetector(
+          onDoubleTap: () => newScreen(
+            context: context,
+            screen: HiddenDevScreen(),
+          ),
+          child: Image.asset(
+            'assets/logo/BussgeldPruefer-Logo-small.png',
+            height: 30,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
       actions: _actionsContent(context),
     );
