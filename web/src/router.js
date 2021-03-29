@@ -18,6 +18,7 @@ import CatalogSingleAlcohol from './views/CatalogSingleAlcohol.vue'
 import CatalogSingleElse from './views/CatalogSingleElse.vue'
 import TopicsSingle from './views/TopicsSingle.vue'
 import OrderTankYou from './views/OrderThankYou.vue'
+import ProfileSignUp from './views/ProfileSignUp.vue'
 
 const history = createWebHistory()
 
@@ -118,6 +119,11 @@ const routes = [
         path: '/order-thank-you',
         name: 'orderthankyou',
         component: OrderTankYou
+    },
+    {
+        path: '/profile-signup',
+        name: 'profilesignup',
+        component: ProfileSignUp
     }
 ]
 
