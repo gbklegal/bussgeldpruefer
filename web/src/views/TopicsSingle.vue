@@ -66,9 +66,9 @@
 <script>
 import Hero from '../components/TopicsHero.vue'
 import BasicCTA from '../components/BasicCTA.vue'
-import TextOne from '../components/BasicTextOne.vue'
+import TextOne from '../components/BasicSuccessOne.vue'
 import Steps from '../components/BasicSteps.vue'
-import Success from '../components/BasicSuccess.vue'
+import Success from '../components/BasicSuccessTwo.vue'
 import FeedbackText from '../components/FeedbackText.vue'
 
 export default {

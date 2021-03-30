@@ -63,6 +63,21 @@ export default {
   color: #5CC8C5;
 }
 
+.profile nav .router-link-active img,
+.profile nav .router-link-exact-active img {
+  background-color: #183B63;
+}
+
+.profile-mail nav .router-link-active,
+.profile-mail nav .router-link-exact-active {
+  color: #5CC8C5;
+}
+
+.profile-mail nav .router-link-active img,
+.profile-mail nav .router-link-exact-active img {
+  background-color: transparent;
+}
+
 @media screen and (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;

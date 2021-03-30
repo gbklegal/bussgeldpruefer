@@ -28,7 +28,7 @@
                     <router-link to="/wie-funktionierts">Wie funktioniert's</router-link>
                 </li>
                 <li v-on:click="menuOpen = !menuOpen">
-                    <router-link to="/profil">Mein Profil</router-link>
+                    <router-link to="/profil/posteingang">Mein Profil</router-link>
                 </li>
                 <li v-on:click="menuOpen = !menuOpen">
                     <router-link to="/kontakt">Kontakt</router-link>
