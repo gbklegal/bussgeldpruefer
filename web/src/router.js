@@ -22,6 +22,13 @@ import ProfileSignUp from './views/ProfileSignUp.vue'
 import ProfileMail from './views/ProfileMail.vue'
 import ProfileStatus from './views/ProfileStatus.vue'
 import ProfileDocuments from './views/ProfileDocuments.vue'
+import ProfileMailCourt from './views/ProfileMailCourt.vue'
+import ProfileMailOutsideCourt from './views/ProfileMailOutsideCourt.vue'
+import ProfileMailElse from './views/ProfileMailElse.vue'
+import ProfileMailSent from './views/ProfileMailSent.vue'
+import ProfileMailMarked from './views/ProfileMailMarked.vue'
+import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
+
 
 const history = createWebHistory()
 
@@ -78,8 +85,40 @@ const routes = [
         children: [
             {
                 path: '/profil/posteingang',
-                name: 'posteingang',
-                component: ProfileMail
+                name: 'profilemail',
+                component: ProfileMail,
+                children: [
+                    {
+                        path: '/profil/posteingang/gerichtliche-angelegenheiten',
+                        name: 'profilemailcourt',
+                        component: ProfileMailCourt,
+                    },
+                    {
+                        path: '/profil/posteingang/aussergerichtliche-angelegenheiten',
+                        name: 'profilemailoutsidecourt',
+                        component: ProfileMailOutsideCourt,
+                    },
+                    {
+                        path: '/profil/posteingang/sonstiges',
+                        name: 'profilemailelse',
+                        component: ProfileMailElse,
+                    },
+                    {
+                        path: '/profil/posteingang/gesendet',
+                        name: 'profilemailsent',
+                        component: ProfileMailElse,
+                    },
+                    {
+                        path: '/profil/posteingang/markiert',
+                        name: 'profilemailmarked',
+                        component: ProfileMailMarked,
+                    },
+                    {
+                        path: '/profil/posteingang/neue-nachricht',
+                        name: 'profilemailnewmessage',
+                        component: ProfileMailNewMessage,
+                    },
+                ]
             },
             {
                 path: '/profil/status',
