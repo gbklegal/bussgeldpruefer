@@ -6,6 +6,7 @@ import 'package:app/screens/bussgeldkatalogdetail.dart';
 import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/bussgeldratgeberdetail.dart';
 import 'package:app/screens/contact.dart';
+import 'package:app/screens/faq.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/information.dart';
 import 'package:app/screens/manual.dart';
@@ -76,6 +77,7 @@ class HiddenDevScreen extends StatelessWidget {
               _simpleButton('Bußgeld Ratgeber Detail',
                   BussgeldRatgeberDetailScreen('empty string [HDS]')),
               _simpleButton('Kontakt', ContactScreen()),
+              _simpleButton('FAQ', FaqScreen()),
               _simpleButton('Info Kanzlei', InfoKanzleiScreen()),
               _simpleButton('Information', InformationScreen()),
               _simpleButton('Anleitung', ManualScreen()),
