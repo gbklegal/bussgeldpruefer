@@ -96,8 +96,8 @@
 import CTA from '../components/BasicCTA.vue'
 import Steps from '../components/BasicSteps.vue'
 import BlogPreview from '../components/BlogPreview.vue'
-import TextOne from '../components/BasicTextOne.vue'
-import Success from '../components/BasicSuccess.vue'
+import TextOne from '../components/BasicSuccessOne.vue'
+import Success from '../components/BasicSuccessTwo.vue'
 import FeedbackStars from '../components/FeedbackStars.vue'
 import FeedbackText from '../components/FeedbackText.vue'
 
