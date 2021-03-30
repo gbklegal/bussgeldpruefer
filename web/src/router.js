@@ -19,6 +19,9 @@ import CatalogSingleElse from './views/CatalogSingleElse.vue'
 import TopicsSingle from './views/TopicsSingle.vue'
 import OrderTankYou from './views/OrderThankYou.vue'
 import ProfileSignUp from './views/ProfileSignUp.vue'
+import ProfileMail from './views/ProfileMail.vue'
+import ProfileStatus from './views/ProfileStatus.vue'
+import ProfileDocuments from './views/ProfileDocuments.vue'
 
 const history = createWebHistory()
 
@@ -71,7 +74,24 @@ const routes = [
     {
         path: '/profil',
         name: 'profile',
-        component: Profile
+        component: Profile,
+        children: [
+            {
+                path: '/profil/posteingang',
+                name: 'posteingang',
+                component: ProfileMail
+            },
+            {
+                path: '/profil/status',
+                name: 'status',
+                component: ProfileStatus
+            },
+            {
+                path: '/profil/dokumente',
+                name: 'documents',
+                component: ProfileDocuments
+            }
+        ]
     },
     {
         path: '/ratgeber',

@@ -63,6 +63,10 @@ export default {
   color: #5CC8C5;
 }
 
+.profile nav .router-link-exact-active img {
+  background-color: #183B63;
+}
+
 @media screen and (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
