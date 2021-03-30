@@ -32,7 +32,8 @@ jobs:
   app-unit-tests:
     name: App
     # Run this job only, when the branch starts with 'app'
-    if: startsWith(github.head_ref, 'app')
+    #if: startsWith(github.head_ref, 'app')
+    if: startsWith(github.head_ref, 'app-test')
     runs-on: macos-latest
     defaults:
       run:
