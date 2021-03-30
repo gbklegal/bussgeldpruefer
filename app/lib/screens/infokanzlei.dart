@@ -39,12 +39,7 @@ class InfoKanzleiScreen extends StatelessWidget {
               'Unsere Partnerkanzleien und Vertragsanwälte',
             ),
             Padding(
-              padding: EdgeInsets.only(
-                top: 0.0,
-                right: 20.0,
-                bottom: 20.0,
-                left: 20.0,
-              ),
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 children: [
                   Column(
@@ -53,7 +48,7 @@ class InfoKanzleiScreen extends StatelessWidget {
                       _title('Die Kanzlei'),
                       _text(
                           'Seit vielen Jahren berät die /// GBK Legal Kanzlei in Sachen Verkehrsrecht. Wir sind der Experte in allen Rechtsgebieten rund um Verkehr. Uns ist ein enger Austausch mit den Klienten wichtig, um den bestmöglichen Service zu bieten. GBK ist darauf spezialisiert deine Rechte im Verkehr zu verteidigen. Dabei ist es uns wichtig, Dich voll und ganz zu entlasten und Angelegenheiten einfach, verständlich zu vermitteln. Führerschein weg? Punkte in Flensburg? Fahrverbot? MPU-Test? Wir sind Experten auf diesem Gebiet. Als kompetente Berater setzen wir uns für Dich ein.'),
-                      SizedBox(height: 12.0),
+                      SizedBox(height: 16.0),
                     ],
                   ),
                   Column(
@@ -64,14 +59,10 @@ class InfoKanzleiScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _text(
-                              'Unsere Vertragsanwälte sind vertrauenswürdige Partner von BussgeldPrüfer. Du wirst im ständigen Kontakt mit unseren Experten stehen.'),
-                          SizedBox(height: 12.0),
-                          _text('- schnell & unkompliziert'),
-                          _text('- bundesweit vertreten'),
-                          _text('- transparente Kostenübersicht'),
+                              'Unsere Vertragsanwälte sind vertrauenswürdige Partner von BussgeldPrüfer. Du wirst im ständigen Kontakt mit unseren Experten stehen.\n\n- schnell & unkompliziert\n- bundesweit vertreten\n- transparente Kostenübersicht'),
                         ],
                       ),
-                      SizedBox(height: 12.0),
+                      SizedBox(height: 16.0),
                     ],
                   ),
                   Column(
@@ -80,7 +71,7 @@ class InfoKanzleiScreen extends StatelessWidget {
                       _title('Wer wir sind'),
                       _text(
                           'Unsere Partnerkanzleien vertreten Dich deutschlandweit. Sie sind der richtige Ansprechpartner, wenn Du rechtliche Probleme im Verkehr hast, und natürlich in allen anderen Angelegenheiten. Überzeuge Dich selbst von deren Kompetenz.'),
-                      SizedBox(height: 12.0),
+                      SizedBox(height: 16.0),
                     ],
                   ),
                 ],
