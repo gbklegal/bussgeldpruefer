@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <h1 class="">Prüfung Bußgeldbescheid</h1>
+        <h1 class="text-secondary">Prüfung Bußgeldbescheid</h1>
         <p>Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden</p>
-        <form>
+        <form @submit.prevent>
 
             <OrderProgress :text="progressText[activeTab]" :percentage="progressPercentage" />
 
@@ -11,95 +11,93 @@
                     <legend>Wähle den Verstoß aus</legend>
 
                     <div class="grid sm:grid-cols-2 md:grid-cols-3">
-                        <label for="speed" class="speed cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
-                            <input type="radio" name="case" id="speed" value="speed" class="sr-only">
+
+                        <input type="radio" name="case" id="speed" value="speed" v-model="violation" class="sr-only">
+                        <label for="speed" class="speed cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary checked:border-secondary">
                         <span class="text-xl">zu schnell</span></label>
 
+                        <input type="radio" name="case" id="redlight" value="redlight" v-model="violation" class="sr-only">                        
                         <label for="redlight" class="redlight cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
-                            <input type="radio" name="case" id="redlight" value="redlight" class="sr-only">
                         <span class="text-xl">Rotlicht</span></label>
                         
+                        <input type="radio" name="case" id="distance" value="distance" v-model="violation" class="sr-only">
                         <label for="distance" class="distance cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
-                            <input type="radio" name="case" id="distance" value="distance" class="sr-only">
                         <span class="text-xl">Abstand</span></label>
 
-                        <label for="alkohol" class="alcohol cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
-                            <input type="radio" name="case" id="alkohol" value="alkohol" class="sr-only">                    
+                        <input type="radio" name="case" id="alcohol" value="alcohol" v-model="violation" class="sr-only">
+                        <label for="alcohol" class="alcohol cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">                   
                         <span class="text-xl">Alkohol</span></label>
 
+                        <input type="radio" name="case" id="phone" value="phone" v-model="violation" class="sr-only">
                         <label for="phone" class="phone cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">            
-                            <input type="radio" name="case" id="phone" value="phone" class="sr-only">
                         <span class="text-xl">Telefon</span></label>
 
+                        <input type="radio" name="case" id="parking" value="parking" v-model="violation" class="sr-only">
                         <label for="parking" class="parking cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
-                            <input type="radio" name="case" id="parking" value="parking" class="sr-only">
                         <span class="text-xl">Parken</span></label>
                     </div>
+                    <!-- for debugging
+                    <span>{{ violation }}</span>
+                    -->‚
  
                 </fieldset>
             </div>   
 
             <div :class="{'sr-only':(activeTab !== 1)}" class="tab">
                 <fieldset>
-                    <legend>Hast du eine Rechtschutzversicherung, die den Bereich Verkehr abdeckt?</legend>
+                    <legend class="mb-6">Hast du eine Rechtschutzversicherung, die den Bereich Verkehr abdeckt?</legend>
 
                     <label class="block" for="insured">
-                        <input type="radio" name="insurance" id="insured" value="insured">
+                        <input type="radio" name="insurance" id="insured" value="insured" v-model="insurance" class="mb-3">
                     Ja</label>
                     
                     <label class="block" for="not-insured">
-                        <input type="radio" name="insurance" id="not-insured" value="not-insured">
+                        <input type="radio" name="insurance" id="not-insured" value="not-insured" v-model="insurance">
                     Nein</label>
-
                 </fieldset>
+
+                <!-- for debugging
+                <span>{{ insurance }}</span> -->
             </div>
 
             <div :class="{'sr-only':(activeTab !== 2)}" class="tab">
                 <fieldset>
-                    <legend>Welches behördliche Schreiben hast du zuletzt erhalten?</legend>
-                    <label for="1" class="block">
-                        <input type="radio" name="urgency" id="1" value="1">
+                    <legend class="mb-6">Welches behördliche Schreiben hast du zuletzt erhalten?</legend>
+                    <label for="1" class="block mb-3">
+                        <input type="radio" name="urgency" id="1" value="1" v-model="urgency">
                     Zeugenfragebogen</label>
                     
-                    <label for="2" class="block">
-                        <input type="radio" name="urgency" id="2" value="2">
+                    <label for="2" class="block mb-3">
+                        <input type="radio" name="urgency" id="2" value="2" v-model="urgency">
                     Anhörungsbogen</label>
 
-                    <label for="3" class="block">
-                        <input type="radio" name="urgency" id="3" value="3">
+                    <label for="3" class="block mb-3">
+                        <input type="radio" name="urgency" id="3" value="3" v-model="urgency">
                     Bußgeldbescheid</label>
 
                     <label for="4" class="block">
-                        <input type="radio" name="urgency" id="4" value="4">
+                        <input type="radio" name="urgency" id="4" value="4" v-model="urgency">
                     Keines / Unklar</label>
                 </fieldset>
+                <!-- for debugging
+                <span>{{ urgency }}</span> -->
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 3)}" class="tab">
-                <fieldset>
-                <!-- TODO: Unterlagen hochladen: redirect to an upload page? or add it her? -->
-                    <p>Dokumente hochladen</p>
-                </fieldset>
+            <div :class="{'sr-only':(activeTab !== 3)}" class="tab">              
+                <label for="document" class="mb-6 text-xl block">Dokumente Hochladen</label>
+                <input type="file" name="document" id="document" multiple>                
             </div>
 
-            <!-- TODO: if user is logged in -> resume, else: redirect to login / signup site then redirect back -->
-
-            <div :class="{'sr-only':(activeTab !== 4)}" class="tab">
-                <fieldset>
-                <!-- TODO: accept AGB, Datenschutz, Schweigepflicht -->
-                <p>Akzeptieren und bestellen</p>
-                </fieldset>
-            </div>
-
-            <div :class="{'sr-only':(activeTab !== 5)}" class="tab">
-                <fieldset>
-                    <p>Geschafft</p>
-                </fieldset>
+            <div :class="{'sr-only':(activeTab !== 4)}" class="tab text-center">
+                <!-- TODO: redirect to Login if user is not logged in and redirect back -->
+                <p class="mb-6">Als nächstes erklären wir dir, wie es weitergeht.</p>
+                <button type="submit" class="btn-primary block mx-auto" @click="submitOrder()">Jetzt prüfen lassen</button>
+                
             </div>
 
             <div class="controls mt-6 flex items-center justify-center">
                 <button v-if="(activeTab >= 1)" @click.prevent="decrement()" class="btn-secondary mr-4">Zurück</button>
-                <button v-if="(activeTab <= 4)" @click.prevent="increment()" class="btn-secondary mr-4">Weiter</button>
+                <button v-if="(activeTab <= 3)" @click.prevent="increment()" class="btn-secondary mr-4">Weiter</button>
                 <button @click.prevent="reset()" class="btn-secondary block">
                     <svg role="img" aria-labelledby="resetForm" class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <title id="resetForm">Neu starten</title>
@@ -115,15 +113,16 @@
 import OrderProgress from '../components/OrderProgress.vue'
 
 import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
     components: {
-        OrderProgress
+        OrderProgress,
     },
     
-    // hide all .tab visually.
-    // change this with class when activeTab = specific number
     setup () {
+        // hide all .tab visually.
+        // change this with class when activeTab = specific number
         const activeTab = ref(0)
         //console.log(activeTab.value)
         const progressPercentage = ref(100/6)
@@ -136,6 +135,15 @@ export default {
             'Schritt 5 von 6',
             'Schritt 6 von 6'
         ]
+
+        // form data:
+        const violation = ref('')
+        const insurance = ref('')
+        const urgency = ref('')
+
+        // router
+        const router = useRouter()
+        const route = useRoute()
 
         function increment() {
             activeTab.value ++
@@ -152,18 +160,26 @@ export default {
             progressPercentage.value = 100/6
         }
 
+        function submitOrder() {
+            router.push('/order-thank-you')
+        }
+
         return { 
             activeTab,
             progressPercentage,
             progressText,
             increment,
             decrement,
-            reset
+            reset,
+            violation,
+            insurance,
+            urgency,
+            submitOrder
         }
     }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .tab {
     margin-top: 2em;
 }
@@ -196,6 +212,10 @@ legend {
     z-index: 99;
     opacity: 1;
     position: relative;
+}
+
+.first-step input[type=radio]:checked + label {
+    border-color: #5CC8C5;
 }
 
 .speed {
