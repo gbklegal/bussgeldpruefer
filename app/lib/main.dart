@@ -7,7 +7,7 @@ import 'package:app/screens/home.dart';
 import 'package:app/screens/profile.dart';
 
 // only for development
-// import 'package:app/screens/contactfeedback.dart';
+// import 'package:app/screens/quickcheckfinal.dart';
 
 void main() => runApp(
       MaterialApp(
