@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+class QuickCheckScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'Quick Check',
+        style: TextStyle(
+          fontSize: 42,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+
+class BigButtonWidget extends StatelessWidget {
+  final String title;
+  final String text;
+  final String image;
+
+  BigButtonWidget({this.title, this.text, this.image: ''});
+
+  initState() {
+    print(this.image);
+  }
+
+  _image() {
+    if (this.image != '') {
+      return Padding(
+        padding: EdgeInsets.only(left: 12.0),
+        child: Image.asset(
+          this.image,
+          width: 60.0,
+        ),
+      );
+    }
+    return Container();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 12.0,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    text,
+                    textAlign: TextAlign.left,
+                    softWrap: true,
+                  ),
+                ],
+              ),
+            ),
+            _image(),
+          ],
+        ),
+      ),
+      onPressed: () => print('BigButtonWidget() pressed'),
+      onLongPress: () => print('BigButtonWidget() long press'),
+    );
+  }
+}
