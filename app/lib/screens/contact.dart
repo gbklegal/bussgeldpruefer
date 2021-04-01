@@ -1,3 +1,5 @@
+import 'package:app/functions/newscreen.dart';
+import 'package:app/screens/contactfeedback.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
 
@@ -166,7 +168,10 @@ class _ContactScreenState extends State<ContactScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () => print('Submit button pressed'),
+                            onPressed: () => newScreen(
+                              context: context,
+                              screen: ContactFeedbackScreen(),
+                            ),
                             child: Text('senden'),
                           ),
                         ),

@@ -2,6 +2,7 @@ import 'package:app/screens/bussgeldkatalog.dart';
 import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
+import 'package:app/screens/quickcheck.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
 

@@ -16,13 +16,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
     if (isHome) {
       return Text('');
     }
-    return IconButton(
-      icon: Icon(
-        Icons.arrow_back_outlined,
-        color: Colors.black,
-      ),
-      onPressed: () => Navigator.pop(context),
-    );
+    return BackButton(color: Colors.black);
   }
 
   _actionsContent(context) {
