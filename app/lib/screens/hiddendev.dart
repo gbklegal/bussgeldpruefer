@@ -6,10 +6,15 @@ import 'package:app/screens/bussgeldkatalogdetail.dart';
 import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/bussgeldratgeberdetail.dart';
 import 'package:app/screens/contact.dart';
+import 'package:app/screens/contactfeedback.dart';
+import 'package:app/screens/dummy.dart';
 import 'package:app/screens/faq.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/information.dart';
 import 'package:app/screens/manual.dart';
+import 'package:app/screens/profile.dart';
+import 'package:app/screens/quickcheck.dart';
+import 'package:app/screens/quickcheckfinal.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -77,10 +82,15 @@ class HiddenDevScreen extends StatelessWidget {
               _simpleButton('Bußgeld Ratgeber Detail',
                   BussgeldRatgeberDetailScreen('empty string [HDS]')),
               _simpleButton('Kontakt', ContactScreen()),
+              _simpleButton('Kontakt Feedback', ContactFeedbackScreen()),
+              _simpleButton('Dummy', DummyScreen()),
               _simpleButton('FAQ', FaqScreen()),
               _simpleButton('Info Kanzlei', InfoKanzleiScreen()),
               _simpleButton('Information', InformationScreen()),
               _simpleButton('Anleitung', ManualScreen()),
+              _simpleButton('Profil', ProfileScreen()),
+              _simpleButton('Quick Check', QuickCheckScreen()),
+              _simpleButton('Quick Check Final', QuickCheckFinalScreen()),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
