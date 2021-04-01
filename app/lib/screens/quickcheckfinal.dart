@@ -122,7 +122,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             IconButton(
-                              icon: Icon(Icons.save),
+                              icon: Icon(Icons.save_outlined),
                               onPressed: () => print('save'),
                             ),
                             Text('speichern'),
