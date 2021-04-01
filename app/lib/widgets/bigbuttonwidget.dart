@@ -1,11 +1,13 @@
+import 'package:app/functions/newscreen.dart';
 import 'package:flutter/material.dart';
 
 class BigButtonWidget extends StatelessWidget {
   final String title;
   final String text;
   final String image;
+  final Widget screen;
 
-  BigButtonWidget({this.title, this.text, this.image: ''});
+  BigButtonWidget({this.title, this.text, this.image: '', this.screen});
 
   initState() {
     print(this.image);
@@ -22,6 +24,17 @@ class BigButtonWidget extends StatelessWidget {
       );
     }
     return Container();
+  }
+
+  _nextScreen([context]) {
+    if (this.screen == null) {
+      print('BigButtonWidget() pressed');
+    } else {
+      newScreen(
+        context: context,
+        screen: this.screen,
+      );
+    }
   }
 
   @override
@@ -57,7 +70,7 @@ class BigButtonWidget extends StatelessWidget {
           ],
         ),
       ),
-      onPressed: () => print('BigButtonWidget() pressed'),
+      onPressed: () => _nextScreen(context),
       onLongPress: () => print('BigButtonWidget() long press'),
     );
   }

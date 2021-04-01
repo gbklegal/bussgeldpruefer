@@ -1,8 +1,9 @@
+import 'package:app/screens/ablauf.dart';
 import 'package:app/screens/bussgeldkatalog.dart';
 import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
-import 'package:app/screens/quickcheck.dart';
+import 'package:app/screens/pruefungbussgeldbescheid.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
 
@@ -74,12 +75,14 @@ class HomeScreen extends StatelessWidget {
                         title: 'Prüfung Bußgeldbescheid',
                         text:
                             'Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden',
+                        screen: PruefungBussgeldbescheidScreen(),
                       ),
                       _padding(),
                       BigButtonWidget(
                         title: 'Bußgeldbescheid erhalten?',
                         text:
                             'So gehst du vor, um erfolgreich Einspruch einzulegen',
+                        screen: AblaufScreen(),
                       ),
                       _padding(),
                     ],
