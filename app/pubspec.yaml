@@ -26,6 +26,7 @@ dependencies:
   http: ^0.12.2
   url_launcher: ^6.0.2
   webview_flutter: ^2.0.2
+  confetti: ^0.5.5
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -58,6 +59,7 @@ flutter:
     - assets/icons/driving-license.png
     - assets/icons/happy.png
     - assets/icons/traffic-light.png
+    - assets/icons/confetti.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
