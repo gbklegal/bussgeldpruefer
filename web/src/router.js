@@ -106,7 +106,7 @@ const routes = [
                     {
                         path: '/profil/posteingang/gesendet',
                         name: 'profilemailsent',
-                        component: ProfileMailElse,
+                        component: ProfileMailSent,
                     },
                     {
                         path: '/profil/posteingang/markiert',

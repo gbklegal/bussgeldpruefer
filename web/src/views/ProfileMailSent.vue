@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-xl inline">E-Mail schreiben</h2>
+    <h2 class="text-xl inline">Gesendet</h2>
 
     <!-- Message -->
     <div class="py-5 border-b-2 border-gray-200 flex justify-between">

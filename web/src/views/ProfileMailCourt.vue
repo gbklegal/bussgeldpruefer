@@ -1,8 +1,8 @@
 <template>
-    <h2 class="text-xl inline">Gerichtliche Angelegenheit</h2>
+    <h2 class="text-xl inline">Gerichtliche Angelegenheiten</h2>
     
     <div class="bg-secondary rounded-full text-white h-6 w-6 text-center inline-block ml-4">
-        <span>1</span>
+        <span class="leading-6 inline-block">1</span>
     </div>
 
     <!-- Message -->
