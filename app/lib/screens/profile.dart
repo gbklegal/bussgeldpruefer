@@ -1,6 +1,8 @@
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/dummy.dart';
+import 'package:app/screens/profileinbox.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -8,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
     return SizedBox(height: 20.0);
   }
 
-  _imageTextButton({icon, text, context, screen}) {
+  _imageTextButton({icon, text, context, screen, bool badge: false}) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -20,10 +22,21 @@ class ProfileScreen extends StatelessWidget {
           padding: EdgeInsets.all(10),
           child: Row(
             children: <Widget>[
-              Icon(
-                icon,
-                size: 40,
-              ),
+              badge
+                  ? Badge(
+                      child: Icon(
+                        icon,
+                        size: 40,
+                      ),
+                      badgeContent: Text(
+                        '1',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  : Icon(
+                      icon,
+                      size: 40,
+                    ),
               SizedBox(
                 width: 10,
               ),
@@ -65,7 +78,8 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.email_outlined,
                   text: 'Online Posteingang',
                   context: context,
-                  screen: DummyScreen(),
+                  screen: ProfileInboxScreen(),
+                  badge: true,
                 ),
                 _padding(),
                 _imageTextButton(
