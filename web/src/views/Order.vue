@@ -89,10 +89,8 @@
             </div>
 
             <div :class="{'sr-only':(activeTab !== 4)}" class="tab text-center">
-                <!-- TODO: redirect to Login if user is not logged in and redirect back -->
-                <p class="mb-6">Als nächstes erklären wir dir, wie es weitergeht.</p>
-                <button type="submit" class="btn-primary block mx-auto" @click="submitOrder()">Jetzt prüfen lassen</button>
-                
+                <p class="mb-6">Um Deinen Bußgeldbescheid prüfen zu lassen <router-link class="underline" to="/login">melde dich an</router-link>. Oder erstelle einen <router-link class="underline" to="/registrieren">Account</router-link>.</p>
+                <p @click="submitOrder()"><br>weiter</p>
             </div>
 
             <div class="controls mt-6 flex items-center justify-center">
