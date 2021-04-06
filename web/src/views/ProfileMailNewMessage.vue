@@ -37,6 +37,13 @@ export default {
         const mailFrom = ref('')
         const mailSubject = ref('')
         const mailBody = ref('')
+
+        return {
+            mailTo,
+            mailFrom,
+            mailSubject,
+            mailBody
+        }
     },
 }
 </script>
