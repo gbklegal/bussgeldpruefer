@@ -28,6 +28,7 @@ import ProfileMailElse from './views/ProfileMailElse.vue'
 import ProfileMailSent from './views/ProfileMailSent.vue'
 import ProfileMailMarked from './views/ProfileMailMarked.vue'
 import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
+import BlogSingle from './views/BlogSingle.vue'
 
 
 const history = createWebHistory()
@@ -136,6 +137,11 @@ const routes = [
         path: '/ratgeber',
         name: 'blog',
         component: Blog
+    },
+    {
+        path: '/blog-single',
+        name: 'blog-single',
+        component: BlogSingle
     },
     {
         path: '/faq',
