@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 class AllConfettiWidget extends StatefulWidget {
   final Widget child;
-  final bool play;
 
   const AllConfettiWidget({
     @required this.child,
-    this.play,
     Key key,
   }) : super(key: key);
   @override
@@ -22,13 +20,18 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
     super.initState();
 
     controller = ConfettiController(duration: Duration(seconds: 2));
-    controller.play();
+    // controller.play();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        controller.play();
+        print('it should play (controller.play())');
+        print(controller.state);
+        // test
+        return;
         if (controller.state == ConfettiControllerState.playing) {
           controller.stop();
         } else {
