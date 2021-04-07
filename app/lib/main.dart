@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/widgets/appbar.dart';
@@ -8,10 +9,11 @@ import 'package:app/screens/profile.dart';
 
 // only for development
 // import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
+import 'package:app/screens/profileinbox.dart';
 
 void main() => runApp(
       MaterialApp(
-        home: MyApp(), // In prod. MyApp()
+        home: ProfileInboxScreen(), // In prod. MyApp()
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -56,9 +58,15 @@ class _MyAppState extends State<MyApp> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: _currentIndex == 2
-                ? Icon(Icons.person)
-                : Icon(Icons.person_outline),
+            icon: Badge(
+              child: _currentIndex == 2
+                  ? Icon(Icons.person)
+                  : Icon(Icons.person_outline),
+              badgeContent: Text(
+                '1',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             label: 'Profil',
           ),
         ],
