@@ -35,27 +35,28 @@ class HiddenDevScreen extends StatelessWidget {
       TextEditingController customController = TextEditingController();
 
       return showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Gib eine URL ein:'),
-              content: TextField(
-                keyboardType: TextInputType.url,
-                autocorrect: false,
-                controller: customController,
-              ),
-              actions: <Widget>[
-                MaterialButton(
-                  elevation: 5.0,
-                  child: Text('Submit'),
-                  onPressed: () => Navigator.pop(
-                    context,
-                    customController.text.toString(),
-                  ),
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Gib eine URL ein:'),
+            content: TextField(
+              keyboardType: TextInputType.url,
+              autocorrect: false,
+              controller: customController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text('Submit'),
+                onPressed: () => Navigator.pop(
+                  context,
+                  customController.text.toString(),
                 ),
-              ],
-            );
-          });
+              ),
+            ],
+          );
+        },
+      );
     }
 
     return Scaffold(
