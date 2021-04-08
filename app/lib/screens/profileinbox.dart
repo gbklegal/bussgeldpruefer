@@ -181,6 +181,24 @@ class ProfileInboxEditorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future formFeedback(BuildContext context) {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Danke Dir!'),
+            content: Text('Deine Nachricht wurde versendet.'),
+            actions: [
+              TextButton(
+                child: Text('schließen'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return ListView(
       children: <Widget>[
         _menuBurgerButton(),
@@ -240,8 +258,7 @@ class ProfileInboxEditorScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        // TODO: onpressed display an alert with the info
-                        onPressed: () => print(''),
+                        onPressed: () => formFeedback(context),
                         child: Text('senden'),
                       ),
                     ),
