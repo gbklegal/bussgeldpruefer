@@ -31,12 +31,12 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
         print('it should play (controller.play())');
         print(controller.state);
         // test
-        return;
-        if (controller.state == ConfettiControllerState.playing) {
-          controller.stop();
-        } else {
-          controller.play();
-        }
+        // return;
+        // if (controller.state == ConfettiControllerState.playing) {
+        //   controller.stop();
+        // } else {
+        //   controller.play();
+        // }
       },
       child: Stack(
         children: [
