@@ -1,3 +1,4 @@
+import 'package:app/screens/dummy.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +10,11 @@ import 'package:app/screens/profile.dart';
 
 // only for development
 // import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
-import 'package:app/screens/profileinbox.dart';
+import 'package:app/screens/profilestatus.dart';
 
 void main() => runApp(
       MaterialApp(
-        home: ProfileInboxScreen(), // In prod. MyApp()
+        home: ProfileStatusScreen(), // In prod. MyApp()
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -24,7 +25,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _currentIndex = 1;
+  int _currentIndex = 2; // default: 1
 
   final List<Widget> _tabs = [
     QuickCheckScreen(),

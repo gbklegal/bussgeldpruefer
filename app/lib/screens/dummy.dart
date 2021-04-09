@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
 class DummyScreen extends StatelessWidget {
   @override
@@ -14,6 +15,14 @@ class DummyScreen extends StatelessWidget {
               child: Text('Menü Header'),
             )
           ],
+        ),
+      ),
+      body: Center(
+        child: FAProgressBar(
+          currentValue: 70,
+          progressColor: Colors.blue,
+          backgroundColor: Colors.grey.shade300,
+          direction: Axis.vertical,
         ),
       ),
       floatingActionButton: FloatingActionButton(

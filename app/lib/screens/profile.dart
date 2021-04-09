@@ -1,6 +1,7 @@
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/dummy.dart';
 import 'package:app/screens/profileinbox.dart';
+import 'package:app/screens/profilestatus.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.rotate_right_outlined,
                   text: 'Überprüfe den aktuellen Status Deines Falls',
                   context: context,
-                  screen: DummyScreen(),
+                  screen: ProfileStatusScreen(),
                 ),
                 _padding(),
                 _imageTextButton(
