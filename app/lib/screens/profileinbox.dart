@@ -273,7 +273,7 @@ class ProfileInboxEditorScreen extends StatelessWidget {
   }
 }
 
-// Usefull functions
+// Useful functions
 
 _padding([width = 0.0, height = 20.0]) {
   return SizedBox(

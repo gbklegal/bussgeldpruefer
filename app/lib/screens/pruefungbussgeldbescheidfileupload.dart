@@ -46,7 +46,7 @@ class _PruefungBussgeldbescheidFileUploadScreenState
                 Text(
                     'Mit der Kamerafunktion kannst du ganz einfach Fotos von deinen Unterlagen machen oder wähle ein Foto aus deinem Album.'),
                 _padding(),
-                _title('1. Wähle ein Dokumnet aus, dass du hochladen willst'),
+                _title('1. Wähle ein Dokument aus, dass du hochladen willst'),
                 SizedBox(
                   width: double.infinity,
                   child: DropdownButton<String>(
