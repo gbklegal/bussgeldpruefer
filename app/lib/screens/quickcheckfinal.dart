@@ -1,5 +1,6 @@
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/contact.dart';
+import 'package:app/screens/pruefungbussgeldbescheid.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,10 @@ class QuickCheckFinalScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => print('Prüfung Bußgeldbescheid'),
+                      onPressed: () => newScreen(
+                        context: context,
+                        screen: PruefungBussgeldbescheidScreen(),
+                      ),
                       child: Text(
                         'Prüfung Bußgeldbescheid',
                         style: TextStyle(

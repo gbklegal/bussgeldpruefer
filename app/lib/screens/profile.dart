@@ -1,5 +1,5 @@
 import 'package:app/functions/newscreen.dart';
-import 'package:app/screens/dummy.dart';
+import 'package:app/screens/profiledocumentsoverview.dart';
 import 'package:app/screens/profileinbox.dart';
 import 'package:app/screens/profilestatus.dart';
 import 'package:app/widgets/pagetitle.dart';
@@ -92,9 +92,9 @@ class ProfileScreen extends StatelessWidget {
                 _padding(),
                 _imageTextButton(
                   icon: Icons.cloud_upload_outlined,
-                  text: 'Dokumenten Übersicht',
+                  text: 'Dokumentenübersicht',
                   context: context,
-                  screen: DummyScreen(),
+                  screen: ProfileDocumentsOverviewScreen(),
                 ),
               ],
             ),
