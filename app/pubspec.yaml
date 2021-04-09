@@ -62,6 +62,7 @@ flutter:
     - assets/icons/happy.png
     - assets/icons/traffic-light.png
     - assets/icons/confetti.png
+    - assets/icons/exclamation-mark.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
