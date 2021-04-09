@@ -1,17 +1,15 @@
-import 'package:app/functions/newscreen.dart';
-import 'package:app/screens/pruefungbussgeldbescheidvollmacht.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
 
-class PruefungBussgeldbescheidFileUploadScreen extends StatefulWidget {
+class ProfileDocumentsOverviewScreen extends StatefulWidget {
   @override
-  _PruefungBussgeldbescheidFileUploadScreenState createState() =>
-      _PruefungBussgeldbescheidFileUploadScreenState();
+  _ProfileDocumentsOverviewScreenState createState() =>
+      _ProfileDocumentsOverviewScreenState();
 }
 
-class _PruefungBussgeldbescheidFileUploadScreenState
-    extends State<PruefungBussgeldbescheidFileUploadScreen> {
+class _ProfileDocumentsOverviewScreenState
+    extends State<ProfileDocumentsOverviewScreen> {
   _title(text) {
     return Text(
       text,
@@ -21,14 +19,82 @@ class _PruefungBussgeldbescheidFileUploadScreenState
     );
   }
 
-  _padding([height = 20.0]) {
-    return SizedBox(height: height);
+  _padding([width = 0.0, height = 20.0]) {
+    return SizedBox(
+      width: width,
+      height: height,
+    );
+  }
+
+  _headerTitle() {
+    return Row(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: Colors.blue,
+          ),
+          child: Icon(
+            Icons.cloud_upload_outlined,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+        _padding(10.0),
+        Text(
+          'Dokumentenübersicht',
+          style: TextStyle(fontSize: 18),
+        ),
+      ],
+    );
   }
 
   String documentName = 'Anhörungsbogen';
 
   @override
   Widget build(BuildContext context) {
+    Future formFeedback(BuildContext context) {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Geschafft!'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(text: 'Deine Dokumente wurden '),
+                      TextSpan(
+                          text: 'erfolgreich',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(text: ' eingereicht.'),
+                    ],
+                  ),
+                ),
+                _padding(),
+                Image.asset(
+                  'assets/icons/confetti.png',
+                  width: 80,
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                child: Text('schließen'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBarWidget(),
       body: ListView(
@@ -39,6 +105,8 @@ class _PruefungBussgeldbescheidFileUploadScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                _headerTitle(),
+                _padding(),
                 Text(
                   'Lade Deine Unterlagen hoch',
                   style: TextStyle(fontSize: 20),
@@ -96,46 +164,16 @@ class _PruefungBussgeldbescheidFileUploadScreenState
                   ],
                 ),
                 _padding(),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.arrow_back),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                          Text('zurück'),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.refresh),
-                            onPressed: () => print('restart'),
-                          ),
-                          Text('neu starten'),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.arrow_forward),
-                            onPressed: () => newScreen(
-                              context: context,
-                              screen: PruefungBussgeldbescheidVollmacht(),
-                            ),
-                          ),
-                          Text('weiter'),
-                        ],
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    child: Text('senden'),
+                    onPressed: () => formFeedback(context),
+                  ),
                 ),
+                _padding(),
+                Text(
+                    'Was wir von Dir mindestens  brauchen, um deinen Fall bearbeiten zu können:\n\n- Verwarnungsbogen\n- Bußgeldbescheid und/oder\n- Anhörungsbogen'),
               ],
             ),
           ),
