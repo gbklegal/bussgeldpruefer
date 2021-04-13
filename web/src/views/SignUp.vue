@@ -79,7 +79,7 @@ export default {
             this.hidden = !this.hidden;
         },
         redirect() {
-          this.$router.push("/profile-signup")
+          this.$router.push({name: 'profile-signup'})
         }
     }
 }

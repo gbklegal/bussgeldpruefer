@@ -6,7 +6,7 @@
             <h2 class="text-secondary">Formular ausfüllen &amp; Dokumente einreichen</h2>
             <div class="how-to-text max-w-3xl">
                 <p class="mb-2">Um Du erfolgreich gegen den Bußgeldbescheid vorzugehen, klicke auf
-                <router-link class="underline" to="/bussgeldbescheid-pruefen">
+                <router-link class="underline" :to="{ name: 'order' }">
                 Bussgeldbescheid Prüfung
                 </router-link>
                 , damit Deine Daten erfasst werden können.</p>

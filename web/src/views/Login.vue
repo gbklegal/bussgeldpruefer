@@ -4,7 +4,7 @@
         <h1>Login</h1>
         <section>
             <p>Du hast noch keinen Account?</p>
-            <router-link to="/registrieren" class="underline mt-3 font-medium">Hier registrieren!</router-link>
+            <router-link :to="{ name: 'signup' }" class="underline mt-3 font-medium">Hier registrieren!</router-link>
 
             <form id="contactform" @submit.prevent="redirect">
 
