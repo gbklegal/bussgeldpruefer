@@ -62,7 +62,7 @@ const routes = [
     },
     {
         path: '/impressum',
-        name: 'legalcontact',
+        name: 'legal-contact',
         component: LegalContact
     },
     {
@@ -72,7 +72,7 @@ const routes = [
     },
     {
         path: '/rechtliche-hinweise',
-        name: 'termsofservice',
+        name: 'terms-of-service',
         component: TermsOfService
     },
     {
