@@ -8,7 +8,7 @@
           </h2>
           <p class="">
             Mit dem BussgeldPrüfer erhöhst du deine Chance erfolgreich gegen
-            deinen Bußgeldbescheid vorzugehen. Klicke jetzt auf <router-link to="/bussgeldbescheid-pruefen" class="underline">“Prüfung
+            deinen Bußgeldbescheid vorzugehen. Klicke jetzt auf <router-link :to="{ name: 'order' }" class="underline">“Prüfung
             Bußgeldbescheid”</router-link> um deinen Bußgeldbescheid anzufechten.
           </p>
         </div>

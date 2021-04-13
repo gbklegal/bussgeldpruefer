@@ -29,6 +29,7 @@ import ProfileMailSent from './views/ProfileMailSent.vue'
 import ProfileMailMarked from './views/ProfileMailMarked.vue'
 import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
 import BlogSingle from './views/BlogSingle.vue'
+import ContactThankYou from './views/ContactThankYou.vue'
 
 
 const history = createWebHistory()
@@ -55,8 +56,13 @@ const routes = [
         component: Contact
     },
     {
+        path: '/danke-fuer-deine-nachricht',
+        name: 'contact-thank-you',
+        component: ContactThankYou
+    },
+    {
         path: '/impressum',
-        name: 'legalcontact',
+        name: 'legal-contact',
         component: LegalContact
     },
     {
@@ -66,7 +72,7 @@ const routes = [
     },
     {
         path: '/rechtliche-hinweise',
-        name: 'termsofservice',
+        name: 'terms-of-service',
         component: TermsOfService
     },
     {
@@ -86,49 +92,49 @@ const routes = [
         children: [
             {
                 path: '/profil/posteingang',
-                name: 'profilemail',
+                name: 'profile-mail',
                 component: ProfileMail,
                 children: [
                     {
                         path: '/profil/posteingang/gerichtliche-angelegenheiten',
-                        name: 'profilemailcourt',
+                        name: 'profile-mail-court',
                         component: ProfileMailCourt,
                     },
                     {
                         path: '/profil/posteingang/aussergerichtliche-angelegenheiten',
-                        name: 'profilemailoutsidecourt',
+                        name: 'profile-mail-outside-court',
                         component: ProfileMailOutsideCourt,
                     },
                     {
                         path: '/profil/posteingang/sonstiges',
-                        name: 'profilemailelse',
+                        name: 'profile-mail-else',
                         component: ProfileMailElse,
                     },
                     {
                         path: '/profil/posteingang/gesendet',
-                        name: 'profilemailsent',
+                        name: 'profile-mail-sent',
                         component: ProfileMailSent,
                     },
                     {
                         path: '/profil/posteingang/markiert',
-                        name: 'profilemailmarked',
+                        name: 'profile-mail-marked',
                         component: ProfileMailMarked,
                     },
                     {
                         path: '/profil/posteingang/neue-nachricht',
-                        name: 'profilemailnewmessage',
+                        name: 'profile-mail-new-message',
                         component: ProfileMailNewMessage,
                     },
                 ]
             },
             {
                 path: '/profil/status',
-                name: 'status',
+                name: 'profile-status',
                 component: ProfileStatus
             },
             {
                 path: '/profil/dokumente',
-                name: 'documents',
+                name: 'profile-documents',
                 component: ProfileDocuments
             }
         ]
@@ -165,29 +171,29 @@ const routes = [
         children: [
             {
                 path: '/bussgeldkatalog/alkohol',
-                name: 'alkohol',
+                name: 'catalog-alcohol',
                 component: CatalogSingleAlcohol
             },
             {
                 path: '/bussgeldkatalog/else',
-                name: 'else',
+                name: 'catalog-else',
                 component: CatalogSingleElse
             }
         ]
     },
     {
         path: '/topics-single',
-        name: 'topicssingle',
+        name: 'topics-single',
         component: TopicsSingle
     },
     {
         path: '/order-thank-you',
-        name: 'orderthankyou',
+        name: 'order-thank-you',
         component: OrderTankYou
     },
     {
         path: '/profile-signup',
-        name: 'profilesignup',
+        name: 'profile-signup',
         component: ProfileSignUp
     }
 ]

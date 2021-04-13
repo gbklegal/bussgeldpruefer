@@ -159,7 +159,7 @@ export default {
         }
 
         function submitOrder() {
-            router.push('/order-thank-you')
+            router.push({name: 'order-thank-you'})
         }
 
         return { 

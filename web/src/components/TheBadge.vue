@@ -5,7 +5,7 @@
             <img class="w-28 m-2 rounded shadow" src="../assets/img/bgpapp-qrcode.png" alt="Hol dir die BussgeldPrüfer App via QR Code.">
             <p class="my-auto text-white">Lade die App für den <br>Quick-Check</p>
         </div>
-    </div>
+        </div>
     </transition>
 </template>
 
@@ -45,7 +45,7 @@ export default {
     left: calc(var(--width) - 10px);
 }
 
-.fslide-ade-enter-active, .slide-fade-leave-active {
+.slide-fade-enter-active, .slide-fade-leave-active {
   transition: opacity 0.25s ease-out;
 }
 

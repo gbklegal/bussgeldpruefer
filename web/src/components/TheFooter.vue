@@ -4,19 +4,19 @@
         <nav aria-label="secondary navigation">
             <ul>
                 <li>
-                   <router-link to="/partnerprogramm">Partnerprogramm</router-link>
+                   <router-link :to="{ name: 'partners' }">Partnerprogramm</router-link>
                 </li>
                 <li>
-                    <router-link to="/kontakt">Kontakt</router-link>
+                    <router-link :to="{ name: 'contact' }">Kontakt</router-link>
                 </li>
                 <li>
-                    <router-link to="/impressum">Impressum</router-link>
+                    <router-link :to="{ name: 'legal-contact' }">Impressum</router-link>
                 </li>
                 <li>
-                    <router-link to="/datenschutz">Datenschutz</router-link>
+                    <router-link :to="{ name: 'privacy' }">Datenschutz</router-link>
                 </li>
                 <li>
-                    <router-link to="/rechtliche-hinweise">Rechtliche Hinweise</router-link>
+                    <router-link :to="{ name: 'terms-of-service' }">Rechtliche Hinweise</router-link>
                 </li>
             </ul>
         </nav>

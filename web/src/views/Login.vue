@@ -4,15 +4,15 @@
         <h1>Login</h1>
         <section>
             <p>Du hast noch keinen Account?</p>
-            <router-link to="/registrieren" class="underline mt-3 font-medium">Hier registrieren!</router-link>
+            <router-link :to="{ name: 'signup' }" class="underline mt-3 font-medium">Hier registrieren!</router-link>
 
             <form id="contactform" @submit.prevent="redirect">
 
                 <div class="relative">
                     <input 
                     class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                    type="email" name="email" id="email" required
-                    placeholder="EMail">
+                    type="email" name="email" id="email" 
+                    placeholder="EMail" v-model="eMail">
                     <label class="absolute" for="email">E-Mail Adresse</label>
                 </div>
 
@@ -35,7 +35,7 @@
                         :type="fieldType"
                         class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                         name="password" id="password"
-                        placeholder="Passwort">
+                        placeholder="Passwort" v-model="password">
                         <label class="absolute" for="password">Passwort</label>   
                     </div>
                 </div>
@@ -49,20 +49,37 @@
 </template>
 
 <script>
+import { ref  } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
 export default {
-    data () {
-        return {
-            hidden: true,
-            fieldType: 'password'
+    setup() {
+        // router
+        const router = useRouter()
+
+        // form data
+        const eMail = ref('')
+        const password = ref('')
+
+        const hidden = ref(true)
+        const fieldType = ref('password')
+
+        function togglePasswordVisibility() {
+            fieldType.value = fieldType.value === 'password' ? 'text' : 'password';
+            hidden.value = !hidden.value;
         }
-    },
-    methods: {
-        togglePasswordVisibility() {
-            this.fieldType = this.fieldType === 'password' ? 'text' : 'password';
-            this.hidden = !this.hidden;
-        },
-        redirect() {
-            this.$router.push("/profil")
+
+        function redirect() {
+            router.push({name: 'profile-mail'})
+        }
+
+        return {
+            eMail,
+            password,
+            hidden,
+            fieldType,
+            togglePasswordVisibility,
+            redirect
         }
     }
 }

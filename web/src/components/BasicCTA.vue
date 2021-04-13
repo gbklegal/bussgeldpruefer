@@ -4,7 +4,7 @@
             <span class="inline-block mb-4 text-sm">{{ smallText }}</span>
             <h2 class="mb-6 font-normal text-secondary">{{ title }}</h2>
             <p class="mb-10">{{ subtitle }}</p>
-            <router-link class="btn-primary text-white font-normal" to="/bussgeldbescheid-pruefen inline-block">
+            <router-link class="btn-primary text-white font-normal" :to="{ name: 'order' }">
                 Bussgeldbescheid Prüfung
             </router-link>
         </div>
