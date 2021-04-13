@@ -11,11 +11,11 @@
                 <button v-on:click="menuOpen = !menuOpen" class="w-7 xl:hidden xl:invisible focus:ring rounded focus:border-secondary focus:ring-secondary focus:ring-opacity-50">
                     <!-- Icons from Heroicon -->
                     <svg v-if="!menuOpen" role="img" aria-labelledby="openMenu" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <title id="openMenu">Open Menu</title>
+                    <title id="openMenu">Menü öffnen</title>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                     <svg v-if="menuOpen" role="img" aria-labelledby="closeMenu" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <title id="closeMenu">Close Menu</title>
+                        <title id="closeMenu">Menü schließen</title>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
