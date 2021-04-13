@@ -11,7 +11,7 @@
                 <div class="relative">
                     <input 
                     class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                    type="email" name="email" id="email" required
+                    type="email" name="email" id="email" 
                     placeholder="EMail" v-model="eMail">
                     <label class="absolute" for="email">E-Mail Adresse</label>
                 </div>
@@ -70,7 +70,7 @@ export default {
         }
 
         function redirect() {
-            router.push({name: 'profile'})
+            router.push({name: 'profile-mail'})
         }
 
         return {

@@ -92,7 +92,7 @@ const routes = [
         children: [
             {
                 path: '/profil/posteingang',
-                name: 'profilemail',
+                name: 'profile-mail',
                 component: ProfileMail,
                 children: [
                     {
