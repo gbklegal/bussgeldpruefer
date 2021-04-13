@@ -29,6 +29,7 @@ import ProfileMailSent from './views/ProfileMailSent.vue'
 import ProfileMailMarked from './views/ProfileMailMarked.vue'
 import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
 import BlogSingle from './views/BlogSingle.vue'
+import ContactThankYou from './views/ContactThankYou.vue'
 
 
 const history = createWebHistory()
@@ -53,6 +54,11 @@ const routes = [
         path: '/kontakt',
         name: 'contact',
         component: Contact
+    },
+    {
+        path: '/danke-fuer-deine-nachricht',
+        name: 'contact-thank-you',
+        component: ContactThankYou
     },
     {
         path: '/impressum',
