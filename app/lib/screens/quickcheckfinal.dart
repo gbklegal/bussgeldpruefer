@@ -6,6 +6,10 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
 
 class QuickCheckFinalScreen extends StatelessWidget {
+  final String trafficLightColor;
+
+  QuickCheckFinalScreen(this.trafficLightColor);
+
   _padding() {
     return SizedBox(height: 22.0);
   }
@@ -29,6 +33,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
               ),
               child: Column(
                 children: <Widget>[
+                  Text(trafficLightColor),
                   RichText(
                     text: TextSpan(
                       style: TextStyle(color: Colors.black, fontSize: 16.0),

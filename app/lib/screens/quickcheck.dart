@@ -1,14 +1,26 @@
+import 'package:app/utilities/quickcheck.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/quickcheckfinal.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
 
 class QuickCheckScreen extends StatefulWidget {
+  QuickCheckScreen({Key key}) : super(key: key);
+
   @override
   _QuickCheckScreenState createState() => _QuickCheckScreenState();
 }
 
 class _QuickCheckScreenState extends State<QuickCheckScreen> {
+  final dateController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed
+    dateController.dispose();
+    super.dispose();
+  }
+
   _title(text) {
     return Text(
       text,
@@ -43,6 +55,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   }
 
   SelbstGefahren _selbstGefahren = SelbstGefahren.ja;
+  SelbstGefahrenZugegeben _selbstGefahrenZugegeben = SelbstGefahrenZugegeben.ja;
   VerstossZugegeben _verstossZugegeben = VerstossZugegeben.ja;
   VerstossBezahlt _verstossBezahlt = VerstossBezahlt.ja;
   AngabenRichtig _angabenRichtig = AngabenRichtig.ja;
@@ -123,6 +136,36 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                             groupValue: _selbstGefahren,
                             onChanged: (SelbstGefahren value) {
                               setState(() => _selbstGefahren = value);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  _padding(),
+                  _title(
+                      'Hast du bereits Zugegeben, dass du selbst gefahren bist?'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(children: [
+                        Text('Ja'),
+                        Radio<SelbstGefahrenZugegeben>(
+                          value: SelbstGefahrenZugegeben.ja,
+                          groupValue: _selbstGefahrenZugegeben,
+                          onChanged: (SelbstGefahrenZugegeben value) {
+                            setState(() => _selbstGefahrenZugegeben = value);
+                          },
+                        ),
+                      ]),
+                      Row(
+                        children: [
+                          Text('Nein'),
+                          Radio<SelbstGefahrenZugegeben>(
+                            value: SelbstGefahrenZugegeben.nein,
+                            groupValue: _selbstGefahrenZugegeben,
+                            onChanged: (SelbstGefahrenZugegeben value) {
+                              setState(() => _selbstGefahrenZugegeben = value);
                             },
                           ),
                         ],
@@ -280,6 +323,22 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                     ],
                   ),
                   _padding(),
+                  _title(
+                      'Wann haben Sie das letzte behödrliche Schreiben erhalten?'),
+                  TextField(
+                    readOnly: true,
+                    controller: dateController,
+                    decoration: InputDecoration(hintText: 'Wähle eine Datum'),
+                    onTap: () async {
+                      var date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100));
+                      dateController.text = date.toString().substring(0, 10);
+                    },
+                  ),
+                  _padding(),
                   Row(
                     children: [
                       Expanded(
@@ -309,10 +368,29 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                           children: <Widget>[
                             IconButton(
                               icon: Icon(Icons.arrow_forward),
-                              onPressed: () => newScreen(
-                                context: context,
-                                screen: QuickCheckFinalScreen(),
-                              ),
+                              onPressed: () {
+                                // count the score
+                                String trafficLightColor = quickCheckValidation(
+                                  violationAdmitted: _verstossZugegeben ==
+                                      VerstossZugegeben.ja,
+                                  violationPayed:
+                                      _verstossBezahlt == VerstossBezahlt.ja,
+                                  selfDriven:
+                                      _selbstGefahren == SelbstGefahren.ja,
+                                  selfDrivenAdmitted:
+                                      _selbstGefahrenZugegeben ==
+                                          SelbstGefahrenZugegeben.ja,
+                                  detailsCorrect:
+                                      _angabenRichtig == AngabenRichtig.ja,
+                                  letterReceived: DateTime.utc(2021, 5, 9),
+                                );
+                                // return the score to the next screen
+                                newScreen(
+                                  context: context,
+                                  screen: QuickCheckFinalScreen(
+                                      trafficLightColor), // add score as a parameter
+                                );
+                              },
                             ),
                             Text('weiter'),
                           ],
@@ -331,6 +409,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
 }
 
 enum SelbstGefahren { ja, nein }
+enum SelbstGefahrenZugegeben { ja, nein }
 enum VerstossZugegeben { ja, nein }
 enum VerstossBezahlt { ja, nein }
 enum AngabenRichtig { ja, nein }
