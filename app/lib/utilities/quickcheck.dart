@@ -1,10 +1,10 @@
 void main() {
   // Verstoß
-  String violation = '';
+  // String violation = '';
   // Behördenschreiben
-  String lastLetter = '';
+  // String lastLetter = '';
   // Rechtschutzversicherung
-  String insurance = '';
+  // String insurance = '';
   // Verstoß bereits zugegeben
   bool violationAdmitted = false;
   // Verstoß bereits bezahlt
@@ -16,20 +16,39 @@ void main() {
   // stimmen die Angaben
   bool detailsCorrect = false;
 
+  // Ampel
+  String trafficLightColor = 'rot';
+
   int score = 0;
-  // var _21days = 1000 * 60 * 24 * 21; // millisecond * seconds * hours * days
   var letterReceived = DateTime.utc(2021, 4, 9);
   var now = DateTime.now();
+  var letterReceivedDifference = now.difference(letterReceived).inDays;
 
-  if (violation != '') score++;
-  if (lastLetter != '') score++;
-  if (insurance != '') score++;
-  now.difference(letterReceived).inDays < 21 ? score++ : score--;
-  violationAdmitted ? score-- : score++;
-  violationPayed ? score-- : score++;
-  selfDriven ? score-- : score++;
-  selfDrivenAdmitted ? score-- : score++;
-  detailsCorrect ? score++ : score--;
+  // score counter
+  if (letterReceivedDifference > 21) score++;
+  if (violationAdmitted) score++;
+  if (violationPayed) score++;
+  if (selfDriven) score++;
+  if (selfDrivenAdmitted) score++;
+  if (detailsCorrect) score++;
 
-  print(score);
+  // evaluation
+  if (score == 0)
+    trafficLightColor = 'grün';
+  else if (score > 0 && score < 6) trafficLightColor = 'gelb';
+
+  // print the result
+  print('Score ($score): $trafficLightColor');
+}
+
+quickCheckValidation({
+  bool violationAdmitted,
+  bool violationPayed,
+  bool selfDriven,
+  bool selfDrivenAdmitted,
+  bool detailsCorrect,
+  DateTime letterReceived,
+}) {
+  print('Hey');
+  return 'Hey';
 }
