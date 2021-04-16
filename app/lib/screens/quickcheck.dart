@@ -1,8 +1,10 @@
+import 'package:app/global.dart';
 import 'package:app/utilities/quickcheck.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/quickcheckfinal.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class QuickCheckScreen extends StatefulWidget {
   QuickCheckScreen({Key key}) : super(key: key);
@@ -13,6 +15,7 @@ class QuickCheckScreen extends StatefulWidget {
 
 class _QuickCheckScreenState extends State<QuickCheckScreen> {
   final dateController = TextEditingController();
+  var letterReceived = DateTime.now();
 
   @override
   void dispose() {
@@ -54,15 +57,12 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
     );
   }
 
-  SelbstGefahren _selbstGefahren = SelbstGefahren.ja;
-  SelbstGefahrenZugegeben _selbstGefahrenZugegeben = SelbstGefahrenZugegeben.ja;
-  VerstossZugegeben _verstossZugegeben = VerstossZugegeben.ja;
-  VerstossBezahlt _verstossBezahlt = VerstossBezahlt.ja;
-  AngabenRichtig _angabenRichtig = AngabenRichtig.ja;
-  Rechtsschutzversicherung _rechtsschutzversicherung =
-      Rechtsschutzversicherung.ja;
-
-  String letztesAnschreiben = 'Anhörungsbogen';
+  SelbstGefahren _selbstGefahren;
+  SelbstGefahrenZugegeben _selbstGefahrenZugegeben;
+  VerstossZugegeben _verstossZugegeben;
+  VerstossBezahlt _verstossBezahlt;
+  AngabenRichtig _angabenRichtig;
+  Rechtsschutzversicherung _rechtsschutzversicherung;
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +236,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                   Align(
                     alignment: Alignment.center,
                     child: DropdownButton<String>(
-                      value: letztesAnschreiben,
+                      value: quickCheckLastOfficialLetter,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
                       elevation: 16,
@@ -246,7 +246,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                       ),
                       onChanged: (String newValue) {
                         setState(() {
-                          letztesAnschreiben = newValue;
+                          quickCheckLastOfficialLetter = newValue;
                         });
                       },
                       items: <String>[
@@ -328,14 +328,19 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                   TextField(
                     readOnly: true,
                     controller: dateController,
-                    decoration: InputDecoration(hintText: 'Wähle eine Datum'),
+                    decoration: InputDecoration(hintText: 'Datum auswählen'),
                     onTap: () async {
                       var date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2100));
-                      dateController.text = date.toString().substring(0, 10);
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(DateTime.now().year - 1),
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        locale: Locale('de'),
+                      );
+                      letterReceived =
+                          DateTime.utc(date.year, date.month, date.day);
+                      dateController.text =
+                          DateFormat('dd.MM.yyyy').format(date).toString();
                     },
                   ),
                   _padding(),
@@ -369,8 +374,10 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                             IconButton(
                               icon: Icon(Icons.arrow_forward),
                               onPressed: () {
-                                // count the score
-                                String trafficLightColor = quickCheckValidation(
+                                // TODO: check if the radio buttons are not empty, if so: display alert and list what is missing
+                                // save traffic light color into the global variable
+                                quickCheckTrafficLightColor =
+                                    quickCheckValidation(
                                   violationAdmitted: _verstossZugegeben ==
                                       VerstossZugegeben.ja,
                                   violationPayed:
@@ -382,13 +389,13 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                                           SelbstGefahrenZugegeben.ja,
                                   detailsCorrect:
                                       _angabenRichtig == AngabenRichtig.ja,
-                                  letterReceived: DateTime.utc(2021, 5, 9),
+                                  letterReceived: letterReceived,
                                 );
                                 // return the score to the next screen
                                 newScreen(
                                   context: context,
                                   screen: QuickCheckFinalScreen(
-                                      trafficLightColor), // add score as a parameter
+                                      quickCheckTrafficLightColor), // add score as a parameter
                                 );
                               },
                             ),
