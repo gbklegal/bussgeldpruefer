@@ -14,6 +14,13 @@ class QuickCheckFinalScreen extends StatelessWidget {
     return SizedBox(height: 22.0);
   }
 
+  _translateColor(color) {
+    String text;
+    if (color == 'red') text = 'nicht ';
+    if (color == 'yellow') text = 'zunächst ';
+    return text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +40,6 @@ class QuickCheckFinalScreen extends StatelessWidget {
               ),
               child: Column(
                 children: <Widget>[
-                  Text(trafficLightColor),
                   RichText(
                     text: TextSpan(
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
@@ -42,6 +48,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                             text: 'Fast geschafft!',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(text: '\nDie Ersteinschätzung war '),
+                        TextSpan(text: _translateColor(trafficLightColor)),
                         TextSpan(
                             text: 'erfolgreich',
                             style: TextStyle(fontWeight: FontWeight.bold)),
@@ -53,7 +60,9 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     ),
                   ),
                   _padding(),
-                  Image.asset('assets/icons/traffic-light.png', height: 80),
+                  Image.asset(
+                      'assets/icons/traffic-light-$trafficLightColor.png',
+                      height: 80),
                   Text(
                     'Eine Verteidigung gegen den behaupteten "XYZ" erscheint "XZY".*',
                     style: TextStyle(fontSize: 18),
