@@ -49,6 +49,25 @@ quickCheckValidation({
   bool detailsCorrect,
   DateTime letterReceived,
 }) {
-  print('Hey');
-  return 'Hey';
+  // Ampel
+  String trafficLightColor = 'red';
+
+  int score = 0;
+  var now = DateTime.now();
+  var letterReceivedDifference = now.difference(letterReceived).inDays;
+
+  // score counter
+  if (letterReceivedDifference > 21) score++;
+  if (violationAdmitted) score++;
+  if (violationPayed) score++;
+  if (selfDriven) score++;
+  if (selfDrivenAdmitted) score++;
+  if (detailsCorrect) score++;
+
+  // evaluation
+  if (score == 0)
+    trafficLightColor = 'green';
+  else if (score > 0 && score < 6) trafficLightColor = 'yellow';
+
+  return trafficLightColor;
 }
