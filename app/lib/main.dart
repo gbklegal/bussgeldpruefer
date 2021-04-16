@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:app/widgets/appbar.dart';
 
@@ -8,13 +9,19 @@ import 'package:app/screens/home.dart';
 import 'package:app/screens/profile.dart';
 
 // only for development
-// import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
-// import 'package:app/screens/profilestatus.dart';
+// import 'package:app/screens/dummy.dart';
 
 void main() => runApp(
       MaterialApp(
         home: MyApp(), // In prod. MyApp()
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('de', 'DE'),
+        ],
       ),
     );
 
