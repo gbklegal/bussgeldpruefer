@@ -31,6 +31,9 @@ dependencies:
   flutter_animation_progress_bar: ^2.0.0
   step_progress_indicator: ^0.2.5+8
 
+  flutter_localizations:
+    sdk: flutter
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -54,6 +57,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/logo/BussgeldPruefer-Logo-small.png
+
+    - assets/images/alcohol.jpg
+    - assets/images/distance.jpg
+    - assets/images/parking.jpg
+    - assets/images/phone.jpg
+    - assets/images/redlight.jpg
+    - assets/images/speed.jpg
+
     - assets/icons/fast-time.png
     - assets/icons/assignment.png
     - assets/icons/communication.png
@@ -61,6 +72,9 @@ flutter:
     - assets/icons/right.png
     - assets/icons/driving-license.png
     - assets/icons/happy.png
+    - assets/icons/traffic-light-green.png
+    - assets/icons/traffic-light-red.png
+    - assets/icons/traffic-light-yellow.png
     - assets/icons/traffic-light.png
     - assets/icons/confetti.png
     - assets/icons/exclamation-mark.png
