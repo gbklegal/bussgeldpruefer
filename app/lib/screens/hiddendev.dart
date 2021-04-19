@@ -18,6 +18,8 @@ import 'package:app/screens/quickcheckfinal.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
+import '../global.dart';
+
 class HiddenDevScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,10 @@ class HiddenDevScreen extends StatelessWidget {
           child: Text(text),
         ),
       );
+    }
+
+    _padding() {
+      return SizedBox(height: 20);
     }
 
     Future<String> createAlertDialog(BuildContext context) {
@@ -91,7 +97,8 @@ class HiddenDevScreen extends StatelessWidget {
               _simpleButton('Anleitung', ManualScreen()),
               _simpleButton('Profil', ProfileScreen()),
               _simpleButton('Quick Check', QuickCheckScreen()),
-              _simpleButton('Quick Check Final', QuickCheckFinalScreen()),
+              _simpleButton(
+                  'Quick Check Final', QuickCheckFinalScreen('green')),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -104,6 +111,11 @@ class HiddenDevScreen extends StatelessWidget {
                   child: Text('WebView'),
                 ),
               ),
+              _padding(),
+              Text(
+                  'quickCheckLastOfficialLetter: $quickCheckLastOfficialLetter'),
+              Text('quickCheckTrafficLightColor: $quickCheckTrafficLightColor'),
+              _padding(),
             ],
           ),
         ),

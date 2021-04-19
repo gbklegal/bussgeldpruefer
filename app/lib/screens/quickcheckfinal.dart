@@ -6,8 +6,19 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
 
 class QuickCheckFinalScreen extends StatelessWidget {
+  final String trafficLightColor;
+
+  QuickCheckFinalScreen(this.trafficLightColor);
+
   _padding() {
     return SizedBox(height: 22.0);
+  }
+
+  _translateColor(color) {
+    String text;
+    if (color == 'red') text = 'nicht ';
+    if (color == 'yellow') text = 'zunächst ';
+    return text;
   }
 
   @override
@@ -37,6 +48,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                             text: 'Fast geschafft!',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(text: '\nDie Ersteinschätzung war '),
+                        TextSpan(text: _translateColor(trafficLightColor)),
                         TextSpan(
                             text: 'erfolgreich',
                             style: TextStyle(fontWeight: FontWeight.bold)),
@@ -48,7 +60,9 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     ),
                   ),
                   _padding(),
-                  Image.asset('assets/icons/traffic-light.png', height: 80),
+                  Image.asset(
+                      'assets/icons/traffic-light-$trafficLightColor.png',
+                      height: 80),
                   Text(
                     'Eine Verteidigung gegen den behaupteten "XYZ" erscheint "XZY".*',
                     style: TextStyle(fontSize: 18),

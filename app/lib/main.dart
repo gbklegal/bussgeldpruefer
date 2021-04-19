@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:app/widgets/appbar.dart';
 
@@ -8,13 +9,19 @@ import 'package:app/screens/home.dart';
 import 'package:app/screens/profile.dart';
 
 // only for development
-// import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
-// import 'package:app/screens/profilestatus.dart';
+// import 'package:app/screens/dummy.dart';
 
 void main() => runApp(
       MaterialApp(
         home: MyApp(), // In prod. MyApp()
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('de', 'DE'),
+        ],
       ),
     );
 
@@ -24,7 +31,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _currentIndex = 1; // default: 1
+  int _currentIndex = 0; // default: 1
 
   final List<Widget> _tabs = [
     QuickCheckScreen(),
