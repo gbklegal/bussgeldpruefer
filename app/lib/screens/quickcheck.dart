@@ -16,8 +16,15 @@ class QuickCheckScreen extends StatefulWidget {
 class _QuickCheckScreenState extends State<QuickCheckScreen> {
   final dateController = TextEditingController();
   var letterReceived = DateTime.now();
+  var lastOfficialLetterItems = <String>[
+    'Anhörungsbogen',
+    'Bußgeldbescheid',
+    'Strafbefehl',
+    'Zeugenanhörungsbogen',
+    'noch keines',
+  ];
+  bool hideDatePicker = false;
 
-  @override
   void dispose() {
     // Clean up the controller when the widget is removed
     dateController.dispose();
@@ -55,6 +62,60 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
         color: Colors.grey.shade300,
       ),
     );
+  }
+
+  Future alertDialog(BuildContext context, String text) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Hinweis!'),
+          content: Text(text),
+          actions: [
+            TextButton(
+              child: Text('schließen'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future confirmResetDialog(BuildContext context, String question) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Bist Du sicher?'),
+            content: Text(question),
+            actions: [
+              TextButton(
+                child: Text('Ja'),
+                onPressed: () {
+                  _resetQuickCheck();
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: Text('Nein'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        });
+  }
+
+  _resetQuickCheck() {
+    setState(() {
+      _selbstGefahren = null;
+      _selbstGefahrenZugegeben = null;
+      _verstossZugegeben = null;
+      _verstossBezahlt = null;
+      _angabenRichtig = null;
+      _rechtsschutzversicherung = null;
+      letterReceived = null;
+    });
   }
 
   SelbstGefahren _selbstGefahren;
@@ -246,16 +307,15 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                       ),
                       onChanged: (String newValue) {
                         setState(() {
+                          if (newValue == 'noch keines')
+                            hideDatePicker = true;
+                          else
+                            hideDatePicker = false;
                           quickCheckLastOfficialLetter = newValue;
                         });
                       },
-                      items: <String>[
-                        'Anhörungsbogen',
-                        'Bußgeldbescheid',
-                        'Strafbefehl',
-                        'Zeugenanhörungsbogen',
-                        'noch keines',
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      items: lastOfficialLetterItems
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -263,6 +323,30 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                       }).toList(),
                     ),
                   ),
+                  if (!hideDatePicker) _padding(),
+                  if (!hideDatePicker)
+                    _title(
+                        'Wann haben Sie das letzte behördliche Schreiben erhalten?'),
+                  if (!hideDatePicker)
+                    TextField(
+                      readOnly: true,
+                      controller: dateController,
+                      decoration: InputDecoration(hintText: 'Datum auswählen'),
+                      onTap: () async {
+                        var date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(DateTime.now().year - 1),
+                          // lastDate: DateTime(DateTime.now().year + 1),
+                          lastDate: DateTime.now(),
+                          locale: Locale('de'),
+                        );
+                        letterReceived =
+                            DateTime.utc(date.year, date.month, date.day);
+                        dateController.text =
+                            DateFormat('dd.MM.yyyy').format(date).toString();
+                      },
+                    ),
                   _padding(),
                   _title(
                       'Stimmen die Angaben im Anschreiben aus Deiner Sicht?'),
@@ -323,27 +407,6 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                     ],
                   ),
                   _padding(),
-                  _title(
-                      'Wann haben Sie das letzte behödrliche Schreiben erhalten?'),
-                  TextField(
-                    readOnly: true,
-                    controller: dateController,
-                    decoration: InputDecoration(hintText: 'Datum auswählen'),
-                    onTap: () async {
-                      var date = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(DateTime.now().year - 1),
-                        lastDate: DateTime(DateTime.now().year + 1),
-                        locale: Locale('de'),
-                      );
-                      letterReceived =
-                          DateTime.utc(date.year, date.month, date.day);
-                      dateController.text =
-                          DateFormat('dd.MM.yyyy').format(date).toString();
-                    },
-                  ),
-                  _padding(),
                   Row(
                     children: [
                       Expanded(
@@ -362,7 +425,8 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                           children: <Widget>[
                             IconButton(
                               icon: Icon(Icons.refresh),
-                              onPressed: () => print('restart'),
+                              onPressed: () => confirmResetDialog(context,
+                                  'Möchtest du den Quick Check zurücksetzten?'),
                             ),
                             Text('neu starten'),
                           ],
@@ -374,29 +438,58 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                             IconButton(
                               icon: Icon(Icons.arrow_forward),
                               onPressed: () {
-                                // TODO: check if the radio buttons are not empty, if so: display alert and list what is missing
-                                // save traffic light color into the global variable
-                                quickCheckTrafficLightColor =
-                                    quickCheckValidation(
-                                  violationAdmitted: _verstossZugegeben ==
-                                      VerstossZugegeben.ja,
-                                  violationPayed:
-                                      _verstossBezahlt == VerstossBezahlt.ja,
-                                  selfDriven:
-                                      _selbstGefahren == SelbstGefahren.ja,
-                                  selfDrivenAdmitted:
-                                      _selbstGefahrenZugegeben ==
-                                          SelbstGefahrenZugegeben.ja,
-                                  detailsCorrect:
-                                      _angabenRichtig == AngabenRichtig.ja,
-                                  letterReceived: letterReceived,
-                                );
-                                // return the score to the next screen
-                                newScreen(
-                                  context: context,
-                                  screen: QuickCheckFinalScreen(
-                                      quickCheckTrafficLightColor), // add score as a parameter
-                                );
+                                String missingSelection = '';
+
+                                if (_selbstGefahren == null)
+                                  missingSelection +=
+                                      '\n- Bist Du selbst gefahren?';
+                                if (_selbstGefahrenZugegeben == null)
+                                  missingSelection +=
+                                      '\n- Hast Du bereits Zugegeben, dass du selbst gefahren bist?';
+                                if (_verstossZugegeben == null)
+                                  missingSelection +=
+                                      '\n- Hast Du den Verstoß bereits zugeben?';
+                                if (_verstossBezahlt == null)
+                                  missingSelection +=
+                                      '\n- Hast Du den Verstoß bereits bezahlt?';
+                                if (!hideDatePicker &&
+                                    dateController.text == '')
+                                  missingSelection +=
+                                      '\n- Wann haben Sie das behördliche Schreiben erhalten?';
+                                if (_angabenRichtig == null)
+                                  missingSelection +=
+                                      '\n- Stimmen die Angaben im Anschreiben aus Deiner Sicht?';
+                                if (_rechtsschutzversicherung == null)
+                                  missingSelection +=
+                                      '\n- Besitzt Du eine Rechtsschutzversicherung?';
+
+                                if (missingSelection != '') {
+                                  alertDialog(context,
+                                      'Folgende Angaben fehlen noch:\n$missingSelection');
+                                } else {
+                                  // save traffic light color into the global variable
+                                  quickCheckTrafficLightColor =
+                                      quickCheckValidation(
+                                    violationAdmitted: _verstossZugegeben ==
+                                        VerstossZugegeben.ja,
+                                    violationPayed:
+                                        _verstossBezahlt == VerstossBezahlt.ja,
+                                    selfDriven:
+                                        _selbstGefahren == SelbstGefahren.ja,
+                                    selfDrivenAdmitted:
+                                        _selbstGefahrenZugegeben ==
+                                            SelbstGefahrenZugegeben.ja,
+                                    detailsCorrect:
+                                        _angabenRichtig == AngabenRichtig.ja,
+                                    letterReceived: letterReceived,
+                                  );
+                                  // return the score to the next screen
+                                  newScreen(
+                                    context: context,
+                                    screen: QuickCheckFinalScreen(
+                                        quickCheckTrafficLightColor), // add score as a parameter
+                                  );
+                                }
                               },
                             ),
                             Text('weiter'),
