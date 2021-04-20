@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                         title: 'Quick Check',
                         text:
                             'Kostenlose Ersteinschätzung in 90 Sekunden - ganz unverbindlich',
-                        image: 'assets/icons/fast-time.png',
+                        image: 'assets/images/icons/fast-time.png',
                       ),
                       _padding(),
                       BigButtonWidget(

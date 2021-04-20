@@ -61,15 +61,16 @@ class QuickCheckFinalScreen extends StatelessWidget {
                   ),
                   _padding(),
                   Image.asset(
-                      'assets/icons/traffic-light-$trafficLightColor.png',
-                      height: 80),
+                    'assets/images/icons/traffic-light-$trafficLightColor.png',
+                    height: 80,
+                  ),
                   Text(
                     'Eine Verteidigung gegen den behaupteten "XYZ" erscheint "XZY".*',
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
                   _padding(),
-                  Image.asset('assets/icons/happy.png', height: 80),
+                  Image.asset('assets/images/icons/happy.png', height: 80),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -100,7 +101,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                           softWrap: true,
                         ),
                       ),
-                      Image.asset('assets/icons/driving-license.png',
+                      Image.asset('assets/images/icons/driving-license.png',
                           width: 70),
                     ],
                   ),

@@ -56,7 +56,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/logo/BussgeldPruefer-Logo-small.png
+    - assets/images/Logo-BussgeldPruefer-small.png
 
     - assets/images/alcohol.jpg
     - assets/images/distance.jpg
@@ -65,19 +65,19 @@ flutter:
     - assets/images/redlight.jpg
     - assets/images/speed.jpg
 
-    - assets/icons/fast-time.png
-    - assets/icons/assignment.png
-    - assets/icons/communication.png
-    - assets/icons/innovation.png
-    - assets/icons/right.png
-    - assets/icons/driving-license.png
-    - assets/icons/happy.png
-    - assets/icons/traffic-light-green.png
-    - assets/icons/traffic-light-red.png
-    - assets/icons/traffic-light-yellow.png
-    - assets/icons/traffic-light.png
-    - assets/icons/confetti.png
-    - assets/icons/exclamation-mark.png
+    - assets/images/icons/fast-time.png
+    - assets/images/icons/assignment.png
+    - assets/images/icons/communication.png
+    - assets/images/icons/innovation.png
+    - assets/images/icons/right.png
+    - assets/images/icons/driving-license.png
+    - assets/images/icons/happy.png
+    - assets/images/icons/traffic-light-green.png
+    - assets/images/icons/traffic-light-red.png
+    - assets/images/icons/traffic-light-yellow.png
+    - assets/images/icons/traffic-light.png
+    - assets/images/icons/confetti.png
+    - assets/images/icons/exclamation-mark.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
