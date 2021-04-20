@@ -30,6 +30,7 @@ dependencies:
   badges: ^1.2.0
   flutter_animation_progress_bar: ^2.0.0
   step_progress_indicator: ^0.2.5+8
+  bordered_text: ^1.0.1
 
   flutter_localizations:
     sdk: flutter
