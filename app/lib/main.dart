@@ -1,3 +1,4 @@
+import 'package:app/global.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                   ? Icon(Icons.person)
                   : Icon(Icons.person_outline),
               badgeContent: Text(
-                '1',
+                '$inboxUnreadBadgeCount',
                 style: TextStyle(color: Colors.white),
               ),
             ),

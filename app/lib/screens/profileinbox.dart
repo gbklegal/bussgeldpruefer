@@ -5,6 +5,8 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
+import '../global.dart';
+
 class ProfileInboxScreen extends StatefulWidget {
   @override
   _ProfileInboxScreenState createState() => _ProfileInboxScreenState();
@@ -159,7 +161,7 @@ class ProfileInboxMainScreen extends StatelessWidget {
                   _padding(5.0),
                   Badge(
                     badgeContent: Text(
-                      '1',
+                      '$inboxUnreadBadgeCount',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
