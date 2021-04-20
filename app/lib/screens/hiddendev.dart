@@ -113,8 +113,7 @@ class HiddenDevScreen extends StatelessWidget {
               ),
               _padding(),
               Text(
-                  'quickCheckLastOfficialLetter: $quickCheckLastOfficialLetter'),
-              Text('quickCheckTrafficLightColor: $quickCheckTrafficLightColor'),
+                  'quickCheckViolationName: $quickCheckViolationName\nquickCheckViolationIndex: $quickCheckViolationIndex\nquickCheckTrafficLightColor: $quickCheckTrafficLightColor\nquickCheckLastOfficialLetter: $quickCheckLastOfficialLetter\ninboxUnreadBadgeCount: $inboxUnreadBadgeCount'),
               _padding(),
             ],
           ),
