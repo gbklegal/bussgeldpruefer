@@ -6,6 +6,8 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
+import '../global.dart';
+
 class ProfileScreen extends StatelessWidget {
   _padding() {
     return SizedBox(height: 20.0);
@@ -30,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
                         size: 40,
                       ),
                       badgeContent: Text(
-                        '1',
+                        '$inboxUnreadBadgeCount',
                         style: TextStyle(color: Colors.white),
                       ),
                     )

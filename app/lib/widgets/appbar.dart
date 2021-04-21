@@ -50,7 +50,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
             screen: HiddenDevScreen(),
           ),
           child: Image.asset(
-            'assets/logo/BussgeldPruefer-Logo-small.png',
+            'assets/images/Logo-BussgeldPruefer-small.png',
             height: 30,
             fit: BoxFit.cover,
           ),

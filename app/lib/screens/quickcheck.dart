@@ -3,6 +3,7 @@ import 'package:app/utilities/quickcheck.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/quickcheckfinal.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -44,22 +45,57 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
     return SizedBox(height: 20.0);
   }
 
-  double _demoPadding = 10.0;
+  List<String> violationImageNames = [
+    'speed',
+    'redlight',
+    'distance',
+    'alcohol',
+    'phone',
+    'parking'
+  ];
+  List<String> violationNames = [
+    'Geschwindig\u2011\nkeit',
+    'Rote Ampel',
+    'Abstand',
+    'Alkohol',
+    'Telefon',
+    'Falschparken'
+  ];
+  int selectedViolationIndex;
 
-  _demoBlockPadding(direction) {
-    if (direction == 'width') {
-      return SizedBox(width: _demoPadding);
-    }
-    return SizedBox(height: _demoPadding);
+  void changeViolationIndex(int index) {
+    setState(() => selectedViolationIndex = index);
   }
 
-  _demoBlock() {
-    return Container(
-      width: (MediaQuery.of(context).size.width * 0.5) - 25,
-      height: 100.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        color: Colors.grey.shade300,
+  Widget customRadio(String image, String name, int index) {
+    return GestureDetector(
+      onTap: () => changeViolationIndex(index),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 10,
+            color: (index == selectedViolationIndex)
+                ? Colors.blue
+                : Colors.transparent,
+          ),
+        ),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: <Widget>[
+            Image.asset('assets/images/$image.jpg'),
+            BorderedText(
+              strokeColor: Colors.black,
+              child: Text(
+                name,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -145,31 +181,44 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _title('1. Wähle Deinen Verstoß aus'),
+                  _title('1. Wähle Deinen Verstoß aus:'),
                   Column(
                     children: <Widget>[
-                      _demoBlockPadding('height'),
+                      _padding(),
                       Row(
                         children: <Widget>[
-                          _demoBlock(),
-                          _demoBlockPadding('width'),
-                          _demoBlock()
+                          Expanded(
+                            child: customRadio(
+                                violationImageNames[0], violationNames[0], 0),
+                          ),
+                          Expanded(
+                            child: customRadio(
+                                violationImageNames[1], violationNames[1], 1),
+                          ),
                         ],
                       ),
-                      _demoBlockPadding('height'),
                       Row(
                         children: <Widget>[
-                          _demoBlock(),
-                          _demoBlockPadding('width'),
-                          _demoBlock()
+                          Expanded(
+                            child: customRadio(
+                                violationImageNames[2], violationNames[2], 2),
+                          ),
+                          Expanded(
+                            child: customRadio(
+                                violationImageNames[3], violationNames[3], 3),
+                          ),
                         ],
                       ),
-                      _demoBlockPadding('height'),
                       Row(
                         children: <Widget>[
-                          _demoBlock(),
-                          _demoBlockPadding('width'),
-                          _demoBlock()
+                          Expanded(
+                            child: customRadio(
+                                violationImageNames[4], violationNames[4], 4),
+                          ),
+                          Expanded(
+                            child: customRadio(
+                                violationImageNames[5], violationNames[5], 5),
+                          ),
                         ],
                       ),
                     ],
@@ -438,34 +487,37 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                             IconButton(
                               icon: Icon(Icons.arrow_forward),
                               onPressed: () {
-                                String missingSelection = '';
+                                String missingSelectionText = '';
 
+                                if (selectedViolationIndex == null)
+                                  missingSelectionText +=
+                                      '\n- Wähle deinen Verstoß aus';
                                 if (_selbstGefahren == null)
-                                  missingSelection +=
+                                  missingSelectionText +=
                                       '\n- Bist Du selbst gefahren?';
                                 if (_selbstGefahrenZugegeben == null)
-                                  missingSelection +=
+                                  missingSelectionText +=
                                       '\n- Hast Du bereits Zugegeben, dass du selbst gefahren bist?';
                                 if (_verstossZugegeben == null)
-                                  missingSelection +=
+                                  missingSelectionText +=
                                       '\n- Hast Du den Verstoß bereits zugeben?';
                                 if (_verstossBezahlt == null)
-                                  missingSelection +=
+                                  missingSelectionText +=
                                       '\n- Hast Du den Verstoß bereits bezahlt?';
                                 if (!hideDatePicker &&
                                     dateController.text == '')
-                                  missingSelection +=
+                                  missingSelectionText +=
                                       '\n- Wann haben Sie das behördliche Schreiben erhalten?';
                                 if (_angabenRichtig == null)
-                                  missingSelection +=
+                                  missingSelectionText +=
                                       '\n- Stimmen die Angaben im Anschreiben aus Deiner Sicht?';
                                 if (_rechtsschutzversicherung == null)
-                                  missingSelection +=
+                                  missingSelectionText +=
                                       '\n- Besitzt Du eine Rechtsschutzversicherung?';
 
-                                if (missingSelection != '') {
+                                if (missingSelectionText != '') {
                                   alertDialog(context,
-                                      'Folgende Angaben fehlen noch:\n$missingSelection');
+                                      'Folgende Angaben fehlen noch:\n$missingSelectionText');
                                 } else {
                                   // save traffic light color into the global variable
                                   quickCheckTrafficLightColor =
@@ -483,6 +535,11 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                                         _angabenRichtig == AngabenRichtig.ja,
                                     letterReceived: letterReceived,
                                   );
+                                  quickCheckViolationName =
+                                      violationNames[selectedViolationIndex]
+                                          .replaceAll('\u2011\n', '');
+                                  quickCheckViolationIndex =
+                                      selectedViolationIndex;
                                   // return the score to the next screen
                                   newScreen(
                                     context: context,

@@ -71,21 +71,23 @@ class _ProfileStatusScreenState extends State<ProfileStatusScreen> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Image.asset('assets/icons/assignment.png'),
+                              Image.asset('assets/images/icons/assignment.png'),
                               Text('Einreichung von Dokumenten'),
                             ],
                           ),
                           Row(
                             children: <Widget>[
-                              Image.asset('assets/icons/communication.png'),
+                              Image.asset(
+                                  'assets/images/icons/communication.png'),
                               Text('Fallbeschsprechung mit der Kanzlei'),
                             ],
                           ),
                           Row(
                             children: <Widget>[
-                              Image.asset('assets/icons/innovation.png'),
+                              Image.asset('assets/images/icons/innovation.png'),
                               Text('Überprüfung / Recherche'),
-                              Image.asset('assets/icons/exclamation-mark.png'),
+                              Image.asset(
+                                  'assets/images/icons/exclamation-mark.png'),
                             ],
                           ),
                           Padding(
@@ -102,7 +104,7 @@ class _ProfileStatusScreenState extends State<ProfileStatusScreen> {
                           ),
                           Row(
                             children: <Widget>[
-                              Image.asset('assets/icons/right.png'),
+                              Image.asset('assets/images/icons/right.png'),
                               Text('Urteil'),
                             ],
                           ),

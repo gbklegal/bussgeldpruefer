@@ -47,7 +47,7 @@ class AblaufScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          _image('assets/icons/assignment.png'),
+                          _image('assets/images/icons/assignment.png'),
                           Text('Einreichung von Dokumente'),
                           Text('1 Tag'),
                         ],
@@ -55,7 +55,7 @@ class AblaufScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          _image('assets/icons/communication.png'),
+                          _image('assets/images/icons/communication.png'),
                           Text('Fallbesprechung mit der Kanzlei'),
                           Text('1 Tag'),
                         ],
@@ -63,7 +63,7 @@ class AblaufScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          _image('assets/icons/innovation.png'),
+                          _image('assets/images/icons/innovation.png'),
                           Text('Überprüfung / Recherche'),
                           Text('2 Tag'),
                         ],
@@ -71,7 +71,7 @@ class AblaufScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          _image('assets/icons/right.png'),
+                          _image('assets/images/icons/right.png'),
                           Text('Urteil'),
                           Text('4 Tage'),
                         ],
