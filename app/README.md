@@ -11,7 +11,7 @@
 ## IDE Setup
 
 1. Install VS Code via Homebrew ([brew.sh](https://formulae.brew.sh/cask/visual-studio-code#default))
-2. Install the following 2 extensions
+2. Install the following 2 extensions:
 	- [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)
 	- [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter)
 
