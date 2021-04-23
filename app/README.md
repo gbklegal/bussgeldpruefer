@@ -2,10 +2,11 @@
 
 ## First Installation
 
-1. Install Flutter via Homebrew ([brew.sh](https://formulae.brew.sh/cask/flutter#default))
-2. Clone this respository
-3. Before the first run make the [IDE setup](#ide-setup)
-4. Open `main.dart` and `Run Without Debugging`
+1. Install Xcode from the [App Store](https://apps.apple.com/de/app/xcode/id497799835)
+2. Install Flutter via Homebrew ([brew.sh](https://formulae.brew.sh/cask/flutter#default))
+3. Clone this respository
+4. Before the first run make the [IDE Setup](#ide-setup)
+5. Open `main.dart` and `Run Without Debugging`
 
 ## IDE Setup
 
