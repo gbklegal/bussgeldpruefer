@@ -33,7 +33,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## File Structure
 
-(Source: [Article](https://www.geeksforgeeks.org/flutter-file-structure/))
+(Source: [Article](https://www.geeksforgeeks.org/flutter-file-structure/))  
 (New File Structure: [Article](https://medium.com/flutter-community/flutter-scalable-folder-files-structure-8f860faafebd))
 
 1. Assets: Static assets for the app
