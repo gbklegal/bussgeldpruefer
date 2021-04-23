@@ -67,7 +67,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
     setState(() => selectedViolationIndex = index);
   }
 
-  Widget customRadio(String image, String name, int index) {
+  Widget customImageRadio(String image, String name, int index) {
     return GestureDetector(
       onTap: () => changeViolationIndex(index),
       child: Container(
@@ -85,6 +85,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
             Image.asset('assets/images/$image.jpg'),
             BorderedText(
               strokeColor: Colors.black,
+              strokeWidth: 3,
               child: Text(
                 name,
                 textAlign: TextAlign.center,
@@ -144,6 +145,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
 
   _resetQuickCheck() {
     setState(() {
+      selectedViolationIndex = null;
       _selbstGefahren = null;
       _selbstGefahrenZugegeben = null;
       _verstossZugegeben = null;
@@ -188,11 +190,11 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: customRadio(
+                            child: customImageRadio(
                                 violationImageNames[0], violationNames[0], 0),
                           ),
                           Expanded(
-                            child: customRadio(
+                            child: customImageRadio(
                                 violationImageNames[1], violationNames[1], 1),
                           ),
                         ],
@@ -200,11 +202,11 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: customRadio(
+                            child: customImageRadio(
                                 violationImageNames[2], violationNames[2], 2),
                           ),
                           Expanded(
-                            child: customRadio(
+                            child: customImageRadio(
                                 violationImageNames[3], violationNames[3], 3),
                           ),
                         ],
@@ -212,11 +214,11 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: customRadio(
+                            child: customImageRadio(
                                 violationImageNames[4], violationNames[4], 4),
                           ),
                           Expanded(
-                            child: customRadio(
+                            child: customImageRadio(
                                 violationImageNames[5], violationNames[5], 5),
                           ),
                         ],
@@ -459,7 +461,12 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: Column(
+                        child: Placeholder(
+                          fallbackWidth: 30,
+                          fallbackHeight: 30,
+                          color: Colors.transparent,
+                        ),
+                        /* Column(
                           children: <Widget>[
                             IconButton(
                               icon: Icon(Icons.arrow_back),
@@ -467,7 +474,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                             ),
                             Text('zurück'),
                           ],
-                        ),
+                        ),*/
                       ),
                       Expanded(
                         child: Column(
@@ -540,6 +547,8 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                                           .replaceAll('\u2011\n', '');
                                   quickCheckViolationIndex =
                                       selectedViolationIndex;
+                                  // reset the quick check inputs
+                                  _resetQuickCheck();
                                   // return the score to the next screen
                                   newScreen(
                                     context: context,
