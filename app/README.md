@@ -1,8 +1,22 @@
-# app
+# Bussgeldprüfer App
 
-A new Flutter project.
+## First Installation
 
-## Getting Started
+1. Install Flutter via Homebrew ([brew.sh](https://formulae.brew.sh/cask/flutter#default))
+2. Clone this respository
+3. Before the first run make the [IDE setup](#ide-setup)
+4. Open `main.dart` and `Run Without Debugging`
+
+## IDE setup
+
+1. Install VS Code via Homebrew ([brew.sh](https://formulae.brew.sh/cask/visual-studio-code#default))
+2. Install the following 2 extensions
+	- [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)
+	- [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter)
+
+---
+
+## Getting Started (Flutter Docs)
 
 This project is a starting point for a Flutter application.
 
@@ -20,13 +34,14 @@ samples, guidance on mobile development, and a full API reference.
 ## File Structure
 
 (Source: [Article](https://www.geeksforgeeks.org/flutter-file-structure/))
+(New File Structure: [Article](https://medium.com/flutter-community/flutter-scalable-folder-files-structure-8f860faafebd))
 
 1. Assets: Static assets for the app
 
 - /assets
 	- /fonts
 	- /images
-	- /logo
+		- /icons
 	- /videos
 
 > This directory is on the root level will contain all the static assets that are used in the application, for example, fonts, icons, logos, background images, demo videos, etc. It is very much recommended that we should have different directories for a different type of data for example images, videos & logos, should have a different folder of their own so that it becomes easier to maintain and access them.
