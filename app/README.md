@@ -7,7 +7,7 @@
 3. Before the first run make the [IDE setup](#ide-setup)
 4. Open `main.dart` and `Run Without Debugging`
 
-## IDE setup
+## IDE Setup
 
 1. Install VS Code via Homebrew ([brew.sh](https://formulae.brew.sh/cask/visual-studio-code#default))
 2. Install the following 2 extensions
