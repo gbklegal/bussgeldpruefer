@@ -1,7 +1,7 @@
 # Bussgeldprüfer App/Web
 
 ## App
-Dart / Flutter [more](./tree/main/app#readme)
+Dart / Flutter [more](https://github.com/gbklegal/bussgeldpruefer/blob/main/app/README.md)
 
 ## Web
 Vite / Tailwind
