@@ -1,3 +1,5 @@
+import 'package:app/functions/isvalidemail.dart';
+import 'package:app/functions/isvalidphonenumber.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/contactfeedback.dart';
 import 'package:app/widgets/pagetitle.dart';
@@ -74,6 +76,9 @@ class _ContactScreenState extends State<ContactScreen> {
                             labelText: 'Vorname',
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) => value.isEmpty
+                              ? 'Bitte gebe einen Vornamen ein'
+                              : null,
                         ),
                         _padding(),
                         TextFormField(
@@ -83,16 +88,27 @@ class _ContactScreenState extends State<ContactScreen> {
                             labelText: 'Nachname',
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) => value.isEmpty
+                              ? 'Bitte gebe einen Nachnamen ein'
+                              : null,
                         ),
                         _padding(),
                         TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          autocorrect: false,
-                          decoration: InputDecoration(
-                            labelText: 'E-Mail',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
+                            keyboardType: TextInputType.emailAddress,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                              labelText: 'E-Mail',
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (value) {
+                              if (_contactType != TypeOfContact.email ||
+                                  _contactType == null) return null;
+                              if (value.isEmpty)
+                                return 'Bitte gebe eine E-Mail Adresse ein';
+                              if (!isValidEmail(value))
+                                return 'Bitte gebe eine richtige E-Mail Adresse ein';
+                              return null;
+                            }),
                         _padding(),
                         TextFormField(
                           keyboardType: TextInputType.phone,
@@ -101,6 +117,15 @@ class _ContactScreenState extends State<ContactScreen> {
                             labelText: 'Telefonnummer',
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (_contactType != TypeOfContact.phone ||
+                                _contactType == null) return null;
+                            if (value.isEmpty)
+                              return 'Bitte gebe eine Telefonnummer ein';
+                            if (!isValidPhoneNumber(value))
+                              return 'Bitte gebe eine richtige Telefonnummer ein';
+                            return null;
+                          },
                         ),
                         _padding(),
                         TextFormField(
@@ -110,6 +135,9 @@ class _ContactScreenState extends State<ContactScreen> {
                             hintText: 'Nachricht',
                             border: OutlineInputBorder(),
                           ),
+                          validator: (value) => value.isEmpty
+                              ? 'Bitte gebe eine Nachricht ein'
+                              : null,
                         ),
                         _padding(),
                         ListTile(
@@ -132,9 +160,7 @@ class _ContactScreenState extends State<ContactScreen> {
                             value: TypeOfContact.phone,
                             groupValue: _contactType,
                             onChanged: (TypeOfContact value) {
-                              setState(() {
-                                _contactType = value;
-                              });
+                              setState(() => _contactType = value);
                             },
                           ),
                         ),
@@ -158,9 +184,7 @@ class _ContactScreenState extends State<ContactScreen> {
                             value: TypeOfContact.email,
                             groupValue: _contactType,
                             onChanged: (TypeOfContact value) {
-                              setState(() {
-                                _contactType = value;
-                              });
+                              setState(() => _contactType = value);
                             },
                           ),
                         ),
@@ -168,10 +192,20 @@ class _ContactScreenState extends State<ContactScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () => newScreen(
-                              context: context,
-                              screen: ContactFeedbackScreen(),
-                            ),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                // clear contact form
+                                _formKey.currentState.reset();
+                                setState(() => _contactType = null);
+                                // open next screen, maybe change this to a simple alert
+                                newScreen(
+                                  context: context,
+                                  screen: ContactFeedbackScreen(),
+                                );
+                              } else {
+                                print('Formular ist nicht gültig');
+                              }
+                            },
                             child: Text('senden'),
                           ),
                         ),
