@@ -1,5 +1,9 @@
 # Bussgeldprüfer App
 
+## ToDo's
+
+ - [ ] Update file structure ([specification](https://medium.com/flutter-community/flutter-scalable-folder-files-structure-8f860faafebd))
+
 ## First Installation
 
 1. Install Xcode from the [App Store](https://apps.apple.com/de/app/xcode/id497799835)
