@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class DummyScreen extends StatefulWidget {
@@ -5,8 +8,40 @@ class DummyScreen extends StatefulWidget {
   _DummyScreenState createState() => _DummyScreenState();
 }
 
+Future sendForm(String firstname) async {
+  final String apiUrl = 'https://dev02.gbk-rae.de/bgp/app/contactform.php';
+
+  final response = await http.post(apiUrl, body: {'firstname': firstname});
+  final statusCode = response.statusCode;
+
+  if (statusCode != 200) {
+    throw new Exception('Error while fetching data');
+  }
+
+  final data = json.decode(response.body);
+  print('sendmail: ' + data['sendmail'].toString());
+}
+
+// Future createPost(String url, {Map body}) async {
+//   return http.post(url, body: body).then((http.Response response) {
+//     final int statusCode = response.statusCode;
+
+//     if (statusCode < 200 || statusCode > 400 || json == null) {
+//       throw new Exception("Error while fetching data");
+//     }
+//     return Post.fromJson(json.decode(response.body));
+//   });
+// }
+
 class _DummyScreenState extends State<DummyScreen> {
   final _formKey = GlobalKey<FormState>();
+  final firstNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    super.dispose();
+  }
 
   _padding() {
     return SizedBox(height: 20.0);
@@ -54,6 +89,7 @@ class _DummyScreenState extends State<DummyScreen> {
                           labelText: 'Text',
                           border: OutlineInputBorder(),
                         ),
+                        controller: firstNameController,
                         validator: (value) =>
                             value.isEmpty ? 'Bitte gebe einen Text ein' : null,
                       ),
@@ -64,7 +100,7 @@ class _DummyScreenState extends State<DummyScreen> {
                             child: Text('senden'),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
-                                // TODO: make http request
+                                sendForm(firstNameController.text);
                               } else {
                                 print('Formular ungültig');
                               }
