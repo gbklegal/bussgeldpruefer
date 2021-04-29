@@ -26,28 +26,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<List<Faq>> _getUsers() async {
-    var data = await http.get('http://tmp.local/faq.json');
-
-    var jsonData = json.decode(data.body);
-
-    print('__________');
-    print(jsonData);
-    print('__________');
-
-    List<Faq> faqs = [];
-
-    for (var qa in jsonData['results']) {
-      Faq faq = Faq(
-        qa['question'],
-        qa['answer'],
-      );
-
-      faqs.add(faq);
-    }
-    print(faqs.length);
-
-    return faqs;
+  Future _getUsers() async {
+    var response = await http.get('https://dev02.gbk-rae.de/bgp/app/faq.json');
+    // TODO: check response status code
+    return json.decode(utf8.decode(response.bodyBytes));
   }
 
   @override
@@ -60,27 +42,27 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FutureBuilder(
           future: _getUsers(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            print(snapshot.data);
             if (snapshot.data == null) {
-              return Container(child: Center(child: Text("Loading...")));
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
             } else {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(snapshot.data[index].picture),
-                    ),
-                    title: Text(snapshot.data[index].name),
-                    subtitle: Text(snapshot.data[index].email),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailPage(snapshot.data[index])));
-                    },
+                  // String question = snapshot.data[index]['question'];
+                  // String answer = snapshot.data[index]['answer'];
+                  // return Text(answer);
+                  return ExpansionTile(
+                    title: Text(snapshot.data[index]['question']),
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+                        child: Text(snapshot.data[index]['answer']),
+                      ),
+                    ],
                   );
                 },
               );
@@ -90,26 +72,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
-
-class DetailPage extends StatelessWidget {
-  final Faq faq;
-
-  DetailPage(this.faq);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(faq.question),
-      ),
-    );
-  }
-}
-
-class Faq {
-  final String question;
-  final String answer;
-
-  Faq(this.question, this.answer);
 }
