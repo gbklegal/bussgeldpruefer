@@ -1,7 +1,6 @@
-// import 'dart:convert';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
 import '../widgets/appbar.dart';
 import '../widgets/pagetitle.dart';
@@ -12,32 +11,76 @@ class FaqScreen extends StatefulWidget {
 }
 
 class _FaqScreenState extends State<FaqScreen> {
+  Future _getFaqs() async {
+    // TODO: change url in prod.
+    var response = await http.get('https://dev02.gbk-rae.de/bgp/app/faq.json');
+    // TODO: check response status code
+    return json.decode(utf8.decode(response.bodyBytes));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            PageTitle('FAQ', 'Häufig gestellte Fragen'),
-            ExpansionPanelList(
-              children: [
-                ExpansionPanel(
-                  headerBuilder: (BuildContext context, bool isExpanded) {
-                    return Text('Welche Kosten kommen auf mich zu?');
+      body:
+          /*ListView(
+        children: [
+          Column(
+            children: [
+              PageTitle('FAQ', 'Häufig gestellte Fragen'),*/
+          FutureBuilder(
+        future: _getFaqs(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else {
+            // TODO: fix pagetitle and listview
+            return Column(
+              children: <Widget>[
+                PageTitle('FAQ', 'Häufig gestellte Fragen'),
+                ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    String question = snapshot.data[index]['question'];
+                    String answer = snapshot.data[index]['answer'];
+                    return ExpansionTile(
+                      title: Text(question),
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+                          child: Text(answer),
+                        ),
+                      ],
+                    );
                   },
-                  isExpanded: true,
-                  body: Container(
-                    child: Text(
-                        'Grundsätzlich sind die Leistungen über BussgeldPrüfer kostenlos. Insbesondere können Sie über BussgeldPrüfer grundsätzlich vorerst eine unverbindliche und kostenlose Erstberatung beauftragen und mandatieren. Auf Wunsch beantragt ein hierzu befugter Anwalt für Sie Akteneinsicht in Ihre amtliche Ermittlungsakte. Hierfür berechnet der von Ihnen beauftragte Anwalt lediglich eine pauschale Akteneinsichtsgebühr in Höhe von 13,92 EUR inklusive Mehrwertsteuer. Die Arbeit der Anwälte ist auch in diesem Schritt für Sie garantiert kostenfrei. Anschließend bieten wir Ihnen absolute Kostensicherheit und Transparenz: Wir informieren Sie vorab im Detail über die anstehenden Schritte und die damit verbundenen Kosten des Verfahrens und klären mit Ihnen die Kostenübernahme.'),
-                  ),
                 ),
               ],
-            ),
-          ],
-        ),
+            );
+          }
+        },
       ),
+      /*],
+          ),
+        ],
+      ),*/
     );
   }
 }
+
+// Future sendForm(String firstname) async {
+//   final String apiUrl = 'https://dev02.gbk-rae.de/bgp/app/contactform.php';
+
+//   final response = await http.post(apiUrl, body: {'firstname': firstname});
+//   final statusCode = response.statusCode;
+
+//   if (statusCode != 200) {
+//     throw new Exception('Error while fetching data');
+//   }
+
+//   final data = json.decode(response.body);
+//   print('sendmail: ' + data['sendmail'].toString());
+// }
