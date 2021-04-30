@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:app/functions/isvalidemail.dart';
 import 'package:app/functions/isvalidphonenumber.dart';
 import 'package:app/functions/newscreen.dart';
@@ -14,17 +17,65 @@ class ContactScreen extends StatefulWidget {
   _ContactScreenState createState() => _ContactScreenState();
 }
 
+Future sendForm({
+  String firstname,
+  String lastname,
+  String email,
+  String phone,
+  String message,
+  TypeOfContact contactType,
+}) async {
+  final String apiUrl = 'https://dev02.gbk-rae.de/bgp/app/contactform.php';
+
+  final response = await http.post(
+    apiUrl,
+    body: {
+      'firstname': firstname,
+      'lastname': lastname,
+      'email': email.isEmpty ? '/' : email,
+      'phone': phone.isEmpty ? '/' : phone,
+      'message': message,
+      'contactType': contactType == TypeOfContact.email ? 'E-Mail' : 'Telefon',
+      'source': 'App 1.0.0+1',
+    },
+  );
+  final statusCode = response.statusCode;
+
+  if (statusCode != 200) {
+    throw new Exception(
+        'Error while fetching data'); // TODO: change this message text
+  }
+
+  final data = json.decode(response.body);
+  // TODO: return feedback
+  print('sendmail: ' + data['sendmail'].toString());
+}
+
 enum TypeOfContact { phone, email }
 
 class _ContactScreenState extends State<ContactScreen> {
-  TypeOfContact _contactType; // = TypeOfContact.lafayette;
+  final _formKey = GlobalKey<FormState>();
+  final _firstnameController = TextEditingController();
+  final _lastnameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _messageController = TextEditingController();
+  TypeOfContact _contactType;
 
   @override
   void initState() {
     super.initState();
   }
 
-  final _formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    _firstnameController.dispose();
+    _lastnameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
 
   _padding() {
     return SizedBox(height: 20.0);
@@ -70,6 +121,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         TextFormField(
+                          controller: _firstnameController,
                           keyboardType: TextInputType.text,
                           autocorrect: false,
                           decoration: InputDecoration(
@@ -82,6 +134,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         ),
                         _padding(),
                         TextFormField(
+                          controller: _lastnameController,
                           keyboardType: TextInputType.text,
                           autocorrect: false,
                           decoration: InputDecoration(
@@ -94,6 +147,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         ),
                         _padding(),
                         TextFormField(
+                            controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
                             decoration: InputDecoration(
@@ -111,6 +165,7 @@ class _ContactScreenState extends State<ContactScreen> {
                             }),
                         _padding(),
                         TextFormField(
+                          controller: _phoneController,
                           keyboardType: TextInputType.phone,
                           autocorrect: false,
                           decoration: InputDecoration(
@@ -129,6 +184,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         ),
                         _padding(),
                         TextFormField(
+                          controller: _messageController,
                           maxLines: 5,
                           maxLength: 120,
                           decoration: InputDecoration(
@@ -194,7 +250,16 @@ class _ContactScreenState extends State<ContactScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
-                                // clear contact form
+                                // sendmail
+                                sendForm(
+                                  firstname: _firstnameController.text,
+                                  lastname: _lastnameController.text,
+                                  email: _emailController.text,
+                                  phone: _phoneController.text,
+                                  message: _messageController.text,
+                                  contactType: _contactType,
+                                );
+                                // clear/reset contact form
                                 _formKey.currentState.reset();
                                 setState(() => _contactType = null);
                                 // open next screen, maybe change this to a simple alert
