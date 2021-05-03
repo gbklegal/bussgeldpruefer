@@ -1,5 +1,6 @@
 import 'package:app/global.dart';
-import 'package:app/screens/authenticate/login.dart';
+//import 'package:app/screens/authenticate/login.dart';
+import 'package:app/screens/authenticate/registeration.dart';
 //import 'package:app/screens/contact.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'package:app/screens/profile.dart';
 
 void main() => runApp(
       MaterialApp(
-        home: LoginScreen(), // In prod. MyApp()
+        home: RegisterationScreen(), // In prod. MyApp()
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,

@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.text,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    labelText: 'E-Mail*',
+                    labelText: 'E-Mail Adresse*',
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) => value.isEmpty
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text('Login'),
               style: ElevatedButton.styleFrom(
                 textStyle: TextStyle(
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
                 primary: Color(0xff5CC8C5),
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text('Account erstellen'),
               style: ElevatedButton.styleFrom(
                 textStyle: TextStyle(
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
                 primary: Color(0xff5CC8C5),
