@@ -18,7 +18,7 @@ import 'package:app/screens/profile.dart';
 
 void main() => runApp(
       MaterialApp(
-        home: ForgotCredentialsScreen(), // In prod. MyApp()
+        home: MyApp(), // In prod. MyApp()
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344295509824",
+    "project_id": "bussgledpruefer",
+    "storage_bucket": "bussgledpruefer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344295509824:android:efd7d0f67335d8b91934a5",
+        "android_client_info": {
+          "package_name": "com.bussgledpruefer.app.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344295509824-sak50meo3da900nd8ebg45jkjo1c7kps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnVKEPVhJMU3gFG0w-AfoChHSER8twE5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344295509824-sak50meo3da900nd8ebg45jkjo1c7kps.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
