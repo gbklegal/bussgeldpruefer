@@ -1,5 +1,7 @@
+import 'package:app/screens/profile.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,8 +10,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String _email, _password;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   _padding(double _height) {
     return SizedBox(height: _height);
+  }
+
+  Future<void> signIn() async {
+    final FormState = _formKey.currentState;
+    if (FormState.validate()) {
+      FormState.save();
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email, password: _password);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (conetext) => ProfileScreen()));
+      } catch (e) {
+        print(e.toString());
+      }
+    }
   }
 
   @override
@@ -26,8 +45,12 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: <Widget>[
                 TextFormField(
+                  key: _formKey,
                   keyboardType: TextInputType.text,
                   autocorrect: false,
+                  onChanged: (val) {
+                    setState(() => _email = val);
+                  },
                   decoration: InputDecoration(
                     labelText: 'E-Mail Adresse*',
                     border: OutlineInputBorder(),
@@ -41,12 +64,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   autocorrect: false,
+                  onChanged: (val) {
+                    setState(() => _password = val);
+                  },
                   decoration: InputDecoration(
                     labelText: 'Passwort*',
                     border: OutlineInputBorder(),
                   ),
-                  validator: (value) => value.isEmpty
-                      ? 'Bitte geben Sie ein korrektes Passwort ein'
+                  validator: (value) => value.length < 6
+                      ? 'Ihr Passwort muss mindestens 6 Zeichen lang sein'
                       : null,
                 ),
               ],
@@ -79,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 primary: Color(0xff5CC8C5),
                 onPrimary: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: signIn,
             ),
           ),
           Row(
