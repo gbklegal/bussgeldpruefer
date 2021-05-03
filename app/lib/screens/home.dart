@@ -4,6 +4,7 @@ import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
 import 'package:app/screens/pruefungbussgeldbescheid.dart';
+import 'package:app/screens/webview.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
 
@@ -102,7 +103,12 @@ class HomeScreen extends StatelessWidget {
                       _simpleButton(
                         'Bußgeld Ratgeber',
                         context,
-                        BussgeldratgeberScreen(),
+                        // BussgeldratgeberScreen(),
+                        WebViewScreen(
+                          url:
+                              'https://xn--bussgeldprfer-5ob.com/ratgeber/?app_mode',
+                          title: 'Bußgeld Ratgeber',
+                        ),
                       ),
                       _simpleButton(
                         'Anleitung',
