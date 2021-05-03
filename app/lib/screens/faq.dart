@@ -12,8 +12,10 @@ class FaqScreen extends StatefulWidget {
 
 class _FaqScreenState extends State<FaqScreen> {
   Future _getFaqs() async {
+    // ignore: todo
     // TODO: change url in prod.
     var response = await http.get('https://dev02.gbk-rae.de/bgp/app/faq.json');
+    // ignore: todo
     // TODO: check response status code
     return json.decode(utf8.decode(response.bodyBytes));
   }
@@ -38,6 +40,7 @@ class _FaqScreenState extends State<FaqScreen> {
               ),
             );
           } else {
+            // ignore: todo
             // TODO: fix pagetitle and listview
             return Column(
               children: <Widget>[

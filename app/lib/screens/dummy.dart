@@ -47,12 +47,12 @@ class _DummyScreenState extends State<DummyScreen> {
     return SizedBox(height: 20.0);
   }
 
-  _image(name) {
-    return Image.asset(
-      name,
-      width: 184,
-    );
-  }
+  // _image(name) {
+  //   return Image.asset(
+  //     name,
+  //     width: 184,
+  //   );
+  // }
 
   // Future
 

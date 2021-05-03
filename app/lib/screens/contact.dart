@@ -43,10 +43,12 @@ Future sendForm({
 
   if (statusCode != 200) {
     throw new Exception(
+        // ignore: todo
         'Error while fetching data'); // TODO: change this message text
   }
 
   final data = json.decode(response.body);
+  // ignore: todo
   // TODO: return feedback
   print('sendmail: ' + data['sendmail'].toString());
 }
