@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/functions/webview.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -54,8 +55,6 @@ class _DummyScreenState extends State<DummyScreen> {
     );
   }
 
-  // Future
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,35 +77,18 @@ class _DummyScreenState extends State<DummyScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                          labelText: 'Text',
-                          border: OutlineInputBorder(),
-                        ),
-                        controller: firstNameController,
-                        validator: (value) =>
-                            value.isEmpty ? 'Bitte gebe einen Text ein' : null,
-                      ),
-                      _padding(),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                            child: Text('senden'),
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                sendForm(firstNameController.text);
-                              } else {
-                                print('Formular ungültig');
-                              }
-                            }),
-                      ),
-                    ],
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    child: Text('Öffne WebView'),
+                    onPressed: () {
+                      webView(
+                        context: context,
+                        title: 'Bußgeld Ratgeber',
+                        url:
+                            'https://xn--bussgeldprfer-5ob.com/ratgeber/?app_mode',
+                      );
+                    },
                   ),
                 ),
               ],
