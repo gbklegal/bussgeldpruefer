@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:app/widgets/appbar.dart';
+import 'package:app/screens/authenticate/registeration.dart';
+import 'package:app/screens/profile/profiledata.dart';
 import 'package:app/widgets/pagetitle.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../profilepage/profile.dart';
-
 class LoginScreen extends StatefulWidget {
+  final Function toggleView;
+  LoginScreen({this.toggleView});
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -16,54 +16,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _email, _password;
+  String error = '';
 
-  checkAuthentification() async {
-    _auth.authStateChanges().listen((user) {
-      if (user != null) {
-        print(user);
-
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    this.checkAuthentification();
-  }
-
-  login() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-
-      try {
-        await _auth.signInWithEmailAndPassword(
-            email: _email, password: _password);
-      } catch (e) {
-        showError(e.message);
-        print(e);
-      }
-    }
-  }
-
-  showError(String errormessage) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('ERROR'),
-            content: Text(errormessage),
-            actions: <Widget>[
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'))
-            ],
-          );
-        });
+  Future<String> login() async {
+    String user = (await _auth.signInWithEmailAndPassword(
+            email: _email.trim(), password: _password))
+        .toString();
+    return user;
   }
 
   _padding(double _height) {
@@ -73,7 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -89,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       autocorrect: false,
-                      onSaved: (input) => _email = input,
+                      onChanged: (input) => _email = input,
                       decoration: InputDecoration(
                         labelText: 'E-Mail Adresse*',
                         border: OutlineInputBorder(),
@@ -103,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
                       autocorrect: false,
-                      onSaved: (input) => _password = input,
+                      onChanged: (input) => _password = input,
                       decoration: InputDecoration(
                         labelText: 'Passwort*',
                         border: OutlineInputBorder(),
@@ -143,7 +101,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   primary: Color(0xff5CC8C5),
                   onPrimary: Colors.white,
                 ),
-                onPressed: login,
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
+                    Future<String> check = login();
+                    if (check != null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  ProfileData()));
+                    }
+                  }
+                },
               ),
             ),
             Row(
@@ -165,7 +134,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   primary: Color(0xff5CC8C5),
                   onPrimary: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              RegisterationScreen()));
+                },
               ),
             ),
           ],

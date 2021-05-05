@@ -1,5 +1,7 @@
+import 'package:app/screens/authenticate/login.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterationScreen extends StatefulWidget {
@@ -8,6 +10,15 @@ class RegisterationScreen extends StatefulWidget {
 }
 
 class _RegisterationScreenState extends State<RegisterationScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String _email, _password;
+  Future<void> register() async {
+    UserCredential user = (await _auth.createUserWithEmailAndPassword(
+        email: _email, password: _password));
+  }
+
   _padding(double _height) {
     return SizedBox(height: _height);
   }
@@ -24,56 +35,62 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             PageTitle('Mein Profil'),
             Padding(
               padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: 'Vorname',
-                      border: OutlineInputBorder(),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                        labelText: 'Vorname',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => value.isEmpty
+                          ? 'Bitte geben Sie den Vornamen ein'
+                          : null,
                     ),
-                    validator: (value) => value.isEmpty
-                        ? 'Bitte geben Sie den Vornamen ein'
-                        : null,
-                  ),
-                  _padding(20.0),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: 'Nachname',
-                      border: OutlineInputBorder(),
+                    _padding(20.0),
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                        labelText: 'Nachname',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => value.isEmpty
+                          ? 'Bitte geben Sie den Nachnamen ein'
+                          : null,
                     ),
-                    validator: (value) => value.isEmpty
-                        ? 'Bitte geben Sie den Nachnamen ein'
-                        : null,
-                  ),
-                  _padding(20.0),
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: 'E-Mail Adresse',
-                      border: OutlineInputBorder(),
+                    _padding(20.0),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      autocorrect: false,
+                      onChanged: (input) => _email = input,
+                      decoration: InputDecoration(
+                        labelText: 'E-Mail Adresse',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => value.isEmpty
+                          ? 'Bitte geben Sie die gültige E-Mail-Adresse ein'
+                          : null,
                     ),
-                    validator: (value) => value.isEmpty
-                        ? 'Bitte geben Sie die gültige E-Mail-Adresse ein'
-                        : null,
-                  ),
-                  _padding(20.0),
-                  TextFormField(
-                    keyboardType: TextInputType.phone,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: 'Telefonnummer',
-                      border: OutlineInputBorder(),
+                    _padding(20.0),
+                    TextFormField(
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: true,
+                      autocorrect: false,
+                      onChanged: (input) => _password = input,
+                      decoration: InputDecoration(
+                        labelText: 'Passwort',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => value.isEmpty
+                          ? 'Bitte geben Sie das Passwort ein (mindestens 6 Zeichen)'
+                          : null,
                     ),
-                    validator: (value) => value.isEmpty
-                        ? 'Bitte geben Sie die Telefonnummer ein'
-                        : null,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Align(
@@ -103,7 +120,15 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                   primary: Color(0xff5CC8C5),
                   onPrimary: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    register();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => LoginScreen()));
+                  }
+                },
               ),
             ),
           ],

@@ -1,5 +1,5 @@
 import 'package:app/global.dart';
-import 'package:app/screens/authenticate/login.dart';
+import 'package:app/screens/authenticate/registeration.dart';
 //import 'package:app/screens/authenticate/login.dart';
 //import 'package:app/screens/authenticate/registeration.dart';
 //import 'package:app/screens/contact.dart';
@@ -10,7 +10,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/screens/quickcheck.dart';
 import 'package:app/screens/home.dart';
-import 'package:app/screens/profile.dart';
 
 // only for development
 // import 'package:app/screens/dummy.dart';
@@ -40,11 +39,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _currentIndex = 1; // default: 1
-
   final List<Widget> _tabs = [
     QuickCheckScreen(),
     HomeScreen(),
-    ProfileScreen(),
+    RegisterationScreen()
   ];
 
   @override

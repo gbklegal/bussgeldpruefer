@@ -12,7 +12,7 @@ import 'package:app/screens/faq.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/information.dart';
 import 'package:app/screens/manual.dart';
-import 'package:app/screens/profile.dart';
+import 'package:app/screens/profile/profiledata.dart';
 import 'package:app/screens/quickcheck.dart';
 import 'package:app/screens/quickcheckfinal.dart';
 import 'package:app/widgets/appbar.dart';
@@ -95,7 +95,7 @@ class HiddenDevScreen extends StatelessWidget {
               _simpleButton('Info Kanzlei', InfoKanzleiScreen()),
               _simpleButton('Information', InformationScreen()),
               _simpleButton('Anleitung', ManualScreen()),
-              _simpleButton('Profil', ProfileScreen()),
+              _simpleButton('Profil', ProfileData()),
               _simpleButton('Quick Check', QuickCheckScreen()),
               _simpleButton(
                   'Quick Check Final', QuickCheckFinalScreen('green')),
