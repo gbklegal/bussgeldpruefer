@@ -1,14 +1,13 @@
 import 'package:app/global.dart';
-import 'package:app/screens/authenticate/forgotcredentials.dart';
+import 'package:app/screens/authenticate/login.dart';
 //import 'package:app/screens/authenticate/login.dart';
 //import 'package:app/screens/authenticate/registeration.dart';
 //import 'package:app/screens/contact.dart';
 import 'package:badges/badges.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:app/widgets/appbar.dart';
-
 import 'package:app/screens/quickcheck.dart';
 import 'package:app/screens/home.dart';
 import 'package:app/screens/profile.dart';
@@ -16,19 +15,23 @@ import 'package:app/screens/profile.dart';
 // only for development
 // import 'package:app/screens/dummy.dart';
 
-void main() => runApp(
-      MaterialApp(
-        home: MyApp(), // In prod. MyApp()
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('de', 'DE'),
-        ],
-      ),
-    );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MaterialApp(
+      home: MyApp(), // In prod. MyApp()
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('de', 'DE'),
+      ],
+    ),
+  );
+}
 
 class MyApp extends StatefulWidget {
   @override
