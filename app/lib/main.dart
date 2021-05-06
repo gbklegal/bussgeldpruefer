@@ -1,9 +1,13 @@
 import 'package:app/global.dart';
+import 'package:app/screens/authenticate/login.dart';
 import 'package:app/screens/authenticate/registeration.dart';
+import 'package:app/screens/profile/profile.dart';
+import 'package:app/screens/profile/profiledata.dart';
 //import 'package:app/screens/authenticate/login.dart';
 //import 'package:app/screens/authenticate/registeration.dart';
 //import 'package:app/screens/contact.dart';
 import 'package:badges/badges.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -42,7 +46,7 @@ class _MyAppState extends State<MyApp> {
   final List<Widget> _tabs = [
     QuickCheckScreen(),
     HomeScreen(),
-    RegisterationScreen()
+    ProfileData(),
   ];
 
   @override
@@ -84,9 +88,22 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+          if (index == 2) {
+            if (FirebaseAuth.instance.currentUser == null) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => LoginScreen()));
+            } else {
+              setState(() {
+                _currentIndex = index;
+              });
+            }
+          } else {
+            setState(() {
+              _currentIndex = index;
+            });
+          }
         },
       ),
     );

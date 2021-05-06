@@ -1,9 +1,12 @@
 import 'package:app/functions/newscreen.dart';
+import 'package:app/main.dart';
+import 'package:app/screens/authenticate/login.dart';
 import 'package:app/screens/profiledocumentsoverview.dart';
 import 'package:app/screens/profileinbox.dart';
 import 'package:app/screens/profilestatus.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:badges/badges.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../global.dart';
 
@@ -97,6 +100,27 @@ class ProfileData extends StatelessWidget {
                   context: context,
                   screen: ProfileDocumentsOverviewScreen(),
                 ),
+                SizedBox(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    child: Text('Logout'),
+                    style: ElevatedButton.styleFrom(
+                      textStyle: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      primary: Color(0xff5CC8C5),
+                      onPrimary: Colors.white,
+                    ),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => MyApp()));
+                    },
+                  ),
+                )
               ],
             ),
           ),
