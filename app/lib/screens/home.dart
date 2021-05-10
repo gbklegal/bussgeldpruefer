@@ -76,6 +76,7 @@ class HomeScreen extends StatelessWidget {
                         text:
                             'Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden',
                         screen: PruefungBussgeldbescheidScreen(),
+                        index: 1,
                       ),
                       _padding(),
                       BigButtonWidget(

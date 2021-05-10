@@ -1,4 +1,6 @@
 import 'package:app/functions/newscreen.dart';
+import 'package:app/screens/authenticate/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BigButtonWidget extends StatelessWidget {
@@ -6,8 +8,15 @@ class BigButtonWidget extends StatelessWidget {
   final String text;
   final String image;
   final Widget screen;
+  final int index;
 
-  BigButtonWidget({this.title, this.text, this.image: '', this.screen});
+  BigButtonWidget({
+    this.title,
+    this.text,
+    this.image: '',
+    this.screen,
+    this.index,
+  });
 
   initState() {
     print(this.image);
@@ -70,7 +79,18 @@ class BigButtonWidget extends StatelessWidget {
           ],
         ),
       ),
-      onPressed: () => _nextScreen(context),
+      onPressed: () {
+        if (index == 1) {
+          if (FirebaseAuth.instance.currentUser == null) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => LoginScreen()));
+          } else
+            _nextScreen(context);
+        } else
+          _nextScreen(context);
+      },
       onLongPress: () => print('BigButtonWidget() long press'),
     );
   }

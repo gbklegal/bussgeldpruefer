@@ -4,7 +4,6 @@ import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function toggleView;
@@ -117,10 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              showAlert(),
               _padding(40.0),
               PageTitle('Mein Profil',
                   'In deinem Profil kannst du auf alle wichtigen Unterlagen jederzeit zugreifen.'),
-              showAlert(),
               Padding(
                 padding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 10.0),
                 child: Form(
