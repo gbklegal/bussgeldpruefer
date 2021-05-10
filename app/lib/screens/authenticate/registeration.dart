@@ -1,4 +1,5 @@
 import 'package:app/screens/authenticate/login.dart';
+import 'package:app/services/authservice.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,10 +14,73 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _email, _password;
-  Future<void> register() async {
-    UserCredential user = (await _auth.createUserWithEmailAndPassword(
-        email: _email, password: _password));
+  String _email, _password, _error;
+
+  bool validate() {
+    final form = _formKey.currentState;
+    form.save();
+    if (form.validate()) {
+      form.save();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void register() async {
+    if (validate()) {
+      try {
+        UserCredential user = (await _auth.createUserWithEmailAndPassword(
+            email: _email, password: _password));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => LoginScreen()));
+      } catch (e) {
+        print(e);
+        setState(() {
+          _error = e.message;
+        });
+      }
+    }
+  }
+
+  Widget showAlert() {
+    if (_error != null) {
+      return Container(
+        color: Colors.amberAccent,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: Text(
+                _error,
+                textAlign: TextAlign.left,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    _error = null;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
+    );
   }
 
   _padding(double _height) {
@@ -31,6 +95,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
+            showAlert(),
             _padding(40.0),
             PageTitle('Mein Profil'),
             Padding(
@@ -46,9 +111,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                         labelText: 'Vorname',
                         border: OutlineInputBorder(),
                       ),
-                      validator: (value) => value.isEmpty
-                          ? 'Bitte geben Sie den Vornamen ein'
-                          : null,
+                      validator: VorNameValidator.validate,
                     ),
                     _padding(20.0),
                     TextFormField(
@@ -58,9 +121,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                         labelText: 'Nachname',
                         border: OutlineInputBorder(),
                       ),
-                      validator: (value) => value.isEmpty
-                          ? 'Bitte geben Sie den Nachnamen ein'
-                          : null,
+                      validator: NachNameValidator.validate,
                     ),
                     _padding(20.0),
                     TextFormField(
@@ -71,9 +132,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                         labelText: 'E-Mail Adresse',
                         border: OutlineInputBorder(),
                       ),
-                      validator: (value) => value.isEmpty
-                          ? 'Bitte geben Sie die gültige E-Mail-Adresse ein'
-                          : null,
+                      validator: EmailValidator.validate,
                     ),
                     _padding(20.0),
                     TextFormField(
@@ -85,9 +144,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                         labelText: 'Passwort',
                         border: OutlineInputBorder(),
                       ),
-                      validator: (value) => value.isEmpty
-                          ? 'Bitte geben Sie das Passwort ein (mindestens 6 Zeichen)'
-                          : null,
+                      validator: PasswordValidator.validate,
                     ),
                   ],
                 ),
@@ -120,15 +177,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                   primary: Color(0xff5CC8C5),
                   onPrimary: Colors.white,
                 ),
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    register();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => LoginScreen()));
-                  }
-                },
+                onPressed: register,
               ),
             ),
           ],

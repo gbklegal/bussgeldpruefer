@@ -1,9 +1,10 @@
 import 'package:app/screens/authenticate/registeration.dart';
-import 'package:app/screens/profile/profiledata.dart';
+import 'package:app/services/authservice.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function toggleView;
@@ -16,17 +17,89 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _email, _password;
+  String _email, _password, _error;
   String error = '';
 
-  Future<bool> login() async {
-    final user = (await _auth.signInWithEmailAndPassword(
-            email: _email.trim(), password: _password))
-        .user;
-    if (user.emailVerified) {
+  bool validate() {
+    final form = _formKey.currentState;
+    form.save();
+    if (form.validate()) {
+      form.save();
       return true;
+    } else {
+      return false;
     }
-    return false;
+  }
+
+  void login() async {
+    if (validate()) {
+      try {
+        final user = (await _auth.signInWithEmailAndPassword(
+                email: _email.trim(), password: _password))
+            .user;
+
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName('/'),
+        );
+      } catch (e) {
+        print(e);
+        setState(() {
+          _error = e.message;
+        });
+      }
+    }
+  }
+
+  // buildShowDialog(BuildContext context) {
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: true,
+  //       builder: (BuildContext context) {
+  //         return Center(
+  //           child: CircularProgressIndicator(
+  //             backgroundColor: Color(0xff5CC8C5),
+  //           ),
+  //         );
+  //       });
+  // }
+
+  Widget showAlert() {
+    if (_error != null) {
+      return Container(
+        color: Colors.amberAccent,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: Text(
+                _error,
+                textAlign: TextAlign.left,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    _error = null;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
+    );
   }
 
   _padding(double _height) {
@@ -47,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
               _padding(40.0),
               PageTitle('Mein Profil',
                   'In deinem Profil kannst du auf alle wichtigen Unterlagen jederzeit zugreifen.'),
+              showAlert(),
               Padding(
                 padding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 10.0),
                 child: Form(
@@ -61,9 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: 'E-Mail Adresse*',
                           border: OutlineInputBorder(),
                         ),
-                        validator: (value) => value.isEmpty
-                            ? 'Bitte geben Sie eine E-mail-Adresse ein'
-                            : null,
+                        validator: EmailValidator.validate,
                       ),
                       _padding(20.0),
                       TextFormField(
@@ -75,9 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: 'Passwort*',
                           border: OutlineInputBorder(),
                         ),
-                        validator: (value) => value.length < 6
-                            ? 'Ihr Passwort muss mindestens 6 Zeichen lang sein'
-                            : null,
+                        validator: PasswordValidator.validate,
                       ),
                     ],
                   ),
@@ -110,16 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     primary: Color(0xff5CC8C5),
                     onPrimary: Colors.white,
                   ),
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      Future<bool> check = login();
-                      if (check == true) {
-                        Navigator.popUntil(
-                          context,
-                          ModalRoute.withName('/'),
-                        );
-                      }
-                    }
+                  onPressed: () {
+                    login();
                   },
                 ),
               ),
