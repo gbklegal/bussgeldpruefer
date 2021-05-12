@@ -1,6 +1,5 @@
 import 'package:app/functions/newscreen.dart';
 import 'package:app/main.dart';
-import 'package:app/screens/authenticate/login.dart';
 import 'package:app/screens/profiledocumentsoverview.dart';
 import 'package:app/screens/profileinbox.dart';
 import 'package:app/screens/profilestatus.dart';

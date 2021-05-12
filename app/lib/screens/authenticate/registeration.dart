@@ -30,6 +30,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   void register() async {
     if (validate()) {
       try {
+        // ignore: unused_local_variable
         UserCredential user = (await _auth.createUserWithEmailAndPassword(
             email: _email, password: _password));
         Navigator.push(

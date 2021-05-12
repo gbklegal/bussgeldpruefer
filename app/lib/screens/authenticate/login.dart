@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() async {
     if (validate()) {
       try {
+        // ignore: unused_local_variable
         final user = (await _auth.signInWithEmailAndPassword(
                 email: _email.trim(), password: _password))
             .user;

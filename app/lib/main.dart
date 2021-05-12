@@ -1,11 +1,6 @@
 import 'package:app/global.dart';
 import 'package:app/screens/authenticate/login.dart';
-import 'package:app/screens/authenticate/registeration.dart';
-import 'package:app/screens/profile/profile.dart';
 import 'package:app/screens/profile/profiledata.dart';
-//import 'package:app/screens/authenticate/login.dart';
-//import 'package:app/screens/authenticate/registeration.dart';
-//import 'package:app/screens/contact.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

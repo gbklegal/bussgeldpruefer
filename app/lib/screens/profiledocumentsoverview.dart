@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileDocumentsOverviewScreen extends StatefulWidget {
   @override
@@ -10,6 +14,83 @@ class ProfileDocumentsOverviewScreen extends StatefulWidget {
 
 class _ProfileDocumentsOverviewScreenState
     extends State<ProfileDocumentsOverviewScreen> {
+  Future<File> imageFile;
+
+  pickImageFromGallery(ImageSource source) {
+    setState(() {
+      imageFile = ImagePicker.pickImage(source: source);
+    });
+  }
+
+  Widget showImage() {
+    return FutureBuilder<File>(
+      future: imageFile,
+      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null) {
+          return Stack(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 13.0, right: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: Image.file(
+                    snapshot.data,
+                    fit: BoxFit.fill,
+                    width: 100.0,
+                    height: 130.0,
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 0.0,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: CircleAvatar(
+                      radius: 14.0,
+                      backgroundColor: Colors.grey[50],
+                      child: CircleAvatar(
+                          radius: 12.0,
+                          backgroundColor: Colors.blue,
+                          child: Icon(Icons.close, color: Colors.white)),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+          // Card(
+          //   elevation: 5,
+          //   margin: EdgeInsets.all(10),
+          //   shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.circular(16.0),
+          //   ),
+          //   child: Image.file(
+          //     snapshot.data,
+          //     fit: BoxFit.fill,
+          //     width: 100.0,
+          //     height: 100.0,
+          //   ),
+          // );
+        } else if (snapshot.error != null) {
+          return const Text(
+            'Error Picking Image',
+            textAlign: TextAlign.center,
+          );
+        } else {
+          return const Text(
+            'No Image Selected',
+            textAlign: TextAlign.center,
+          );
+        }
+      },
+    );
+  }
+
   _title(text) {
     return Text(
       text,
@@ -147,6 +228,7 @@ class _ProfileDocumentsOverviewScreenState
                 _title('2. Mache ein Foto von deinem Dokument'),
                 Text('Vergiss nicht die Vorder- und Rückseite'),
                 _padding(),
+                showImage(),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -158,7 +240,9 @@ class _ProfileDocumentsOverviewScreenState
                     Expanded(
                       child: IconButton(
                         icon: Icon(Icons.photo_library_outlined),
-                        onPressed: () => print('Get photo from library.'),
+                        onPressed: () =>
+                            pickImageFromGallery(ImageSource.gallery),
+                        // print('Get photo from library.'),
                       ),
                     ),
                   ],
