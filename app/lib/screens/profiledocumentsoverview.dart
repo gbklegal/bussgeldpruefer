@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart' as Path;
+import 'package:image_picker/image_picker.dart';
 
 class ProfileDocumentsOverviewScreen extends StatefulWidget {
   @override
@@ -15,92 +16,120 @@ class ProfileDocumentsOverviewScreen extends StatefulWidget {
 
 class _ProfileDocumentsOverviewScreenState
     extends State<ProfileDocumentsOverviewScreen> {
-  Future<File> imageFile;
-  List<Asset> images = <Asset>[];
-  bool isLoading = false;
+  bool uploading = false;
+  double val = 0;
+  CollectionReference imgRef;
+  firebase_storage.Reference ref;
+
+  List<File> _image = [];
+  final picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
   }
 
-  uploadImage() async {
-    setState(() {
-      isLoading = true;
-    });
-    for (var imageFile in images) {
-      await postImage(imageFile).then((downloadUrl) {
-        // Get the download URL and do your stuff here
-      }).catchError((err) {
-        print(err);
-      });
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  int _id;
 
-  Future<dynamic> postImage(Asset imageFile) async {
-    double imageDesiredWidth = 500;
-
-    double getAspectRatio(double originalSize, double desiredSize) =>
-        desiredSize / originalSize;
-    final aspectRatio =
-        getAspectRatio(imageFile.originalWidth.toDouble(), imageDesiredWidth);
-    ByteData byteData = await imageFile.getThumbByteData(
-      (imageFile.originalWidth * aspectRatio).round(),
-      (imageFile.originalHeight * aspectRatio).round(),
-      quality: 100,
-    );
-
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    Reference reference = FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = reference.putData(byteData.buffer.asUint8List());
-    TaskSnapshot storageTaskSnapshot =
-        await uploadTask.whenComplete(() => null);
-
-    return await storageTaskSnapshot.ref.getDownloadURL();
-  }
-
-  Future<void> pickImages() async {
-    List<Asset> resultList = <Asset>[];
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 5,
-        selectedAssets: images,
-        materialOptions: MaterialOptions(
-          actionBarTitle: "Select Photos",
-        ),
-      );
-    } on Exception catch (e) {
-      print(e);
-    }
-    setState(() {
-      images = resultList;
-    });
-  }
-
-  Widget buildGridView() {
-    if (images.isNotEmpty) {
-      return GridView.count(
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        crossAxisCount: 3,
-        children: List.generate(images.length, (index) {
-          Asset asset = images[index];
-          return AssetThumb(
-            asset: asset,
-            width: 100,
-            height: 130,
+  Widget _buildGridView() {
+    return _image.length == 0
+        ? const Text(
+            'No Image Selected',
+            textAlign: TextAlign.center,
+          )
+        : GridView.builder(
+            key: _scaffoldKey,
+            itemCount: _image.length,
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                margin: EdgeInsets.all(3),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 13.0, right: 8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Image.file(
+                          _image[index],
+                          fit: BoxFit.fill,
+                          width: 100.0,
+                          height: 130.0,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _id = index;
+                            _image.removeAt(_id);
+                          });
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: CircleAvatar(
+                            radius: 14.0,
+                            backgroundColor: Colors.grey[50],
+                            child: CircleAvatar(
+                                radius: 12.0,
+                                backgroundColor: Colors.blue,
+                                child: Icon(Icons.close, color: Colors.white)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //         image: FileImage(_image[index]), fit: BoxFit.cover)),
+              );
+            },
           );
-        }),
-      );
+  }
+
+  chooseImage(ImageSource _source) async {
+    final pickedFile = await picker.getImage(source: _source);
+    setState(() {
+      _image.add(File(pickedFile?.path));
+    });
+    if (pickedFile.path == null) retrieveLostData();
+  }
+
+  Future<void> retrieveLostData() async {
+    final LostData response = await picker.getLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        _image.add(File(response.file.path));
+      });
     } else {
-      return const Text(
-        'No Image Selected',
-        textAlign: TextAlign.center,
-      );
+      print(response.file);
+    }
+  }
+
+  Future uploadFile() async {
+    int i = 1;
+
+    for (var img in _image) {
+      setState(() {
+        val = i / _image.length;
+      });
+      ref = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('images/${Path.basename(img.path)}');
+      await ref.putFile(img).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          //imgRef.add({'url': value});
+          i++;
+        });
+      });
     }
   }
 
@@ -242,11 +271,12 @@ class _ProfileDocumentsOverviewScreenState
                   _title('2. Mache ein Foto von deinem Dokument'),
                   Text('Vergiss nicht die Vorder- und Rückseite'),
                   _padding(),
+                  //showImage(),
                   Container(
                     constraints: BoxConstraints(
                       maxHeight: 130,
                     ),
-                    child: buildGridView(),
+                    child: _buildGridView(),
                   ),
                   _padding(),
                   Row(
@@ -254,33 +284,56 @@ class _ProfileDocumentsOverviewScreenState
                       Expanded(
                         child: IconButton(
                           icon: Icon(Icons.photo_camera_outlined),
-                          onPressed: () => print('Take photo with camera.'),
+                          onPressed: () => chooseImage(ImageSource.camera),
+                          //print('Take photo with camera.'),
                         ),
                       ),
                       Expanded(
                         child: IconButton(
                           icon: Icon(Icons.photo_library_outlined),
-                          onPressed: () => pickImages(),
-                          //pickImageFromGallery(ImageSource.gallery),
-                          // print('Get photo from library.'),
+                          onPressed: () => chooseImage(ImageSource.gallery),
+                          //print('Get photo from library.'),
                         ),
                       ),
                     ],
                   ),
+                  uploading
+                      ? Center(
+                          child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              child: Text(
+                                'uploading...',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            CircularProgressIndicator(
+                              value: val,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.green),
+                            )
+                          ],
+                        ))
+                      : Container(),
                   _padding(),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       child: Text('senden'),
                       onPressed: () {
-                        uploadImage();
+                        setState(() {
+                          uploading = true;
+                        });
+                        uploadFile()
+                            .whenComplete(() => Navigator.of(context).pop());
                       },
                       //formFeedback(context),
                     ),
                   ),
-                  isLoading
-                      ? CircularProgressIndicator()
-                      : Visibility(visible: false, child: Text("test")),
                   _padding(),
                   Text(
                       'Was wir von Dir mindestens  brauchen, um deinen Fall bearbeiten zu können:\n\n- Verwarnungsbogen\n- Bußgeldbescheid und/oder\n- Anhörungsbogen'),
