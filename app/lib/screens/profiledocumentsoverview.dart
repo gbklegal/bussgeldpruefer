@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -16,121 +17,23 @@ class ProfileDocumentsOverviewScreen extends StatefulWidget {
 
 class _ProfileDocumentsOverviewScreenState
     extends State<ProfileDocumentsOverviewScreen> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   bool uploading = false;
   double val = 0;
-  CollectionReference imgRef;
   firebase_storage.Reference ref;
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  int _id;
   List<File> _image = [];
   final picker = ImagePicker();
+  List<String> _fileURLs = [];
+  final db = FirebaseFirestore.instance;
+
+  // final DocumentReference documentReference =
+  //     FirebaseFirestore.instance.doc("Users/Files");
 
   @override
   void initState() {
     super.initState();
-  }
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  int _id;
-
-  Widget _buildGridView() {
-    return _image.length == 0
-        ? const Text(
-            'No Image Selected',
-            textAlign: TextAlign.center,
-          )
-        : GridView.builder(
-            key: _scaffoldKey,
-            itemCount: _image.length,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: EdgeInsets.all(3),
-                child: Stack(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 13.0, right: 8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Image.file(
-                          _image[index],
-                          fit: BoxFit.fill,
-                          width: 100.0,
-                          height: 130.0,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 0.0,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _id = index;
-                            _image.removeAt(_id);
-                          });
-                        },
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: CircleAvatar(
-                            radius: 14.0,
-                            backgroundColor: Colors.grey[50],
-                            child: CircleAvatar(
-                                radius: 12.0,
-                                backgroundColor: Colors.blue,
-                                child: Icon(Icons.close, color: Colors.white)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //         image: FileImage(_image[index]), fit: BoxFit.cover)),
-              );
-            },
-          );
-  }
-
-  chooseImage(ImageSource _source) async {
-    final pickedFile = await picker.getImage(source: _source);
-    setState(() {
-      _image.add(File(pickedFile?.path));
-    });
-    if (pickedFile.path == null) retrieveLostData();
-  }
-
-  Future<void> retrieveLostData() async {
-    final LostData response = await picker.getLostData();
-    if (response.isEmpty) {
-      return;
-    }
-    if (response.file != null) {
-      setState(() {
-        _image.add(File(response.file.path));
-      });
-    } else {
-      print(response.file);
-    }
-  }
-
-  Future uploadFile() async {
-    int i = 1;
-
-    for (var img in _image) {
-      setState(() {
-        val = i / _image.length;
-      });
-      ref = firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('images/${Path.basename(img.path)}');
-      await ref.putFile(img).whenComplete(() async {
-        await ref.getDownloadURL().then((value) {
-          //imgRef.add({'url': value});
-          i++;
-        });
-      });
-    }
   }
 
   _title(text) {
@@ -177,47 +80,6 @@ class _ProfileDocumentsOverviewScreenState
 
   @override
   Widget build(BuildContext context) {
-    Future formFeedback(BuildContext context) {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Geschafft!'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(text: 'Deine Dokumente wurden '),
-                      TextSpan(
-                          text: 'erfolgreich',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: ' eingereicht.'),
-                    ],
-                  ),
-                ),
-                _padding(),
-                Image.asset(
-                  'assets/icons/confetti.png',
-                  width: 80,
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                child: Text('schließen'),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     return Scaffold(
       appBar: AppBarWidget(),
       body: SingleChildScrollView(
@@ -344,5 +206,119 @@ class _ProfileDocumentsOverviewScreenState
         ),
       ),
     );
+  }
+
+  Future<void> _add() async {
+    final uid = (_firebaseAuth.currentUser.uid);
+    Map<String, dynamic> data = <String, dynamic>{
+      "name": documentName,
+      "fileURLs": FieldValue.arrayUnion(_fileURLs)
+    };
+    await db
+        .collection("userData")
+        .doc(uid)
+        .collection("Files")
+        .add(data)
+        .whenComplete(() {
+      print("Document Added");
+    });
+  }
+
+  Widget _buildGridView() {
+    return _image.length == 0
+        ? const Text(
+            'No Image Selected',
+            textAlign: TextAlign.center,
+          )
+        : GridView.builder(
+            key: _scaffoldKey,
+            itemCount: _image.length,
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                margin: EdgeInsets.all(3),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 13.0, right: 8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Image.file(
+                          _image[index],
+                          fit: BoxFit.fill,
+                          width: 100.0,
+                          height: 130.0,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _id = index;
+                            _image.removeAt(_id);
+                          });
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: CircleAvatar(
+                            radius: 14.0,
+                            backgroundColor: Colors.grey[50],
+                            child: CircleAvatar(
+                                radius: 12.0,
+                                backgroundColor: Colors.blue,
+                                child: Icon(Icons.close, color: Colors.white)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+  }
+
+  chooseImage(ImageSource _source) async {
+    final pickedFile = await picker.getImage(source: _source);
+    setState(() {
+      _image.add(File(pickedFile?.path));
+    });
+    if (pickedFile.path == null) retrieveLostData();
+  }
+
+  Future<void> retrieveLostData() async {
+    final LostData response = await picker.getLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        _image.add(File(response.file.path));
+      });
+    } else {
+      print(response.file);
+    }
+  }
+
+  Future uploadFile() async {
+    int i = 1;
+
+    for (var img in _image) {
+      setState(() {
+        val = i / _image.length;
+      });
+      ref = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('images/${Path.basename(img.path)}');
+      await ref.putFile(img).whenComplete(() async {
+        _fileURLs.add(await ref.getDownloadURL());
+        i++;
+      });
+    }
+    print(_fileURLs);
+    _add();
   }
 }

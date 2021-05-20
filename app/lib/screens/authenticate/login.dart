@@ -1,5 +1,5 @@
 import 'package:app/screens/authenticate/registeration.dart';
-import 'package:app/services/authservice.dart';
+import 'package:app/services/validators.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,19 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-
-  // buildShowDialog(BuildContext context) {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: true,
-  //       builder: (BuildContext context) {
-  //         return Center(
-  //           child: CircularProgressIndicator(
-  //             backgroundColor: Color(0xff5CC8C5),
-  //           ),
-  //         );
-  //       });
-  // }
 
   Widget showAlert() {
     if (_error != null) {
