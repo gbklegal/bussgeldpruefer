@@ -26,10 +26,8 @@ class _ProfileDocumentsOverviewScreenState
   List<File> _image = [];
   final picker = ImagePicker();
   List<String> _fileURLs = [];
+  List<String> _getImages = [];
   final db = FirebaseFirestore.instance;
-
-  // final DocumentReference documentReference =
-  //     FirebaseFirestore.instance.doc("Users/Files");
 
   @override
   void initState() {
@@ -76,6 +74,21 @@ class _ProfileDocumentsOverviewScreenState
     );
   }
 
+  fetchData() async {
+    var data = await FirebaseFirestore.instance
+        .collection("userData")
+        .doc(_firebaseAuth.currentUser.uid)
+        .collection("Files")
+        .get();
+    for (int i = 0; i < data.docs.length; i++) {
+      DocumentSnapshot files = data.docs[i];
+      List<dynamic> images = files['fileURLs'];
+      //print(images);
+      for (int j = 0; j < images.length; j++) _getImages.add(images[j]);
+    }
+    print(_getImages);
+  }
+
   String documentName = 'Anhörungsbogen';
 
   @override
@@ -92,6 +105,13 @@ class _ProfileDocumentsOverviewScreenState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _headerTitle(),
+                  _padding(),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: 130,
+                    ),
+                    child: _buildGridViewForOverview(),
+                  ),
                   _padding(),
                   Text(
                     'Lade Deine Unterlagen hoch',
@@ -222,6 +242,23 @@ class _ProfileDocumentsOverviewScreenState
         .whenComplete(() {
       print("Document Added");
     });
+  }
+
+  Widget _buildGridViewForOverview() {
+    fetchData();
+    return GridView.builder(
+        itemCount: _getImages.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (context, index) {
+          return Container(
+            child: FadeInImage.assetNetwork(
+              placeholder: "assets/loading.gif",
+              image: _getImages[index],
+              fit: BoxFit.fill,
+            ),
+          );
+        });
   }
 
   Widget _buildGridView() {

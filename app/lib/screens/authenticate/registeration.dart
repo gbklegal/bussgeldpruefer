@@ -1,5 +1,5 @@
 import 'package:app/screens/authenticate/login.dart';
-import 'package:app/services/authservice.dart';
+import 'package:app/services/validators.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
