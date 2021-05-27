@@ -177,7 +177,7 @@ class _ProfileDocumentsOverviewScreenState
                           children: [
                             Container(
                               child: Text(
-                                'uploading...',
+                                'Hochladen...',
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
