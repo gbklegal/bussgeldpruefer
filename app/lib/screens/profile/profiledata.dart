@@ -1,6 +1,6 @@
 import 'package:app/functions/newscreen.dart';
 import 'package:app/main.dart';
-import 'package:app/screens/profiledocumentsoverview.dart';
+import 'package:app/screens/documentoverview/profiledocumentsoverview.dart';
 import 'package:app/screens/profileinbox.dart';
 import 'package:app/screens/profilestatus.dart';
 import 'package:app/widgets/pagetitle.dart';

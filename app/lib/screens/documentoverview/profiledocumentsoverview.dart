@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app/screens/documentoverview/fullscreenimage.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +33,11 @@ class _ProfileDocumentsOverviewScreenState
   @override
   void initState() {
     super.initState();
+  }
+
+  clearAll() {
+    _fileURLs.clear();
+    _image.clear();
   }
 
   _title(text) {
@@ -74,21 +80,6 @@ class _ProfileDocumentsOverviewScreenState
     );
   }
 
-  fetchData() async {
-    var data = await FirebaseFirestore.instance
-        .collection("userData")
-        .doc(_firebaseAuth.currentUser.uid)
-        .collection("Files")
-        .get();
-    for (int i = 0; i < data.docs.length; i++) {
-      DocumentSnapshot files = data.docs[i];
-      List<dynamic> images = files['fileURLs'];
-      //print(images);
-      for (int j = 0; j < images.length; j++) _getImages.add(images[j]);
-    }
-    print(_getImages);
-  }
-
   String documentName = 'Anhörungsbogen';
 
   @override
@@ -108,7 +99,7 @@ class _ProfileDocumentsOverviewScreenState
                   _padding(),
                   Container(
                     constraints: BoxConstraints(
-                      maxHeight: 130,
+                      maxHeight: 120,
                     ),
                     child: _buildGridViewForOverview(),
                   ),
@@ -187,17 +178,25 @@ class _ProfileDocumentsOverviewScreenState
                             Container(
                               child: Text(
                                 'uploading...',
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 18),
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            _padding(10.0),
                             CircularProgressIndicator(
                               value: val,
                               valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.green),
-                            )
+                                  AlwaysStoppedAnimation<Color>(Colors.blue),
+                            ),
+                            _padding(10.0),
+                            Container(
+                              child: Text(
+                                (val * _image.length).toInt().toString() +
+                                    ' von ' +
+                                    _image.length.toString() +
+                                    ' Dokumenten hochgeladen',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
                           ],
                         ))
                       : Container(),
@@ -210,8 +209,16 @@ class _ProfileDocumentsOverviewScreenState
                         setState(() {
                           uploading = true;
                         });
-                        uploadFile()
-                            .whenComplete(() => Navigator.of(context).pop());
+                        uploadFile().whenComplete(() {
+                          uploading = false;
+                          if (_image.length == 0) {
+                            showAlertDialog(
+                                context, "Es ist kein Dokument ausgewählt.");
+                          } else {
+                            showAlertDialog(context,
+                                "Alle Dokumenten wurden erfolgreich hochgeladen");
+                          }
+                        });
                       },
                       //formFeedback(context),
                     ),
@@ -242,29 +249,67 @@ class _ProfileDocumentsOverviewScreenState
         .whenComplete(() {
       print("Document Added");
     });
+    clearAll();
   }
 
   Widget _buildGridViewForOverview() {
     fetchData();
-    return GridView.builder(
-        itemCount: _getImages.length,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemBuilder: (context, index) {
-          return Container(
-            child: FadeInImage.assetNetwork(
-              placeholder: "assets/loading.gif",
-              image: _getImages[index],
-              fit: BoxFit.fill,
-            ),
-          );
-        });
+    return _getImages.length == 0
+        ? const Text(
+            'Kein Dokument',
+            textAlign: TextAlign.center,
+          )
+        : GridView.builder(
+            itemCount: _getImages.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, crossAxisSpacing: 6, mainAxisSpacing: 6),
+            itemBuilder: (context, index) {
+              return Container(
+                child: GestureDetector(
+                  onTap: () {
+                    print("YEs");
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return FullScreenImage(
+                        imageUrl: _getImages[index],
+                        tag: "generate_a_unique_tag",
+                      );
+                    }));
+                  },
+                  child: FadeInImage.assetNetwork(
+                    placeholder: "assets/loading.gif",
+                    image: _getImages[index],
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              );
+            });
+  }
+
+  fetchData() async {
+    List<String> img = [];
+    var data = await FirebaseFirestore.instance
+        .collection("userData")
+        .doc(_firebaseAuth.currentUser.uid)
+        .collection("Files")
+        .get();
+    for (int i = 0; i < data.docs.length; i++) {
+      DocumentSnapshot files = data.docs[i];
+      List<dynamic> images = files['fileURLs'];
+      //print(images);
+      for (int j = 0; j < images.length; j++) img.add(images[j]);
+    }
+    _getImages.clear();
+    _getImages = img;
+    //print(_getImages);
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Widget _buildGridView() {
     return _image.length == 0
         ? const Text(
-            'No Image Selected',
+            'Kein Dokument ausgewählt',
             textAlign: TextAlign.center,
           )
         : GridView.builder(
@@ -342,7 +387,6 @@ class _ProfileDocumentsOverviewScreenState
 
   Future uploadFile() async {
     int i = 1;
-
     for (var img in _image) {
       setState(() {
         val = i / _image.length;
@@ -356,6 +400,33 @@ class _ProfileDocumentsOverviewScreenState
       });
     }
     print(_fileURLs);
-    _add();
+    if (_image.length != 0 && _fileURLs.length != 0) _add();
+  }
+
+  showAlertDialog(BuildContext context, String dialog) {
+    // set up the button
+    Widget okButton = ElevatedButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Dokument hochladen"),
+      content: Text(dialog),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
