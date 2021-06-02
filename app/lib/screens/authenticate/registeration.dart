@@ -1,4 +1,5 @@
 import 'package:app/screens/authenticate/login.dart';
+import 'package:app/services/database.dart';
 import 'package:app/services/validators.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
@@ -13,8 +14,9 @@ class RegisterationScreen extends StatefulWidget {
 class _RegisterationScreenState extends State<RegisterationScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  DatabaseMethods databaseMethods = new DatabaseMethods();
 
-  String _email, _password, _error;
+  String _email, _password, _error, _firstName, _lastName;
 
   bool validate() {
     final form = _formKey.currentState;
@@ -33,6 +35,12 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         // ignore: unused_local_variable
         UserCredential user = (await _auth.createUserWithEmailAndPassword(
             email: _email, password: _password));
+
+        Map<String, String> userInfoMap = {
+          "name": _firstName + _lastName,
+          "email": _email
+        };
+        databaseMethods.addUserInfo(userInfoMap);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -110,6 +118,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       autocorrect: false,
+                      onChanged: (input) => _firstName = input,
                       decoration: InputDecoration(
                         labelText: 'Vorname',
                         border: OutlineInputBorder(),
@@ -120,6 +129,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       autocorrect: false,
+                      onChanged: (input) => _lastName = input,
                       decoration: InputDecoration(
                         labelText: 'Nachname',
                         border: OutlineInputBorder(),
