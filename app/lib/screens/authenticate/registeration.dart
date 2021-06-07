@@ -37,7 +37,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             email: _email, password: _password));
 
         Map<String, String> userInfoMap = {
-          "name": _firstName + _lastName,
+          "name": _firstName + ' ' + _lastName,
           "email": _email
         };
         databaseMethods.addUserInfo(userInfoMap);

@@ -1,11 +1,17 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/profileinboxdetail.dart';
+import 'package:app/services/database.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../global.dart';
+import '../../global.dart';
 
 class ProfileInboxScreen extends StatefulWidget {
   @override
@@ -178,8 +184,17 @@ class ProfileInboxMainScreen extends StatelessWidget {
   }
 }
 
-class ProfileInboxEditorScreen extends StatelessWidget {
+class ProfileInboxEditorScreen extends StatefulWidget {
+  @override
+  _ProfileInboxEditorScreenState createState() =>
+      _ProfileInboxEditorScreenState();
+}
+
+class _ProfileInboxEditorScreenState extends State<ProfileInboxEditorScreen> {
   final _formKey = GlobalKey<FormState>();
+  String _reciever, _sender, _subject, _message;
+  DatabaseMethods _databaseMethods = new DatabaseMethods();
+  final TextEditingController _typeAheadController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -222,17 +237,52 @@ class ProfileInboxEditorScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Column(
-                        children: <TextFormField>[
+                        children: [
+                          TypeAheadField(
+                              debounceDuration: Duration(milliseconds: 500),
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: this._typeAheadController,
+                                decoration: InputDecoration(
+                                  labelText: 'An:',
+                                ),
+                              ),
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  title: Text(suggestion['name']),
+                                  subtitle: Text(suggestion['email']),
+                                  leading: CircleAvatar(
+                                    backgroundColor: Colors.primaries[Random()
+                                        .nextInt(Colors.primaries.length)],
+                                    foregroundColor: Colors.white,
+                                    child: Text(
+                                      suggestion['name']
+                                          .substring(0, 1)
+                                          .toUpperCase(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                this._typeAheadController.text =
+                                    suggestion['email'];
+                              },
+                              noItemsFoundBuilder: (context) => Container(
+                                    height: 100,
+                                    child: Center(
+                                      child: Text(
+                                        'No Users Found.',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                              suggestionsCallback: (pattern) async {
+                                return await _databaseMethods
+                                    .getSuggestions(pattern);
+                              }),
                           TextFormField(
                             keyboardType: TextInputType.text,
                             autocorrect: false,
-                            decoration: InputDecoration(
-                              labelText: 'An:',
-                            ),
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.text,
-                            autocorrect: false,
+                            onChanged: (input) => _sender = input,
                             decoration: InputDecoration(
                               labelText: 'Von:',
                               hintText: 'Name des Mandaten',
@@ -241,6 +291,7 @@ class ProfileInboxEditorScreen extends StatelessWidget {
                           TextFormField(
                             keyboardType: TextInputType.text,
                             autocorrect: false,
+                            onChanged: (input) => _subject = input,
                             decoration: InputDecoration(
                               labelText: 'Betreff:',
                             ),
@@ -249,6 +300,7 @@ class ProfileInboxEditorScreen extends StatelessWidget {
                             maxLines: 5,
                             maxLength: 120,
                             keyboardType: TextInputType.text,
+                            onChanged: (input) => _message = input,
                             decoration: InputDecoration(
                               hintText: 'Nachricht:',
                             ),
