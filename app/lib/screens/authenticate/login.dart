@@ -1,7 +1,10 @@
+import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/registeration.dart';
+import 'package:app/services/database.dart';
 import 'package:app/services/validators.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  DatabaseMethods _databaseMethods = new DatabaseMethods();
+  QuerySnapshot snapshotUserInfo;
 
   String _email, _password, _error;
   String error = '';
@@ -37,7 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
         final user = (await _auth.signInWithEmailAndPassword(
                 email: _email.trim(), password: _password))
             .user;
-
+        QuerySnapshot userInfoSnapshot =
+            await DatabaseMethods().getUserInfo(_email.trim());
+        print("I am user : " + userInfoSnapshot.docs[0]['name']);
+        HelperFunctions().saveUserLoggedInSharedPreference(true);
+        HelperFunctions()
+            .saveUserNameSharedPreference(userInfoSnapshot.docs[0]['name']);
+        String name;
+        name = await HelperFunctions().getUserNameSharedPreference();
+        print(name);
+        HelperFunctions()
+            .saveUserEmailSharedPreference(userInfoSnapshot.docs[0]['email']);
+        HelperFunctions().saveUserLoggedInSharedPreference(true);
         Navigator.popUntil(
           context,
           ModalRoute.withName('/'),

@@ -1,4 +1,5 @@
 import 'package:app/global.dart';
+import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/login.dart';
 import 'package:app/screens/profile/profiledata.dart';
 import 'package:badges/badges.dart';
@@ -43,6 +44,22 @@ class _MyAppState extends State<MyApp> {
     HomeScreen(),
     ProfileData(),
   ];
+  bool userIsLoggedIn;
+
+  @override
+  void initState() {
+    getLoggedInState();
+    super.initState();
+  }
+
+  getLoggedInState() async {
+    await HelperFunctions().getUserLoggedInSharedPreference().then((value) {
+      print(userIsLoggedIn.toString());
+      setState(() {
+        userIsLoggedIn = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

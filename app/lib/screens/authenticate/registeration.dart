@@ -1,3 +1,4 @@
+import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/login.dart';
 import 'package:app/services/database.dart';
 import 'package:app/services/validators.dart';
@@ -40,6 +41,11 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
           "name": _firstName + ' ' + _lastName,
           "email": _email
         };
+        HelperFunctions().saveUserEmailSharedPreference(_email);
+        HelperFunctions()
+            .saveUserNameSharedPreference(_firstName + ' ' + _lastName);
+
+        HelperFunctions().saveUserLoggedInSharedPreference(true);
         databaseMethods.addUserInfo(userInfoMap);
         Navigator.push(
             context,

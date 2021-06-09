@@ -34,7 +34,6 @@ class DatabaseMethods {
 
   Future<List<DocumentSnapshot>> getSuggestions(String suggestion) =>
       FirebaseFirestore.instance.collection("users").get().then((snap) {
-        print(snap.docs);
         return List.of(snap.docs).where((user) {
           final userLower = user['name'].toString().toLowerCase();
           final queryLower = suggestion.toLowerCase();
@@ -60,8 +59,8 @@ class DatabaseMethods {
   //   return List.of(userData).toList();
   // }
 
-  Future<bool> addChatRoom(chatRoom, chatRoomId) {
-    FirebaseFirestore.instance
+  addChatRoom(chatRoom, chatRoomId) {
+    return FirebaseFirestore.instance
         .collection("chatRoom")
         .doc(chatRoomId)
         .set(chatRoom)

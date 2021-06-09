@@ -1,7 +1,7 @@
 import 'package:app/functions/newscreen.dart';
 import 'package:app/main.dart';
+import 'package:app/screens/chat/chatscreen.dart';
 import 'package:app/screens/documentoverview/profiledocumentsoverview.dart';
-import 'package:app/screens/onlineinbox/profileinbox.dart';
 import 'package:app/screens/profilestatus.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:badges/badges.dart';
@@ -82,7 +82,7 @@ class ProfileData extends StatelessWidget {
                   icon: Icons.email_outlined,
                   text: 'Online Posteingang',
                   context: context,
-                  screen: ProfileInboxScreen(),
+                  screen: ChatScreen(),
                   badge: true,
                 ),
                 _padding(),

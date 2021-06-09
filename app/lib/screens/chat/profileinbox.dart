@@ -265,6 +265,7 @@ class _ProfileInboxEditorScreenState extends State<ProfileInboxEditorScreen> {
                               onSuggestionSelected: (suggestion) {
                                 this._typeAheadController.text =
                                     suggestion['email'];
+                                _reciever = suggestion['email'];
                               },
                               noItemsFoundBuilder: (context) => Container(
                                     height: 100,
