@@ -124,7 +124,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       autocorrect: false,
-                      onChanged: (input) => _firstName = input,
+                      onChanged: (input) => _firstName = input.trim(),
                       decoration: InputDecoration(
                         labelText: 'Vorname',
                         border: OutlineInputBorder(),
@@ -135,7 +135,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       autocorrect: false,
-                      onChanged: (input) => _lastName = input,
+                      onChanged: (input) => _lastName = input.trim(),
                       decoration: InputDecoration(
                         labelText: 'Nachname',
                         border: OutlineInputBorder(),

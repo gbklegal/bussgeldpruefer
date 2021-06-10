@@ -59,13 +59,54 @@ class DatabaseMethods {
   //   return List.of(userData).toList();
   // }
 
-  addChatRoom(chatRoom, chatRoomId) {
+  addChatRoom(chatRoom, chatRoomId) async {
+    // return FirebaseFirestore.instance
+    //     .collection("chatRoom")
+    //     .doc(chatRoomId)
+    //     .set(chatRoom)
+    //     .catchError((e) {
+    //   print(e);
+    // });
+    final snapShot = await FirebaseFirestore.instance
+        .collection("chatRoom")
+        .doc(chatRoomId)
+        .get();
+    if (snapShot.exists) {
+      // chatroom already exists
+      return true;
+    } else {
+      // chatroom does not exists
+      return FirebaseFirestore.instance
+          .collection("chatRoom")
+          .doc(chatRoomId)
+          .set(chatRoom);
+    }
+  }
+
+  addUserMessages(chatRoomId, chatMessageData) async {
+    FirebaseFirestore.instance
+        .collection("chatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .add(chatMessageData)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  getUserChats(String itIsMyName) async {
+    return await FirebaseFirestore.instance
+        .collection("chatRoom")
+        .where('users', arrayContains: itIsMyName)
+        .snapshots();
+  }
+
+  getChats(String chatRoomId) async {
     return FirebaseFirestore.instance
         .collection("chatRoom")
         .doc(chatRoomId)
-        .set(chatRoom)
-        .catchError((e) {
-      print(e);
-    });
+        .collection("chats")
+        .orderBy('time')
+        .snapshots();
   }
 }

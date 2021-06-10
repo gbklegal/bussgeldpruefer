@@ -20,7 +20,7 @@ class ChatInputField extends StatelessWidget {
           BoxShadow(
             offset: Offset(0, 4),
             blurRadius: 32,
-            color: Color(0xFF087949).withOpacity(0.08),
+            color: Color(0xFF087949),
           ),
         ],
       ),

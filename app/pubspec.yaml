@@ -101,6 +101,7 @@ flutter:
     - assets/images/icons/exclamation-mark.png
 
     - assets/loading.gif
+    - assets/images/icons/send.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

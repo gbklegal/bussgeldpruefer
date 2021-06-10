@@ -18,7 +18,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  DatabaseMethods _databaseMethods = new DatabaseMethods();
   QuerySnapshot snapshotUserInfo;
 
   String _email, _password, _error;
