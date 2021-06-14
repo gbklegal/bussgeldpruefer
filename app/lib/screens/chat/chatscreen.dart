@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:app/helper/helperfunctions.dart';
-import 'package:app/helper/theme.dart';
 import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/services/database.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +75,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     border: OutlineInputBorder(),
                     suffixIcon: IconButton(
                       onPressed: () => _typeAheadController.clear(),
-                      icon: Icon(Icons.clear),
+                      icon: Icon(Icons.highlight_remove_rounded),
                     ),
                     //Icon(Icons.close),
                     hintText: 'Search Username',
@@ -154,10 +152,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
+      iconTheme: IconThemeData(
+        color: Colors.black, //change your color here
+      ),
+      backgroundColor: Colors.white,
       centerTitle: true,
       title: Text(
         "Chats",
         textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.black),
       ),
       actions: [
         IconButton(
@@ -181,13 +184,6 @@ class _ChatScreenState extends State<ChatScreen> {
     };
 
     _databaseMethods.addChatRoom(chatRoom, chatRoomId);
-
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => Chat(
-    //               chatRoomId: chatRoomId,
-    //             )));
   }
 
   getChatRoomId(String a, String b) {
@@ -205,10 +201,20 @@ class ChatRoomsTile extends StatelessWidget {
 
   ChatRoomsTile({this.userName, @required this.chatRoomId});
 
+  getUserInfo() async {
+    usersOfChats = [
+      await HelperFunctions().getUserNameSharedPreference(),
+      userName
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        getUserInfo();
+        print(userName);
+        print(chatRoomId + usersOfChats.toString());
         Navigator.push(
             context,
             MaterialPageRoute(

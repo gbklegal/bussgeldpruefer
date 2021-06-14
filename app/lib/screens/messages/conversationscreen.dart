@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:app/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String chatRoomId;
@@ -10,28 +14,99 @@ class ConversationScreen extends StatefulWidget {
   _ConversationScreenState createState() => _ConversationScreenState();
 }
 
-class _ConversationScreenState extends State<ConversationScreen> {
+class _ConversationScreenState extends State<ConversationScreen>
+    with SingleTickerProviderStateMixin {
   TextEditingController messageEditingController = new TextEditingController();
   DatabaseMethods _databaseMethods = new DatabaseMethods();
   Stream<QuerySnapshot> chats;
+  ScrollController _controller = ScrollController();
+  bool _value = false;
 
-  Widget chatMessages() {
-    return StreamBuilder(
-      stream: chats,
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (context, index) {
-                  return MessageTile(
-                    message: snapshot.data.docs[index]["message"],
-                    sendByMe:
-                        widget.users[0] == snapshot.data.docs[index]["sendBy"],
-                  );
-                })
-            : Container();
-      },
+  chatInputField() {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: kDefaultPadding,
+        vertical: kDefaultPadding / 2,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 4),
+            blurRadius: 32,
+            color: Color(0xFF087949),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: kDefaultPadding * 0.75,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.20),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: kDefaultPadding / 4),
+                    Expanded(
+                      child: TextField(
+                        controller: messageEditingController,
+                        onChanged: (messageEditingController) {
+                          setState(() {
+                            if (messageEditingController.isEmpty) {
+                              _value = false;
+                            } else
+                              _value = true;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Type message",
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  sendMessage();
+                  _value = false;
+                });
+              },
+              child: Container(
+                  height: 50,
+                  width: 50,
+                  padding: EdgeInsets.all(12),
+                  child: getSendButton()),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  Widget getSendButton() {
+    if (_value) {
+      return Image.asset(
+        "assets/images/icons/send.png",
+        height: 25,
+        width: 25,
+      );
+    } else {
+      return Image.asset(
+        "assets/images/icons/hollow_send.png",
+        height: 25,
+        width: 25,
+      );
+    }
   }
 
   sendMessage() {
@@ -51,10 +126,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        backgroundColor: Colors.white,
         title: Text(
-      widget.users[1],
-      style: TextStyle(fontSize: 16),
-    ));
+          widget.users[1],
+          style: TextStyle(color: Colors.black, fontSize: 16),
+        ));
   }
 
   @override
@@ -67,68 +146,49 @@ class _ConversationScreenState extends State<ConversationScreen> {
     super.initState();
   }
 
+  Widget chatMessages() {
+    return StreamBuilder(
+      stream: chats,
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasData) {
+          print(snapshot.data.docs.length);
+          Timer(
+            Duration(microseconds: 0),
+            () => _controller.jumpTo(_controller.position.maxScrollExtent),
+          );
+          return ListView.builder(
+              shrinkWrap: true,
+              controller: _controller,
+              itemCount: snapshot.data.docs.length,
+              itemBuilder: (context, index) {
+                return MessageTile(
+                  message: snapshot.data.docs[index]["message"],
+                  sendByMe:
+                      widget.users[0] == snapshot.data.docs[index]["sendBy"],
+                );
+              });
+        } else
+          return Container();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      body: Container(
-        child: Stack(
+        resizeToAvoidBottomInset: true,
+        appBar: buildAppBar(),
+        body: Column(
           children: [
-            chatMessages(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              width: MediaQuery.of(context).size.width,
+            Flexible(
+              fit: FlexFit.tight,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                color: Color(0x54FFF000),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      controller: messageEditingController,
-                      //style: simpleTextStyle(),
-                      decoration: InputDecoration(
-                          hintText: "Message ...",
-                          hintStyle: TextStyle(
-                            //color: Colors.white,
-                            fontSize: 16,
-                          ),
-                          border: InputBorder.none),
-                    )),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        sendMessage();
-                      },
-                      child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x3611FF00),
-                                    const Color(0x0F11FF00)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.asset(
-                            "assets/images/icons/send.png",
-                            height: 25,
-                            width: 25,
-                          )),
-                    ),
-                  ],
-                ),
-              ),
+                  height: MediaQuery.of(context).size.height,
+                  child: chatMessages()),
             ),
+            chatInputField(),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
 
@@ -142,34 +202,33 @@ class MessageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          top: 8, bottom: 8, left: sendByMe ? 0 : 24, right: sendByMe ? 24 : 0),
+          top: 8, bottom: 8, left: sendByMe ? 0 : 16, right: sendByMe ? 16 : 0),
       alignment: sendByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin:
-            sendByMe ? EdgeInsets.only(left: 30) : EdgeInsets.only(right: 30),
-        padding: EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
-        decoration: BoxDecoration(
-            borderRadius: sendByMe
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(23),
-                    topRight: Radius.circular(23),
-                    bottomLeft: Radius.circular(23))
-                : BorderRadius.only(
-                    topLeft: Radius.circular(23),
-                    topRight: Radius.circular(23),
-                    bottomRight: Radius.circular(23)),
-            gradient: LinearGradient(
-              colors: sendByMe
-                  ? [const Color(0xff007EF4), const Color(0xff2A75BC)]
-                  : [const Color(0x3AF13567), const Color(0x5AF58400)],
-            )),
+        padding: EdgeInsets.only(top: 13, bottom: 13, left: 20, right: 20),
+        decoration: sendByMe
+            ? BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                    bottomLeft: Radius.circular(16)),
+                gradient: LinearGradient(
+                  colors: [const Color(0xff007EF4), const Color(0xff2A75BC)],
+                ))
+            : BoxDecoration(
+                border: Border.all(color: Colors.black, width: 0.5),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                    bottomRight: Radius.circular(16)),
+              ),
         child: Text(message,
             textAlign: TextAlign.start,
             style: TextStyle(
-                color: Colors.white,
+                color: sendByMe ? Colors.white : Colors.black,
                 fontSize: 16,
                 fontFamily: 'OverpassRegular',
-                fontWeight: FontWeight.w300)),
+                fontWeight: FontWeight.w400)),
       ),
     );
   }

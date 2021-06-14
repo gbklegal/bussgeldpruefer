@@ -102,6 +102,7 @@ flutter:
 
     - assets/loading.gif
     - assets/images/icons/send.png
+    - assets/images/icons/hollow_send.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

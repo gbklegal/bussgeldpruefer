@@ -33,8 +33,8 @@ class ChatInputField extends StatelessWidget {
                   horizontal: kDefaultPadding * 0.75,
                 ),
                 decoration: BoxDecoration(
-                  color: kPrimaryColor.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(40),
+                  color: Colors.grey.withOpacity(0.20),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
                   children: [
@@ -50,6 +50,20 @@ class ChatInputField extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            GestureDetector(
+              onTap: () {
+                //sendMessage();
+              },
+              child: Container(
+                  height: 50,
+                  width: 50,
+                  padding: EdgeInsets.all(12),
+                  child: Image.asset(
+                    "assets/images/icons/send.png",
+                    height: 25,
+                    width: 25,
+                  )),
             ),
           ],
         ),
