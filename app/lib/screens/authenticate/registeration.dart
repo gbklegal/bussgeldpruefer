@@ -5,6 +5,7 @@ import 'package:app/services/validators.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class RegisterationScreen extends StatefulWidget {
@@ -13,11 +14,12 @@ class RegisterationScreen extends StatefulWidget {
 }
 
 class _RegisterationScreenState extends State<RegisterationScreen> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
-  String _email, _password, _error, _firstName, _lastName;
+  String _email, _password, _error, _firstName, _lastName, _token;
 
   bool validate() {
     final form = _formKey.currentState;
@@ -30,6 +32,21 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
     }
   }
 
+  _registerOnFirebase() {
+    //_firebaseMessaging.subscribeToTopic('all');
+    _firebaseMessaging.getToken().then((token) {
+      _token = token;
+      HelperFunctions().saveUserTokenSharedPreference(token);
+      print(token);
+    });
+  }
+
+  @override
+  void initState() {
+    _registerOnFirebase();
+    super.initState();
+  }
+
   void register() async {
     if (validate()) {
       try {
@@ -39,7 +56,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
 
         Map<String, String> userInfoMap = {
           "name": _firstName + ' ' + _lastName,
-          "email": _email
+          "email": _email,
+          "token": _token
         };
         HelperFunctions().saveUserEmailSharedPreference(_email);
         HelperFunctions()

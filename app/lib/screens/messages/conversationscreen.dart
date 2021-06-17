@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:app/helper/helperfunctions.dart';
 import 'package:app/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import '../../constants.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -14,13 +16,31 @@ class ConversationScreen extends StatefulWidget {
   _ConversationScreenState createState() => _ConversationScreenState();
 }
 
-class _ConversationScreenState extends State<ConversationScreen>
-    with SingleTickerProviderStateMixin {
+class _ConversationScreenState extends State<ConversationScreen> {
   TextEditingController messageEditingController = new TextEditingController();
   DatabaseMethods _databaseMethods = new DatabaseMethods();
   Stream<QuerySnapshot> chats;
   ScrollController _controller = ScrollController();
   bool _value = false;
+  String myEmail, userEmail, userToken;
+
+  @override
+  void initState() {
+    DatabaseMethods().getChats(widget.chatRoomId).then((val) {
+      setState(() {
+        chats = val;
+      });
+    });
+    getUserInfo();
+    super.initState();
+  }
+
+  getUserInfo() async {
+    myEmail = await HelperFunctions().getUserEmailSharedPreference();
+    userEmail =
+        await _databaseMethods.getUserEmail(widget.chatRoomId, myEmail.trim());
+    userToken = await _databaseMethods.getUserToken(userEmail);
+  }
 
   chatInputField() {
     return Container(
@@ -109,15 +129,20 @@ class _ConversationScreenState extends State<ConversationScreen>
     }
   }
 
-  sendMessage() {
+  sendMessage() async {
     if (messageEditingController.text.isNotEmpty) {
       print(widget.users);
       Map<String, dynamic> chatMessageMap = {
         "sendBy": widget.users[0],
         "message": messageEditingController.text,
         'time': DateTime.now().millisecondsSinceEpoch,
+        'isRead': false
       };
+
       _databaseMethods.addUserMessages(widget.chatRoomId, chatMessageMap);
+
+      sendNotificationMessageToPeerUser(
+          messageEditingController.text, widget.users[0], userToken);
       setState(() {
         messageEditingController.text = "";
       });
@@ -136,14 +161,44 @@ class _ConversationScreenState extends State<ConversationScreen>
         ));
   }
 
-  @override
-  void initState() {
-    DatabaseMethods().getChats(widget.chatRoomId).then((val) {
-      setState(() {
-        chats = val;
-      });
-    });
-    super.initState();
+  Future<void> sendNotificationMessageToPeerUser(
+      textFromTextField, myName, peerUserToken) async {
+    // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    try {
+      await http.post(
+        // 'https://fcm.googleapis.com/fcm/send',
+        // 'https://api.rnfirebase.io/messaging/send',
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'key=$firebaseCloudserverToken',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              'body': '$textFromTextField',
+              'title': '$myName',
+              //'badge':'$unReadMSGCount',//'$unReadMSGCount'
+              "sound": "default",
+              //"image" : myImageUrl
+            },
+            'priority': 'high',
+            // 'data': <String, dynamic>{
+            //   'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            //   'id': '1',
+            //   'status': 'done',
+            //   'chatroomid': chatID,
+            //   'userImage':myImageUrl,
+            //   'userName':'$myName',
+            //   'message': messageType == 'text' ? '$textFromTextField' : '(Photo)',
+            // },
+            'to': peerUserToken,
+          },
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
   Widget chatMessages() {

@@ -6,6 +6,7 @@ import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,12 +17,28 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   QuerySnapshot snapshotUserInfo;
 
-  String _email, _password, _error;
+  String _email, _password, _error, _token;
   String error = '';
+
+  _registerOnFirebase() {
+    //_firebaseMessaging.subscribeToTopic('all');
+    _firebaseMessaging.getToken().then((token) {
+      _token = token;
+      HelperFunctions().saveUserTokenSharedPreference(token);
+      print(token);
+    });
+  }
+
+  @override
+  void initState() {
+    _registerOnFirebase();
+    super.initState();
+  }
 
   bool validate() {
     final form = _formKey.currentState;
@@ -53,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         HelperFunctions()
             .saveUserEmailSharedPreference(userInfoSnapshot.docs[0]['email']);
         HelperFunctions().saveUserLoggedInSharedPreference(true);
+        DatabaseMethods().updateUserToken(_token);
         Navigator.popUntil(
           context,
           ModalRoute.withName('/'),

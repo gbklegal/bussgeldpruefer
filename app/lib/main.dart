@@ -5,6 +5,7 @@ import 'package:app/screens/profile/profiledata.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app/widgets/appbar.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String _message = '';
   int _currentIndex = 1; // default: 1
   final List<Widget> _tabs = [
     QuickCheckScreen(),
@@ -52,6 +54,20 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  // void getMessage() {
+  //   _firebaseMessaging.configure(
+  //       onMessage: (Map<String, dynamic> message) async {
+  //     print('received message');
+  //     setState(() => _message = message["notification"]["body"]);
+  //   }, onResume: (Map<String, dynamic> message) async {
+  //     print('on resume $message');
+  //     setState(() => _message = message["notification"]["body"]);
+  //   }, onLaunch: (Map<String, dynamic> message) async {
+  //     print('on launch $message');
+  //     setState(() => _message = message["notification"]["body"]);
+  //   });
+  // }
+
   getLoggedInState() async {
     await HelperFunctions().getUserLoggedInSharedPreference().then((value) {
       print(userIsLoggedIn.toString());
@@ -65,7 +81,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(isHome: true),
-      body: _tabs[_currentIndex],
+      body:
+          // Container(
+          //     child: Center(
+          //   child: Text("Message: " + _message),
+          // )),
+          _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
         selectedItemColor: Colors.white,

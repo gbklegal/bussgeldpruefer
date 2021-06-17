@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/services/database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -11,18 +12,24 @@ class ChatScreen extends StatefulWidget {
 }
 
 List<String> usersOfChats = [];
+String userEmail;
 
 class _ChatScreenState extends State<ChatScreen> {
   String chatRoomId;
   DatabaseMethods _databaseMethods = new DatabaseMethods();
   final TextEditingController _typeAheadController = TextEditingController();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String myUserName;
+  String myEmail;
   Stream chatRooms;
 
   @override
   void initState() {
     getUserInfogetChats();
     super.initState();
+    _firebaseMessaging.getToken().then((value) {
+      print(value);
+    });
   }
 
   Widget chatRoomsList() {
@@ -49,6 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   getUserInfogetChats() async {
     myUserName = await HelperFunctions().getUserNameSharedPreference();
+    myEmail = await HelperFunctions().getUserEmailSharedPreference();
     DatabaseMethods().getUserChats(myUserName).then((snapshots) {
       setState(() {
         chatRooms = snapshots;
@@ -82,21 +90,26 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    title: Text(suggestion['name']),
-                    leading: CircleAvatar(
-                      backgroundColor: Colors
-                          .primaries[Random().nextInt(Colors.primaries.length)],
-                      foregroundColor: Colors.white,
-                      child: Text(
-                        suggestion['name'].substring(0, 1).toUpperCase(),
+                  if (suggestion['email'] == myEmail) {
+                    return const SizedBox();
+                  } else
+                    return ListTile(
+                      title: Text(suggestion['name']),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.primaries[
+                            Random().nextInt(Colors.primaries.length)],
+                        foregroundColor: Colors.white,
+                        child: Text(
+                          suggestion['name'].substring(0, 1).toUpperCase(),
+                        ),
                       ),
-                    ),
-                  );
+                    );
                 },
                 onSuggestionSelected: (suggestion) {
                   //this._typeAheadController.text = suggestion['name'];
-                  sendMessage(suggestion['name'].trim().toString());
+                  sendMessage(
+                      suggestion['name'].trim(), suggestion['email'].trim());
+                  userEmail = suggestion['email'].trim();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -117,24 +130,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 suggestionsCallback: (pattern) async {
                   return await _databaseMethods.getSuggestions(pattern);
                 }),
-            //   child: Column(
-            //     children: [
-            //       Expanded(
-            //         child: ListView.builder(
-            //           itemCount: chatsData.length,
-            //           itemBuilder: (context, index) => ChatCard(
-            //             chat: chatsData[index],
-            //             press: () => Navigator.push(
-            //               context,
-            //               MaterialPageRoute(
-            //                 builder: (context) => MessagesScreen(),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
           ),
           Container(child: chatRoomsList()),
         ],
@@ -171,9 +166,10 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  sendMessage(String userName) {
+  sendMessage(String userName, String _userEmail) {
     usersOfChats = [];
     List<String> users = [myUserName, userName];
+    List<String> usersEmails = [myEmail, _userEmail];
     print("I am : " + myUserName.toString() + " Other is : " + userName);
     usersOfChats = users;
     chatRoomId = getChatRoomId(myUserName, userName);
@@ -181,6 +177,7 @@ class _ChatScreenState extends State<ChatScreen> {
     Map<String, dynamic> chatRoom = {
       "users": users,
       "chatRoomId": chatRoomId,
+      "usersEmails": usersEmails
     };
 
     _databaseMethods.addChatRoom(chatRoom, chatRoomId);

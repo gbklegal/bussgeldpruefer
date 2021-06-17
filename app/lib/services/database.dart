@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserData {
   String name;
@@ -13,10 +14,13 @@ class UserData {
 }
 
 class DatabaseMethods {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Future<void> addUserInfo(userData) async {
     FirebaseFirestore.instance
         .collection("users")
-        .add(userData)
+        .doc(_auth.currentUser.uid)
+        .set(userData)
         .catchError((e) {
       print(e.toString());
     });
@@ -60,13 +64,6 @@ class DatabaseMethods {
   // }
 
   addChatRoom(chatRoom, chatRoomId) async {
-    // return FirebaseFirestore.instance
-    //     .collection("chatRoom")
-    //     .doc(chatRoomId)
-    //     .set(chatRoom)
-    //     .catchError((e) {
-    //   print(e);
-    // });
     final snapShot = await FirebaseFirestore.instance
         .collection("chatRoom")
         .doc(chatRoomId)
@@ -94,12 +91,42 @@ class DatabaseMethods {
     });
   }
 
+  Future<void> updateUserToken(token) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_auth.currentUser.uid)
+        .update({
+      'token': token.toString(),
+    });
+  }
+
+  Future<String> getUserToken(email) async => await FirebaseFirestore.instance
+          .collection("users")
+          .where('email', isEqualTo: email)
+          .get()
+          .then((value) {
+        return value.docs[0]['token'].toString();
+      });
+
   getUserChats(String itIsMyName) async {
-    return await FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection("chatRoom")
         .where('users', arrayContains: itIsMyName)
         .snapshots();
   }
+
+  Future<String> getUserEmail(String chatRoomId, String myEmail) async =>
+      FirebaseFirestore.instance
+          .collection('chatRoom')
+          .doc(chatRoomId)
+          .get()
+          .then((value) {
+        if (value['usersEmails'][0].toString() == myEmail) {
+          return value['usersEmails'][1].toString();
+        } else {
+          return value['usersEmails'][0].toString();
+        }
+      });
 
   getChats(String chatRoomId) async {
     return FirebaseFirestore.instance
