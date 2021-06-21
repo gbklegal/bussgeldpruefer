@@ -18,7 +18,6 @@ class _ChatScreenState extends State<ChatScreen> {
   String chatRoomId;
   DatabaseMethods _databaseMethods = new DatabaseMethods();
   final TextEditingController _typeAheadController = TextEditingController();
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String myUserName;
   String myEmail;
   Stream chatRooms;
@@ -27,7 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     getUserInfogetChats();
     super.initState();
-    _firebaseMessaging.getToken().then((value) {
+    FirebaseMessaging.instance.getToken().then((value) {
       print(value);
     });
   }

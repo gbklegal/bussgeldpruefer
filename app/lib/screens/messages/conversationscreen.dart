@@ -141,8 +141,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
       _databaseMethods.addUserMessages(widget.chatRoomId, chatMessageMap);
 
-      sendNotificationMessageToPeerUser(
-          messageEditingController.text, widget.users[0], userToken);
+      sendNotificationMessageToPeerUser(messageEditingController.text,
+          widget.users[0], userToken, widget.chatRoomId);
       setState(() {
         messageEditingController.text = "";
       });
@@ -162,7 +162,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 
   Future<void> sendNotificationMessageToPeerUser(
-      textFromTextField, myName, peerUserToken) async {
+      textFromTextField, myName, peerUserToken, chatID) async {
     // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     try {
       await http.post(
@@ -183,15 +183,17 @@ class _ConversationScreenState extends State<ConversationScreen> {
               //"image" : myImageUrl
             },
             'priority': 'high',
-            // 'data': <String, dynamic>{
-            //   'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-            //   'id': '1',
-            //   'status': 'done',
-            //   'chatroomid': chatID,
-            //   'userImage':myImageUrl,
-            //   'userName':'$myName',
-            //   'message': messageType == 'text' ? '$textFromTextField' : '(Photo)',
-            // },
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done',
+              'chatroomid': chatID,
+              //'userImage':myImageUrl,
+              'userName': '$myName',
+              'users': widget.users,
+              //'message': messageType == 'text' ? '$textFromTextField' : '(Photo)',
+              'message': '$textFromTextField',
+            },
             'to': peerUserToken,
           },
         ),

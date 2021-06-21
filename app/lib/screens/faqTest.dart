@@ -27,7 +27,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future _getUsers() async {
-    var response = await http.get('https://dev02.gbk-rae.de/bgp/app/faq.json');
+    var response =
+        await http.get(Uri.parse('https://dev02.gbk-rae.de/bgp/app/faq.json'));
     // ignore: todo
     // TODO: check response status code
     return json.decode(utf8.decode(response.bodyBytes));

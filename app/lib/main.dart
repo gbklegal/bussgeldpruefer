@@ -1,12 +1,13 @@
 import 'package:app/global.dart';
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/login.dart';
+import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/screens/quickcheck.dart';
@@ -15,9 +16,19 @@ import 'package:app/screens/home.dart';
 // only for development
 // import 'package:app/screens/dummy.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  print('Handling a background message ${message.messageId}');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+  //   badge: true,
+  // );
   runApp(
     MaterialApp(
       home: MyApp(), // In prod. MyApp()
@@ -39,7 +50,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _message = '';
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
   int _currentIndex = 1; // default: 1
   final List<Widget> _tabs = [
     QuickCheckScreen(),
@@ -48,25 +59,56 @@ class _MyAppState extends State<MyApp> {
   ];
   bool userIsLoggedIn;
 
-  @override
-  void initState() {
-    getLoggedInState();
-    super.initState();
+  Future initFCM() async {
+    FirebaseMessaging.instance.requestPermission();
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage message) {
+      //If there is data in our notification
+      if (message != null) {
+        //We will open the route from the field view
+        //with the value definied in the notification
+        var chatRoomId = message.data['chatroomid'];
+        List<String> listOfUsers = message.data['users'];
+        print("abcd:" + listOfUsers.toString());
+        Navigator.push(
+            _scaffoldKey.currentContext,
+            MaterialPageRoute(
+                builder: (_) => ConversationScreen(chatRoomId, listOfUsers)));
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
+      // var message = event.data['chatroomid'];
+      // var listOfUsers = message.data['users'];
+
+      var chatRoomId = event.data['chatroomid'];
+      List<String> listOfUsers = event.data['users'];
+      print("abcd:" + listOfUsers.toString());
+      Navigator.push(
+          _scaffoldKey.currentContext,
+          MaterialPageRoute(
+              builder: (_) => ConversationScreen(chatRoomId, listOfUsers)));
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      var chatRoomId = message.data['chatroomid'];
+      List<String> listOfUsers = message.data['users'];
+      print("abcd:" + listOfUsers.toString());
+      Navigator.push(
+          _scaffoldKey.currentContext,
+          MaterialPageRoute(
+              builder: (_) => ConversationScreen(chatRoomId, listOfUsers)));
+    });
   }
 
-  // void getMessage() {
-  //   _firebaseMessaging.configure(
-  //       onMessage: (Map<String, dynamic> message) async {
-  //     print('received message');
-  //     setState(() => _message = message["notification"]["body"]);
-  //   }, onResume: (Map<String, dynamic> message) async {
-  //     print('on resume $message');
-  //     setState(() => _message = message["notification"]["body"]);
-  //   }, onLaunch: (Map<String, dynamic> message) async {
-  //     print('on launch $message');
-  //     setState(() => _message = message["notification"]["body"]);
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    initFCM();
+    getLoggedInState();
+  }
 
   getLoggedInState() async {
     await HelperFunctions().getUserLoggedInSharedPreference().then((value) {
@@ -80,6 +122,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBarWidget(isHome: true),
       body:
           // Container(

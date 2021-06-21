@@ -14,7 +14,6 @@ class RegisterationScreen extends StatefulWidget {
 }
 
 class _RegisterationScreenState extends State<RegisterationScreen> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DatabaseMethods databaseMethods = new DatabaseMethods();
@@ -34,7 +33,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
 
   _registerOnFirebase() {
     //_firebaseMessaging.subscribeToTopic('all');
-    _firebaseMessaging.getToken().then((token) {
+    FirebaseMessaging.instance.getToken().then((token) {
       _token = token;
       HelperFunctions().saveUserTokenSharedPreference(token);
       print(token);

@@ -17,7 +17,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   QuerySnapshot snapshotUserInfo;
@@ -27,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _registerOnFirebase() {
     //_firebaseMessaging.subscribeToTopic('all');
-    _firebaseMessaging.getToken().then((token) {
+    FirebaseMessaging.instance.getToken().then((token) {
       _token = token;
       HelperFunctions().saveUserTokenSharedPreference(token);
       print(token);

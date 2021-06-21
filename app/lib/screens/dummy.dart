@@ -9,7 +9,8 @@ class DummyScreen extends StatefulWidget {
 }
 
 Future sendForm(String firstname) async {
-  final String apiUrl = 'https://dev02.gbk-rae.de/bgp/app/contactform.php';
+  final Uri apiUrl =
+      Uri.parse('https://dev02.gbk-rae.de/bgp/app/contactform.php');
 
   final response = await http.post(apiUrl, body: {'firstname': firstname});
   final statusCode = response.statusCode;
