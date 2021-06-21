@@ -133,14 +133,14 @@ class _ChatScreenState extends State<ChatScreen> {
           Container(child: chatRoomsList()),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.blue,
-        child: Icon(
-          Icons.person_add_alt_1,
-          color: Colors.white,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   backgroundColor: Colors.blue,
+      //   child: Icon(
+      //     Icons.person_add_alt_1,
+      //     color: Colors.white,
+      //   ),
+      // ),
     );
   }
 
@@ -156,12 +156,12 @@ class _ChatScreenState extends State<ChatScreen> {
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.black),
       ),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {},
-        ),
-      ],
+      // actions: [
+      //   IconButton(
+      //     icon: Icon(Icons.search),
+      //     onPressed: () {},
+      //   ),
+      // ],
     );
   }
 
