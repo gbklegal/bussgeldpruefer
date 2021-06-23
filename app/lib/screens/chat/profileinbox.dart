@@ -190,7 +190,6 @@ class ProfileInboxEditorScreen extends StatefulWidget {
 
 class _ProfileInboxEditorScreenState extends State<ProfileInboxEditorScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _reciever, _sender, _subject, _message;
   DatabaseMethods _databaseMethods = new DatabaseMethods();
   final TextEditingController _typeAheadController = TextEditingController();
 
@@ -263,7 +262,6 @@ class _ProfileInboxEditorScreenState extends State<ProfileInboxEditorScreen> {
                               onSuggestionSelected: (suggestion) {
                                 this._typeAheadController.text =
                                     suggestion['email'];
-                                _reciever = suggestion['email'];
                               },
                               noItemsFoundBuilder: (context) => Container(
                                     height: 100,
@@ -281,7 +279,6 @@ class _ProfileInboxEditorScreenState extends State<ProfileInboxEditorScreen> {
                           TextFormField(
                             keyboardType: TextInputType.text,
                             autocorrect: false,
-                            onChanged: (input) => _sender = input,
                             decoration: InputDecoration(
                               labelText: 'Von:',
                               hintText: 'Name des Mandaten',
@@ -290,7 +287,6 @@ class _ProfileInboxEditorScreenState extends State<ProfileInboxEditorScreen> {
                           TextFormField(
                             keyboardType: TextInputType.text,
                             autocorrect: false,
-                            onChanged: (input) => _subject = input,
                             decoration: InputDecoration(
                               labelText: 'Betreff:',
                             ),
@@ -299,7 +295,6 @@ class _ProfileInboxEditorScreenState extends State<ProfileInboxEditorScreen> {
                             maxLines: 5,
                             maxLength: 120,
                             keyboardType: TextInputType.text,
-                            onChanged: (input) => _message = input,
                             decoration: InputDecoration(
                               hintText: 'Nachricht:',
                             ),

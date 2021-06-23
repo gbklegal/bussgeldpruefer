@@ -1,13 +1,20 @@
 import 'package:app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
-class FullScreenImage extends StatelessWidget {
+class FullScreenImage extends StatefulWidget {
   final String imageUrl;
   final String tag;
-  final _transformationController = TransformationController();
-  TapDownDetails _doubleTapDetails;
 
   FullScreenImage({Key key, this.imageUrl, this.tag}) : super(key: key);
+
+  @override
+  _FullScreenImageState createState() => _FullScreenImageState();
+}
+
+class _FullScreenImageState extends State<FullScreenImage> {
+  final _transformationController = TransformationController();
+
+  TapDownDetails _doubleTapDetails;
 
   void _handleDoubleTapDown(TapDownDetails details) {
     _doubleTapDetails = details;
@@ -37,11 +44,11 @@ class FullScreenImage extends StatelessWidget {
         onDoubleTap: _handleDoubleTap,
         child: Center(
           child: Hero(
-            tag: tag,
+            tag: widget.tag,
             child: InteractiveViewer(
               transformationController: _transformationController,
               child: Image.network(
-                imageUrl,
+                widget.imageUrl,
                 fit: BoxFit.fitHeight,
                 alignment: Alignment.center,
               ),

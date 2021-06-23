@@ -48,6 +48,15 @@ dependencies:
   random_color: ^1.0.5
   shared_preferences: ^0.5.7
 
+  # create signature pad
+  syncfusion_flutter_signaturepad: ^19.1.69-beta
+  # generate pdf document
+  syncfusion_flutter_pdf: ^19.1.69-beta
+
+  open_file: ^3.2.1
+  permission_handler: ^8.1.1
+
+
   flutter_localizations:
     sdk: flutter
 
