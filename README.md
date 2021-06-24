@@ -4,4 +4,4 @@
 Dart / Flutter [more](https://github.com/gbklegal/bussgeldpruefer/blob/main/app/README.md)
 
 ## Web
-Vite / Tailwind
+Vite / Tailwind [more](https://github.com/gbklegal/bussgeldpruefer/blob/main/web/README.md)
