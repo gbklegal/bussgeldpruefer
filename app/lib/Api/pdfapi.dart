@@ -1,38 +1,41 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class PdfApi {
   static Future<File> generatePDF({
+    String myName,
     ByteData imageSignature,
   }) async {
     final document = PdfDocument();
     final page = document.pages.add();
-    drawSignature(page, imageSignature);
+    drawSignature(page, myName, imageSignature);
     return saveFile(document);
   }
 
-  static void drawSignature(PdfPage page, ByteData imageSignature) {
+  static void drawSignature(
+      PdfPage page, String myName, ByteData imageSignature) async {
     final pageSize = page.getClientSize();
     final PdfBitmap image = PdfBitmap(imageSignature.buffer.asUint8List());
-    PdfBrush solidBrush = PdfSolidBrush(PdfColor(126, 151, 173));
 
-    page.graphics.drawRectangle(
-        brush: solidBrush, bounds: Rect.fromLTWH(0, 0, pageSize.width, 60));
+    // page.graphics.drawRectangle(
+    //     brush: solidBrush, bounds: Rect.fromLTWH(0, 0, pageSize.width, 60));
+    // page.graphics.drawString(
+    //     "Power Of Attorney", PdfStandardFont(PdfFontFamily.helvetica, 30),
+    //     bounds: Rect.fromLTWH(10, 10, 0, 0));
+    print(myName);
+    page.graphics.drawImage(PdfBitmap(await _readImageData('vollmacht.jpg')),
+        Rect.fromLTWH(0, 0, pageSize.width, pageSize.height));
     page.graphics.drawString(
-        "Power Of Attorney", PdfStandardFont(PdfFontFamily.helvetica, 30),
-        bounds: Rect.fromLTWH(10, 10, 0, 0));
-
-    page.graphics.drawString(
-        "Signature of User", PdfStandardFont(PdfFontFamily.helvetica, 18),
-        bounds: Rect.fromLTWH(
-            0, pageSize.height - 30 - (pageSize.height / 2), 0, 0));
-    page.graphics.drawImage(
-        image,
-        Rect.fromLTWH(0, pageSize.height - (pageSize.height / 2),
-            pageSize.width, pageSize.height / 2));
+        myName, PdfStandardFont(PdfFontFamily.helvetica, 12),
+        bounds: Rect.fromLTWH(60, (pageSize.height / 4) - 10, 0, 0));
+    page.graphics.drawImage(image,
+        Rect.fromLTWH(pageSize.width - 140, pageSize.height - 251, 70, 25));
+    page.graphics.drawImage(image,
+        Rect.fromLTWH(pageSize.width - 140, pageSize.height - 118, 70, 25));
   }
 
   static Future<File> saveFile(PdfDocument document) async {
@@ -44,4 +47,10 @@ class PdfApi {
     document.dispose();
     return file;
   }
+}
+
+Future<Uint8List> _readImageData(String name) async {
+  print("object");
+  final data = await rootBundle.load('assets/documents/$name');
+  return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 }

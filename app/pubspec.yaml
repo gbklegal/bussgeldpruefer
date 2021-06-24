@@ -55,6 +55,7 @@ dependencies:
 
   open_file: ^3.2.1
   permission_handler: ^8.1.1
+  auth_buttons: ^1.0.1+4
 
 
   flutter_localizations:
@@ -111,6 +112,8 @@ flutter:
     - assets/loading.gif
     - assets/images/icons/send.png
     - assets/images/icons/hollow_send.png
+    - assets/documents/vollmacht.jpg
+    - assets/documents/vollmacht.pdf
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

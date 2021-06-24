@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:auth_buttons/auth_buttons.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function toggleView;
@@ -230,6 +231,46 @@ class _LoginScreenState extends State<LoginScreen> {
                             builder: (BuildContext context) =>
                                 RegisterationScreen()));
                   },
+                ),
+              ),
+              _padding(10.0),
+              GoogleAuthButton(
+                onPressed: () {},
+                style: AuthButtonStyle(
+                  buttonColor: Colors.white,
+                  borderColor: Colors.black.withOpacity(0.2),
+                  borderRadius: 10.0,
+                  width: 250.0,
+                  height: 50.0,
+                  iconSize: 25.0,
+                  iconBackground: Colors.transparent,
+                  iconType: AuthIconType.outlined,
+                  buttonType: AuthButtonType.secondary,
+                  padding: const EdgeInsets.all(8.0),
+                  textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              _padding(10.0),
+              AppleAuthButton(
+                onPressed: () {},
+                darkMode: true,
+                style: AuthButtonStyle(
+                  buttonColor: Colors.black,
+                  borderColor: Colors.black.withOpacity(0.2),
+                  borderRadius: 10.0,
+                  width: 250.0,
+                  height: 50.0,
+                  iconSize: 25.0,
+                  iconType: AuthIconType.outlined,
+                  buttonType: AuthButtonType.secondary,
+                  padding: const EdgeInsets.all(8.0),
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ],

@@ -2,6 +2,7 @@
 //import 'dart:async';
 import 'dart:ui';
 
+import 'package:app/helper/helperfunctions.dart';
 import 'package:open_file/open_file.dart';
 import 'package:app/Api/pdfapi.dart';
 import 'package:app/functions/newscreen.dart';
@@ -20,9 +21,15 @@ class PruefungBussgeldbescheidVollmacht extends StatefulWidget {
 
 class _PruefungBussgeldbescheidVollmachtState
     extends State<PruefungBussgeldbescheidVollmacht> {
+  String myName = '';
   final keySignaturePad = GlobalKey<SfSignaturePadState>();
   _padding([height = 20.0]) {
     return SizedBox(height: height);
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -123,8 +130,9 @@ class _PruefungBussgeldbescheidVollmachtState
   Future saveSignature() async {
     final image = await keySignaturePad.currentState.toImage();
     final imageSignature = await image.toByteData(format: ImageByteFormat.png);
-
+    myName = await HelperFunctions().getUserNameSharedPreference();
     final file = await PdfApi.generatePDF(
+      myName: myName,
       imageSignature: imageSignature,
     );
     await OpenFile.open(file.path);
