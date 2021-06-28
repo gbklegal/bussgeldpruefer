@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,6 +21,10 @@ class PdfApi {
       PdfPage page, String myName, ByteData imageSignature) async {
     final pageSize = page.getClientSize();
     final PdfBitmap image = PdfBitmap(imageSignature.buffer.asUint8List());
+    DateTime now = new DateTime.now();
+    var formatter = new DateFormat('dd.MM.yyyy');
+    String formattedDate = formatter.format(now);
+    //DateTime date = new DateTime(now.year, now.month, now.day);
 
     // page.graphics.drawRectangle(
     //     brush: solidBrush, bounds: Rect.fromLTWH(0, 0, pageSize.width, 60));
@@ -32,6 +37,12 @@ class PdfApi {
     page.graphics.drawString(
         myName, PdfStandardFont(PdfFontFamily.helvetica, 12),
         bounds: Rect.fromLTWH(60, (pageSize.height / 4) - 10, 0, 0));
+    page.graphics.drawString(
+        formattedDate, PdfStandardFont(PdfFontFamily.helvetica, 12),
+        bounds: Rect.fromLTWH(60, pageSize.height - 230, 0, 0));
+    page.graphics.drawString(
+        formattedDate, PdfStandardFont(PdfFontFamily.helvetica, 12),
+        bounds: Rect.fromLTWH(60, pageSize.height - 98, 0, 0));
     page.graphics.drawImage(image,
         Rect.fromLTWH(pageSize.width - 140, pageSize.height - 251, 70, 25));
     page.graphics.drawImage(image,

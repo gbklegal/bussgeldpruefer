@@ -1,7 +1,10 @@
 //import 'dart:ui';
 //import 'dart:async';
 import 'dart:ui';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart' as Path;
 import 'package:app/helper/helperfunctions.dart';
 import 'package:open_file/open_file.dart';
 import 'package:app/Api/pdfapi.dart';
@@ -22,6 +25,10 @@ class PruefungBussgeldbescheidVollmacht extends StatefulWidget {
 class _PruefungBussgeldbescheidVollmachtState
     extends State<PruefungBussgeldbescheidVollmacht> {
   String myName = '';
+  List<String> _fileURLs = [];
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  firebase_storage.Reference ref;
+  var file;
   final keySignaturePad = GlobalKey<SfSignaturePadState>();
   _padding([height = 20.0]) {
     return SizedBox(height: height);
@@ -68,12 +75,14 @@ class _PruefungBussgeldbescheidVollmachtState
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    child: Text('senden'),
-                    onPressed: () => newScreen(
-                      context: context,
-                      screen: PruefungBussgeldbescheidFinalScreen(),
-                    ),
-                  ),
+                      child: Text('senden'),
+                      onPressed: () {
+                        uploadFile();
+                        newScreen(
+                          context: context,
+                          screen: PruefungBussgeldbescheidFinalScreen(),
+                        );
+                      }),
                 ),
                 _padding(),
                 Row(
@@ -131,10 +140,77 @@ class _PruefungBussgeldbescheidVollmachtState
     final image = await keySignaturePad.currentState.toImage();
     final imageSignature = await image.toByteData(format: ImageByteFormat.png);
     myName = await HelperFunctions().getUserNameSharedPreference();
-    final file = await PdfApi.generatePDF(
+    file = await PdfApi.generatePDF(
       myName: myName,
       imageSignature: imageSignature,
     );
     await OpenFile.open(file.path);
+  }
+
+  Future uploadFile() async {
+    // int i = 1;
+    // for (var img in _image) {
+    //   setState(() {
+    //     val = i / _image.length;
+    //   });
+    ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('signatures/${Path.basename(file.path)}');
+    await ref.putFile(file).whenComplete(() async {
+      _fileURLs.add(await ref.getDownloadURL());
+      //i++;
+    });
+
+    _add();
+  }
+
+  Future<void> _add() async {
+    String orderNumberFormat = '000000000';
+    var totalOrders = await getTotalOrderNumbers();
+
+    print("productCount" +
+        totalOrders.toString()); // Count of Documents in Collection
+    int orderNumber = int.parse(orderNumberFormat) + totalOrders;
+    Map<String, dynamic> data = <String, dynamic>{"signatureFile": _fileURLs};
+    await FirebaseFirestore.instance
+        .collection("Orders")
+        .doc(orderNumber.toString())
+        .collection("Signatures")
+        .add(data)
+        .whenComplete(() {
+      print("Document Added");
+    });
+    // await FirebaseFirestore.instance
+    //     .collection("TotalOrders")
+    //     .add(data)
+    //     .whenComplete(() {
+    //   print("Document Added");
+    // });
+    setTotalOrderNumbers(totalOrders + 1);
+    _fileURLs.clear();
+  }
+
+  Future<int> setTotalOrderNumbers(noOfOrders) async {
+    Map<String, dynamic> data = <String, dynamic>{"totalOrders": noOfOrders};
+    await FirebaseFirestore.instance
+        .collection("TotalOrders")
+        .doc('All Order Numbers')
+        .set(data)
+        .whenComplete(() {
+      print("Document Added");
+    });
+  }
+
+  Future<int> getTotalOrderNumbers() async {
+    int totalOrders = 0;
+    var userQuery = await FirebaseFirestore.instance
+        .collection("TotalOrders")
+        .doc('All Order Numbers')
+        .get()
+        .then((value) {
+      print("ABC:" + value.get('totalOrders').toString());
+      totalOrders = value.get('totalOrders');
+    });
+    return totalOrders;
   }
 }
