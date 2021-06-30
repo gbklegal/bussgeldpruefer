@@ -9,16 +9,17 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 class PdfApi {
   static Future<File> generatePDF({
     String myName,
+    String orderNumber,
     ByteData imageSignature,
   }) async {
     final document = PdfDocument();
     final page = document.pages.add();
-    drawSignature(page, myName, imageSignature);
+    drawSignature(page, myName, orderNumber, imageSignature);
     return saveFile(document);
   }
 
-  static void drawSignature(
-      PdfPage page, String myName, ByteData imageSignature) async {
+  static void drawSignature(PdfPage page, String myName, String orderNumber,
+      ByteData imageSignature) async {
     final pageSize = page.getClientSize();
     final PdfBitmap image = PdfBitmap(imageSignature.buffer.asUint8List());
     DateTime now = new DateTime.now();
@@ -37,9 +38,13 @@ class PdfApi {
     page.graphics.drawString(
         myName, PdfStandardFont(PdfFontFamily.helvetica, 12),
         bounds: Rect.fromLTWH(60, (pageSize.height / 4) - 10, 0, 0));
+    page.graphics.drawString(orderNumber == null ? '' : orderNumber,
+        PdfStandardFont(PdfFontFamily.helvetica, 10),
+        bounds: Rect.fromLTWH(187, (pageSize.height / 3) - 32, 0, 0));
     page.graphics.drawString(
         formattedDate, PdfStandardFont(PdfFontFamily.helvetica, 12),
         bounds: Rect.fromLTWH(60, pageSize.height - 230, 0, 0));
+
     page.graphics.drawString(
         formattedDate, PdfStandardFont(PdfFontFamily.helvetica, 12),
         bounds: Rect.fromLTWH(60, pageSize.height - 98, 0, 0));

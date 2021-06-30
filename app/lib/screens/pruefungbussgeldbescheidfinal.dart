@@ -24,83 +24,94 @@ class _PruefungBussgeldbescheidFinalScreenState
     return SizedBox(height: height);
   }
 
+  Future<bool> _willPopCallback() async {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/screen1', (Route<dynamic> route) => false);
+    return false; // return true if the route to be popped
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWidget(),
-      body: ListView(
-        children: <Widget>[
-          PageTitle('Prüfung Bußgeldbescheid'),
-          Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Geschafft!',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black),
-                    children: <TextSpan>[
-                      TextSpan(text: 'Der Antrag wurde '),
-                      TextSpan(
-                        text: 'erfolgreich',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: _willPopCallback,
+      child: Scaffold(
+        appBar: AppBarWidget(),
+        body: ListView(
+          children: <Widget>[
+            PageTitle('Prüfung Bußgeldbescheid'),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Geschafft!',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(color: Colors.black),
+                      children: <TextSpan>[
+                        TextSpan(text: 'Der Antrag wurde '),
+                        TextSpan(
+                          text: 'erfolgreich',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(text: ' eingereicht.'),
+                      ],
+                    ),
+                  ),
+                  _padding(),
+                  Align(
+                    alignment: Alignment.center,
+                    child: AllConfettiWidget(
+                      child: Image.asset('assets/images/icons/confetti.png',
+                          height: 80),
+                    ),
+                  ),
+                  _padding(),
+                  _title('Was passiert als Nächstes?'),
+                  Table(
+                    columnWidths: <int, TableColumnWidth>{
+                      0: IntrinsicColumnWidth(),
+                    },
+                    children: <TableRow>[
+                      TableRow(
+                        children: <Widget>[
+                          Text('1.'),
+                          Text(
+                              'Du erhältst nun eine E-Mail mit allen wichtigen Daten.'),
+                        ],
                       ),
-                      TextSpan(text: ' eingereicht.'),
+                      TableRow(
+                        children: <Widget>[
+                          Text('2.'),
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(color: Colors.black),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text:
+                                        'Die Anwaltskanzlei meldet sich bei dir in 24 Stunden.'),
+                                TextSpan(
+                                    text:
+                                        '\n(Es entstehen keine Anwaltskosten.)',
+                                    style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-                _padding(),
-                Align(
-                  alignment: Alignment.center,
-                  child: AllConfettiWidget(
-                    child: Image.asset('assets/icons/confetti.png', height: 80),
-                  ),
-                ),
-                _padding(),
-                _title('Was passiert als Nächstes?'),
-                Table(
-                  columnWidths: <int, TableColumnWidth>{
-                    0: IntrinsicColumnWidth(),
-                  },
-                  children: <TableRow>[
-                    TableRow(
-                      children: <Widget>[
-                        Text('1.'),
-                        Text(
-                            'Du erhältst nun eine E-Mail mit allen wichtigen Daten.'),
-                      ],
-                    ),
-                    TableRow(
-                      children: <Widget>[
-                        Text('2.'),
-                        RichText(
-                          text: TextSpan(
-                            style: TextStyle(color: Colors.black),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text:
-                                      'Die Anwaltskanzlei meldet sich bei dir in 24 Stunden.'),
-                              TextSpan(
-                                  text: '\n(Es entstehen keine Anwaltskosten.)',
-                                  style: TextStyle(fontSize: 12)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                _padding(),
-                Text(
-                    'Du willst dich über den aktuellen Status deines Falls informieren?\nDann eröffne einen Account bei BussgeldPruefer!\n- Information über Deinen aktuellen Status\n- Direkter Austausch mit der Partnerkanzlei\n- Einfacher Upload Deiner Dokumente'),
-              ],
+                  _padding(),
+                  Text(
+                      'Du willst dich über den aktuellen Status deines Falls informieren?\nDann eröffne einen Account bei BussgeldPruefer!\n- Information über Deinen aktuellen Status\n- Direkter Austausch mit der Partnerkanzlei\n- Einfacher Upload Deiner Dokumente'),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

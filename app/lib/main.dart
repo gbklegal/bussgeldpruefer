@@ -3,6 +3,7 @@ import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/login.dart';
 import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
+import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +33,11 @@ void main() async {
   runApp(
     MaterialApp(
       home: MyApp(), // In prod. MyApp()
+      routes: <String, WidgetBuilder>{
+        '/screen1': (BuildContext context) => new MyApp(),
+        '/screen2': (BuildContext context) =>
+            new PruefungBussgeldbescheidFinalScreen()
+      },
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

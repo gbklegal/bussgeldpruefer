@@ -77,11 +77,8 @@ class _PruefungBussgeldbescheidVollmachtState
                   child: ElevatedButton(
                       child: Text('senden'),
                       onPressed: () {
-                        uploadFile();
-                        newScreen(
-                          context: context,
-                          screen: PruefungBussgeldbescheidFinalScreen(),
-                        );
+                        showAlertDialog(context,
+                            "Möchten Sie das signierte Dokument wirklich senden?");
                       }),
                 ),
                 _padding(),
@@ -118,9 +115,7 @@ class _PruefungBussgeldbescheidVollmachtState
                         children: <Widget>[
                           IconButton(
                             icon: Icon(Icons.save_outlined),
-                            onPressed: () {
-                              saveSignature();
-                            },
+                            onPressed: () {},
                           ),
                           Text('speichern'),
                         ],
@@ -136,69 +131,93 @@ class _PruefungBussgeldbescheidVollmachtState
     );
   }
 
-  Future saveSignature() async {
+  showAlertDialog(BuildContext context, String dialog) {
+    // set up the button
+    Widget okButton = ElevatedButton(
+      child: Text("OK"),
+      onPressed: () {
+        uploadFile();
+        newScreen(
+          context: context,
+          screen: PruefungBussgeldbescheidFinalScreen(),
+        );
+      },
+    );
+    Widget cancelButton = ElevatedButton(
+      child: Text("Stornieren"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    Widget previewButton = ElevatedButton(
+      child: Text("Dokumentvorschau"),
+      onPressed: () async {
+        await saveSignature();
+        await OpenFile.open(file.path);
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Dokument senden"),
+      content: Text(dialog),
+      actions: [
+        previewButton,
+        cancelButton,
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  Future saveSignature({orderNumber}) async {
     final image = await keySignaturePad.currentState.toImage();
     final imageSignature = await image.toByteData(format: ImageByteFormat.png);
     myName = await HelperFunctions().getUserNameSharedPreference();
     file = await PdfApi.generatePDF(
       myName: myName,
+      orderNumber: orderNumber,
       imageSignature: imageSignature,
     );
-    await OpenFile.open(file.path);
+    //await OpenFile.open(file.path);
   }
 
   Future uploadFile() async {
-    // int i = 1;
-    // for (var img in _image) {
-    //   setState(() {
-    //     val = i / _image.length;
-    //   });
+    var totalOrders = await getTotalOrderNumbers();
+    var orderNumber = totalOrders.toString().padLeft(9, '0');
+    await saveSignature(orderNumber: orderNumber);
     ref = firebase_storage.FirebaseStorage.instance
         .ref()
         .child('signatures/${Path.basename(file.path)}');
     await ref.putFile(file).whenComplete(() async {
       _fileURLs.add(await ref.getDownloadURL());
-      //i++;
     });
-
-    _add();
+    _add(orderNumber);
   }
 
-  Future<void> _add() async {
-    String orderNumberFormat = '000000000';
-    var totalOrders = await getTotalOrderNumbers();
-
-    print("productCount" +
-        totalOrders.toString()); // Count of Documents in Collection
-    int orderNumber = int.parse(orderNumberFormat) + totalOrders;
+  Future<void> _add(orderNumber) async {
     Map<String, dynamic> data = <String, dynamic>{"signatureFile": _fileURLs};
     await FirebaseFirestore.instance
         .collection("Orders")
-        .doc(orderNumber.toString())
+        .doc(orderNumber)
         .collection("Signatures")
-        .add(data)
-        .whenComplete(() {
-      print("Document Added");
-    });
-    // await FirebaseFirestore.instance
-    //     .collection("TotalOrders")
-    //     .add(data)
-    //     .whenComplete(() {
-    //   print("Document Added");
-    // });
-    setTotalOrderNumbers(totalOrders + 1);
+        .add(data);
     _fileURLs.clear();
   }
 
-  Future<int> setTotalOrderNumbers(noOfOrders) async {
+  Future<void> setTotalOrderNumbers(noOfOrders) async {
     Map<String, dynamic> data = <String, dynamic>{"totalOrders": noOfOrders};
     await FirebaseFirestore.instance
         .collection("TotalOrders")
         .doc('All Order Numbers')
-        .set(data)
-        .whenComplete(() {
-      print("Document Added");
-    });
+        .set(data);
   }
 
   Future<int> getTotalOrderNumbers() async {
@@ -206,11 +225,15 @@ class _PruefungBussgeldbescheidVollmachtState
     var userQuery = await FirebaseFirestore.instance
         .collection("TotalOrders")
         .doc('All Order Numbers')
-        .get()
-        .then((value) {
-      print("ABC:" + value.get('totalOrders').toString());
-      totalOrders = value.get('totalOrders');
-    });
-    return totalOrders;
+        .get();
+    if (userQuery.exists) {
+      totalOrders = userQuery.get('totalOrders');
+      totalOrders++;
+      setTotalOrderNumbers(totalOrders);
+      return totalOrders;
+    } else {
+      setTotalOrderNumbers(1);
+      return 1;
+    }
   }
 }
