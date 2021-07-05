@@ -1,5 +1,6 @@
 import 'package:app/global.dart';
 import 'package:app/helper/helperfunctions.dart';
+import 'package:app/provider/google_sign_in.dart';
 import 'package:app/screens/authenticate/login.dart';
 import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/screens/quickcheck.dart';
 import 'package:app/screens/home.dart';
+import 'package:provider/provider.dart';
 
 // only for development
 // import 'package:app/screens/dummy.dart';
@@ -31,21 +33,25 @@ void main() async {
   //   badge: true,
   // );
   runApp(
-    MaterialApp(
-      home: MyApp(), // In prod. MyApp()
-      routes: <String, WidgetBuilder>{
-        '/screen1': (BuildContext context) => new MyApp(),
-        '/screen2': (BuildContext context) =>
-            new PruefungBussgeldbescheidFinalScreen()
-      },
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('de', 'DE'),
-      ],
+    ChangeNotifierProvider(
+      create: (context) => GoogleSignInProvider(),
+      child: MaterialApp(
+        home: MyApp(), // In prod. MyApp()
+        routes: <String, WidgetBuilder>{
+          '/screen1': (BuildContext context) => new MyApp(),
+          '/screen2': (BuildContext context) =>
+              new PruefungBussgeldbescheidFinalScreen(),
+          '/ProfileData': (BuildContext context) => new ProfileData()
+        },
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('de', 'DE'),
+        ],
+      ),
     ),
   );
 }

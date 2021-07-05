@@ -1,8 +1,5 @@
-//import 'dart:ui';
-//import 'dart:async';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart' as Path;
 import 'package:app/helper/helperfunctions.dart';
@@ -26,7 +23,6 @@ class _PruefungBussgeldbescheidVollmachtState
     extends State<PruefungBussgeldbescheidVollmacht> {
   String myName = '';
   List<String> _fileURLs = [];
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   firebase_storage.Reference ref;
   var file;
   final keySignaturePad = GlobalKey<SfSignaturePadState>();

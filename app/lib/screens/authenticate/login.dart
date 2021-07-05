@@ -1,3 +1,4 @@
+import 'package:app/provider/google_sign_in.dart';
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/registeration.dart';
 import 'package:app/services/database.dart';
@@ -7,6 +8,7 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 
@@ -64,9 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
         HelperFunctions().saveUserLoggedInSharedPreference(true);
         HelperFunctions()
             .saveUserNameSharedPreference(userInfoSnapshot.docs[0]['name']);
-        String name;
-        name = await HelperFunctions().getUserNameSharedPreference();
-        print(name);
+        // String name;
+        // name = await HelperFunctions().getUserNameSharedPreference();
         HelperFunctions()
             .saveUserEmailSharedPreference(userInfoSnapshot.docs[0]['email']);
         HelperFunctions().saveUserLoggedInSharedPreference(true);
@@ -235,7 +236,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               _padding(10.0),
               GoogleAuthButton(
-                onPressed: () {},
+                onPressed: () {
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.googleLogin(_token);
+                  Navigator.popUntil(
+                    context,
+                    ModalRoute.withName('/'),
+                  );
+                },
                 style: AuthButtonStyle(
                   buttonColor: Colors.white,
                   borderColor: Colors.black.withOpacity(0.2),
@@ -279,4 +288,47 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  // _appleLogin() async {
+  //   final credential = await SignInWithApple.getAppleIDCredential(
+  //     scopes: [
+  //       AppleIDAuthorizationScopes.email,
+  //       AppleIDAuthorizationScopes.fullName,
+  //     ],
+  //     webAuthenticationOptions: WebAuthenticationOptions(
+  //       clientId: 'com.aboutyou.dart_packages.sign_in_with_apple.example',
+  //       redirectUri: Uri.parse(
+  //         'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
+  //       ),
+  //     ),
+  //     nonce: 'example-nonce',
+  //     state: 'example-state',
+  //   );
+
+  //   print(credential);
+
+  //   // This is the endpoint that will convert an authorization code obtained
+  //   // via Sign in with Apple into a session in your system
+  //   final signInWithAppleEndpoint = Uri(
+  //     scheme: 'https',
+  //     host: 'flutter-sign-in-with-apple-example.glitch.me',
+  //     path: '/sign_in_with_apple',
+  //     queryParameters: <String, String>{
+  //       'code': credential.authorizationCode,
+  //       if (credential.givenName != null) 'firstName': credential.givenName,
+  //       if (credential.familyName != null) 'lastName': credential.familyName,
+  //       'useBundleId':
+  //           Platform.isAndroid || Platform.isMacOS ? 'true' : 'false',
+  //       if (credential.state != null) 'state': credential.state,
+  //     },
+  //   );
+
+  //   final session = await http.Client().post(
+  //     signInWithAppleEndpoint,
+  //   );
+
+  //   // If we got this far, a session based on the Apple ID credential has been created in your system,
+  //   // and you can now set this as the app's session
+  //   print(session);
+  // }
 }
