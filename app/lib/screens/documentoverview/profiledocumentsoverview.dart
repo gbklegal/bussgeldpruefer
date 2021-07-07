@@ -210,7 +210,9 @@ class _ProfileDocumentsOverviewScreenState
                           uploading = true;
                         });
                         uploadFile().whenComplete(() {
-                          uploading = false;
+                          setState(() {
+                            uploading = false;
+                          });
                           if (_image.length == 0) {
                             showAlertDialog(
                                 context, "Es ist kein Dokument ausgewählt.");

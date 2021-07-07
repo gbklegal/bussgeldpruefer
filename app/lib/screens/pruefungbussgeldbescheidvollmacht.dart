@@ -21,6 +21,7 @@ class PruefungBussgeldbescheidVollmacht extends StatefulWidget {
 
 class _PruefungBussgeldbescheidVollmachtState
     extends State<PruefungBussgeldbescheidVollmacht> {
+  bool uploading = false;
   String myName = '';
   List<String> _fileURLs = [];
   firebase_storage.Reference ref;
@@ -68,11 +69,32 @@ class _PruefungBussgeldbescheidVollmachtState
                 //   ),
                 // ),
                 _padding(),
+                uploading
+                    ? Center(
+                        child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Hochladen...',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          _padding(10.0),
+                          CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.blue),
+                          ),
+                        ],
+                      ))
+                    : Container(),
+                _padding(),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                       child: Text('senden'),
-                      onPressed: () {
+                      onPressed: () async {
+                        await saveSignature();
                         showAlertDialog(context,
                             "Möchten Sie das signierte Dokument wirklich senden?");
                       }),
@@ -131,12 +153,20 @@ class _PruefungBussgeldbescheidVollmachtState
     // set up the button
     Widget okButton = ElevatedButton(
       child: Text("OK"),
-      onPressed: () {
-        uploadFile();
-        newScreen(
-          context: context,
-          screen: PruefungBussgeldbescheidFinalScreen(),
-        );
+      onPressed: () async {
+        Navigator.pop(context);
+        setState(() {
+          uploading = true;
+        });
+        await uploadFile().whenComplete(() {
+          setState(() {
+            uploading = false;
+          });
+          newScreen(
+            context: context,
+            screen: PruefungBussgeldbescheidFinalScreen(),
+          );
+        });
       },
     );
     Widget cancelButton = ElevatedButton(
@@ -149,8 +179,9 @@ class _PruefungBussgeldbescheidVollmachtState
     Widget previewButton = ElevatedButton(
       child: Text("Dokumentvorschau"),
       onPressed: () async {
-        await saveSignature();
+        //await saveSignature();
         await OpenFile.open(file.path);
+        //file = null;
       },
     );
     // set up the AlertDialog
@@ -174,6 +205,8 @@ class _PruefungBussgeldbescheidVollmachtState
   }
 
   Future saveSignature({orderNumber}) async {
+    var totalOrders = await getTotalOrderNumbers();
+    var orderNumber = totalOrders.toString().padLeft(9, '0');
     final image = await keySignaturePad.currentState.toImage();
     final imageSignature = await image.toByteData(format: ImageByteFormat.png);
     myName = await HelperFunctions().getUserNameSharedPreference();
@@ -188,17 +221,16 @@ class _PruefungBussgeldbescheidVollmachtState
   Future uploadFile() async {
     var totalOrders = await getTotalOrderNumbers();
     var orderNumber = totalOrders.toString().padLeft(9, '0');
-    await saveSignature(orderNumber: orderNumber);
     ref = firebase_storage.FirebaseStorage.instance
         .ref()
         .child('signatures/${Path.basename(file.path)}');
     await ref.putFile(file).whenComplete(() async {
       _fileURLs.add(await ref.getDownloadURL());
     });
-    _add(orderNumber);
+    _add(orderNumber, totalOrders);
   }
 
-  Future<void> _add(orderNumber) async {
+  Future<void> _add(orderNumber, totalOrders) async {
     Map<String, dynamic> data = <String, dynamic>{"signatureFile": _fileURLs};
     await FirebaseFirestore.instance
         .collection("Orders")
@@ -206,6 +238,7 @@ class _PruefungBussgeldbescheidVollmachtState
         .collection("Signatures")
         .add(data);
     _fileURLs.clear();
+    setTotalOrderNumbers(totalOrders);
   }
 
   Future<void> setTotalOrderNumbers(noOfOrders) async {
@@ -225,10 +258,8 @@ class _PruefungBussgeldbescheidVollmachtState
     if (userQuery.exists) {
       totalOrders = userQuery.get('totalOrders');
       totalOrders++;
-      setTotalOrderNumbers(totalOrders);
       return totalOrders;
     } else {
-      setTotalOrderNumbers(1);
       return 1;
     }
   }
