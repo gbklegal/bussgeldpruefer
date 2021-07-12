@@ -1,4 +1,7 @@
 import 'dart:ui';
+import 'package:app/constants.dart';
+import 'package:app/services/connectivity.dart';
+import 'package:app/utilities/connection_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart' as Path;
@@ -12,6 +15,8 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
+
+import '../global.dart';
 
 class PruefungBussgeldbescheidVollmacht extends StatefulWidget {
   @override
@@ -95,8 +100,13 @@ class _PruefungBussgeldbescheidVollmachtState
                       child: Text('senden'),
                       onPressed: () async {
                         await saveSignature();
-                        showAlertDialog(context,
-                            "Möchten Sie das signierte Dokument wirklich senden?");
+                        isConnection =
+                            await ConnectionStatus().checkConnectionStatus();
+                        isConnection
+                            ? showAlertDialog(context,
+                                "Möchten Sie das signierte Dokument wirklich senden?")
+                            : ConnectionDialog().showAlertDialog(context,
+                                uploadDialogTitle, notConnectedInternet);
                       }),
                 ),
                 _padding(),

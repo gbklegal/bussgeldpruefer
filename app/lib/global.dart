@@ -6,5 +6,7 @@ int quickCheckViolationIndex;
 String quickCheckTrafficLightColor = 'red';
 String quickCheckLastOfficialLetter = 'Anhörungsbogen';
 
+bool isConnection = false;
+
 // Inbox
 int inboxUnreadBadgeCount = 1;

@@ -1,8 +1,11 @@
+import 'package:app/constants.dart';
 import 'package:app/provider/google_sign_in.dart';
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/registeration.dart';
+import 'package:app/services/connectivity.dart';
 import 'package:app/services/database.dart';
 import 'package:app/services/validators.dart';
+import 'package:app/utilities/connection_dialog.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +14,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_buttons/auth_buttons.dart';
+
+import '../../global.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function toggleView;
@@ -23,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   QuerySnapshot snapshotUserInfo;
-
   String _email, _password, _error, _token;
   String error = '';
 
@@ -201,8 +205,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     primary: Color(0xff5CC8C5),
                     onPrimary: Colors.white,
                   ),
-                  onPressed: () {
-                    login();
+                  onPressed: () async {
+                    isConnection =
+                        await ConnectionStatus().checkConnectionStatus();
+                    isConnection
+                        ? login()
+                        : ConnectionDialog().showAlertDialog(
+                            context, loginDialogTitle, notConnectedInternet);
                   },
                 ),
               ),
@@ -236,14 +245,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               _padding(10.0),
               GoogleAuthButton(
-                onPressed: () {
+                onPressed: () async {
+                  isConnection =
+                      await ConnectionStatus().checkConnectionStatus();
                   final provider =
                       Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin(_token);
-                  Navigator.popUntil(
-                    context,
-                    ModalRoute.withName('/'),
-                  );
+                  isConnection
+                      ? provider.googleLogin(_token).whenComplete(() => {
+                            Navigator.popUntil(
+                              context,
+                              ModalRoute.withName('/'),
+                            )
+                          })
+                      : ConnectionDialog().showAlertDialog(
+                          context, loginDialogTitle, notConnectedInternet);
                 },
                 style: AuthButtonStyle(
                   buttonColor: Colors.white,
@@ -288,7 +303,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
+}
   // _appleLogin() async {
   //   final credential = await SignInWithApple.getAppleIDCredential(
   //     scopes: [
@@ -331,4 +346,4 @@ class _LoginScreenState extends State<LoginScreen> {
   //   // and you can now set this as the app's session
   //   print(session);
   // }
-}
+

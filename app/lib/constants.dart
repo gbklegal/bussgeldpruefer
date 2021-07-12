@@ -12,6 +12,14 @@ const String firebaseCloudserverToken =
 
 const kDefaultPadding = 20.0;
 
+const String loginDialogTitle = "Kann nicht einloggen";
+const String registerDialogTitle = "Kann sich nicht registrieren";
+const String uploadDialogTitle = "Kann nicht hochladen";
+const String noInternetTitle = "Kein Internet";
+
+const String notConnectedInternet =
+    "Sie sind nicht mit dem Internet verbunden!!";
+
 class Constants {
   static String myName = "";
 }

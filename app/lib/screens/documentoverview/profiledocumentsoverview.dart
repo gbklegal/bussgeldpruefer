@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:app/global.dart';
 import 'package:app/screens/documentoverview/fullscreenimage.dart';
+import 'package:app/services/connectivity.dart';
+import 'package:app/utilities/connection_dialog.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +12,8 @@ import 'package:flutter/rendering.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart' as Path;
 import 'package:image_picker/image_picker.dart';
+
+import '../../constants.dart';
 
 class ProfileDocumentsOverviewScreen extends StatefulWidget {
   @override
@@ -205,22 +210,29 @@ class _ProfileDocumentsOverviewScreenState
                     width: double.infinity,
                     child: ElevatedButton(
                       child: Text('senden'),
-                      onPressed: () {
-                        setState(() {
-                          uploading = true;
-                        });
-                        uploadFile().whenComplete(() {
+                      onPressed: () async {
+                        isConnection =
+                            await ConnectionStatus().checkConnectionStatus();
+                        if (isConnection && _image.length != 0) {
                           setState(() {
-                            uploading = false;
+                            uploading = true;
                           });
-                          if (_image.length == 0) {
-                            showAlertDialog(
-                                context, "Es ist kein Dokument ausgewählt.");
-                          } else {
-                            showAlertDialog(context,
-                                "Alle Dokumenten wurden erfolgreich hochgeladen");
-                          }
-                        });
+                          uploadFile().whenComplete(() {
+                            setState(() {
+                              uploading = false;
+                            });
+                            if (_image.length == 0) {
+                              showAlertDialog(
+                                  context, "Es ist kein Dokument ausgewählt.");
+                            } else {
+                              showAlertDialog(context,
+                                  "Alle Dokumenten wurden erfolgreich hochgeladen");
+                            }
+                          });
+                        } else {
+                          ConnectionDialog().showAlertDialog(
+                              context, uploadDialogTitle, notConnectedInternet);
+                        }
                       },
                       //formFeedback(context),
                     ),

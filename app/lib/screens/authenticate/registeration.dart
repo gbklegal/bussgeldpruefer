@@ -1,12 +1,17 @@
+import 'package:app/constants.dart';
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/screens/authenticate/login.dart';
+import 'package:app/services/connectivity.dart';
 import 'package:app/services/database.dart';
 import 'package:app/services/validators.dart';
+import 'package:app/utilities/connection_dialog.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+
+import '../../global.dart';
 
 class RegisterationScreen extends StatefulWidget {
   @override
@@ -17,7 +22,6 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DatabaseMethods databaseMethods = new DatabaseMethods();
-
   String _email, _password, _error, _firstName, _lastName, _token;
 
   bool validate() {
@@ -213,7 +217,14 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                   primary: Color(0xff5CC8C5),
                   onPrimary: Colors.white,
                 ),
-                onPressed: register,
+                onPressed: () async {
+                  isConnection =
+                      await ConnectionStatus().checkConnectionStatus();
+                  isConnection
+                      ? register()
+                      : ConnectionDialog().showAlertDialog(
+                          context, registerDialogTitle, notConnectedInternet);
+                },
               ),
             ),
           ],

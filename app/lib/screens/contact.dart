@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:app/services/connectivity.dart';
+import 'package:app/utilities/connection_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/functions/isvalidemail.dart';
 import 'package:app/functions/isvalidphonenumber.dart';
@@ -7,10 +8,12 @@ import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/contactfeedback.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
-
 import 'package:app/widgets/appbar.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../constants.dart';
+import '../global.dart';
 
 class ContactScreen extends StatefulWidget {
   @override
@@ -27,7 +30,6 @@ Future sendForm({
 }) async {
   final Uri apiUrl =
       Uri.parse('https://dev02.gbk-rae.de/bgp/app/contactform.php');
-
   final response = await http.post(
     apiUrl,
     body: {
@@ -251,27 +253,34 @@ class _ContactScreenState extends State<ContactScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                // sendmail
-                                sendForm(
-                                  firstname: _firstnameController.text,
-                                  lastname: _lastnameController.text,
-                                  email: _emailController.text,
-                                  phone: _phoneController.text,
-                                  message: _messageController.text,
-                                  contactType: _contactType,
-                                );
-                                // clear/reset contact form
-                                _formKey.currentState.reset();
-                                setState(() => _contactType = null);
-                                // open next screen, maybe change this to a simple alert
-                                newScreen(
-                                  context: context,
-                                  screen: ContactFeedbackScreen(),
-                                );
+                            onPressed: () async {
+                              isConnection = await ConnectionStatus()
+                                  .checkConnectionStatus();
+                              if (isConnection) {
+                                if (_formKey.currentState.validate()) {
+                                  // sendmail
+                                  sendForm(
+                                    firstname: _firstnameController.text,
+                                    lastname: _lastnameController.text,
+                                    email: _emailController.text,
+                                    phone: _phoneController.text,
+                                    message: _messageController.text,
+                                    contactType: _contactType,
+                                  );
+                                  // clear/reset contact form
+                                  _formKey.currentState.reset();
+                                  setState(() => _contactType = null);
+                                  // open next screen, maybe change this to a simple alert
+                                  newScreen(
+                                    context: context,
+                                    screen: ContactFeedbackScreen(),
+                                  );
+                                } else {
+                                  print('Formular ist nicht gültig');
+                                }
                               } else {
-                                print('Formular ist nicht gültig');
+                                ConnectionDialog().showAlertDialog(context,
+                                    noInternetTitle, notConnectedInternet);
                               }
                             },
                             child: Text('senden'),
