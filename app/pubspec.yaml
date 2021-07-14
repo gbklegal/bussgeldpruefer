@@ -49,6 +49,7 @@ dependencies:
   shared_preferences: ^0.5.7
   connectivity: ^3.0.6
   open_settings: ^2.0.1
+  fluttertoast: ^8.0.7
 
   # create signature pad
   syncfusion_flutter_signaturepad: ^19.1.69-beta

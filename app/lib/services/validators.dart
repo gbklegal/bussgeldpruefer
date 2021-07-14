@@ -24,8 +24,18 @@ class NachNameValidator {
 
 class EmailValidator {
   static String validate(String value) {
+    bool emailValid =
+        RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+                r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+                r"{0,253}[a-zA-Z0-9])?)*$")
+            .hasMatch(value);
     if (value.isEmpty) {
       return 'Bitte geben Sie eine E-mail-Adresse ein';
+    } else if (!emailValid) {
+      if (value.contains(' ')) {
+        return null;
+      } else
+        return 'Bitte geben Sie eine gültige E-Mail-Adresse ein';
     }
     return null;
   }

@@ -1,6 +1,7 @@
 import 'package:app/constants.dart';
 import 'package:app/provider/google_sign_in.dart';
 import 'package:app/helper/helperfunctions.dart';
+import 'package:app/screens/authenticate/forgotcredentials.dart';
 import 'package:app/screens/authenticate/registeration.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/database.dart';
@@ -180,17 +181,26 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Container(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      'Log In Daten vergessen?',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: const Color(0xff5dc8c5),
-                        letterSpacing: -0.3,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    )),
+                child: new GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ForgotCredentialsScreen()));
+                  },
+                  child: Container(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        'Log In Daten vergessen?',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: const Color(0xff5dc8c5),
+                          letterSpacing: -0.3,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      )),
+                ),
               ),
               _padding(30.0),
               SizedBox(
