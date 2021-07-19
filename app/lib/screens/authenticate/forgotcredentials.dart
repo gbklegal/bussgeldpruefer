@@ -34,7 +34,6 @@ class _ForgotCredentialsScreenState extends State<ForgotCredentialsScreen> {
     if (validate()) {
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
-        //     .whenComplete(() {
         if (_error == null) {
           Navigator.pop(context);
           Fluttertoast.showToast(
@@ -43,7 +42,6 @@ class _ForgotCredentialsScreenState extends State<ForgotCredentialsScreen> {
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 2);
         }
-        // });
       } catch (e) {
         print(e);
         setState(() {

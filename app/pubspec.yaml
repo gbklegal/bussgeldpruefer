@@ -50,7 +50,8 @@ dependencies:
   connectivity: ^3.0.6
   open_settings: ^2.0.1
   fluttertoast: ^8.0.7
-
+  json_to_model: ^2.3.1
+  
   # create signature pad
   syncfusion_flutter_signaturepad: ^19.1.69-beta
   # generate pdf document
