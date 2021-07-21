@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:app/functions/newscreen.dart';
-import 'package:app/screens/bussgeldratgeberdetail.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class BussgeldratgeberScreen extends StatelessWidget {
   final HttpService httpService = HttpService();
@@ -55,72 +53,91 @@ class BussgeldratgeberScreen extends StatelessWidget {
       appBar: AppBarWidget(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            PageTitle('Bußgeld Ratgeber',
-                'In unserem Bußgeld Ratgeber findest du aktuelle Bußgelder, Punkte & Fahrverbote. Hier kannst Du Dich über Bußgelder im Straßenverkehr informieren.'),
-            SizedBox(
-              height: 300,
-              child: FutureBuilder<List<Post>>(
-                future: httpService.getPosts(),
-                builder: (context, snapshot) {
-                  print(snapshot.data);
-                  if (snapshot.hasData) {
-                    List<Post> posts = snapshot.data;
-                    return ListView(
-                      children: posts
-                          .map((Post post) => ListTile(
-                                title: Text(post.title.rendered),
-                                // subtitle: Text(post
-                                //     .embedded
-                                //     .wpFeaturedmedia[0]
-                                //     .mediaDetails
-                                //     .sizes
-                                //     .onepressBlogSmall
-                                //     .sourceUrl),
-                              ))
-                          .toList(),
-                    );
-                  }
-                  return Center(child: CircularProgressIndicator());
-                },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              PageTitle('Bußgeld Ratgeber',
+                  'In unserem Bußgeld Ratgeber findest du aktuelle Bußgelder, Punkte & Fahrverbote. Hier kannst Du Dich über Bußgelder im Straßenverkehr informieren.'),
+              Container(
+                width: double.infinity,
+                height: 500,
+                child: FutureBuilder(
+                  future: httpService.getPosts(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Post>> snapshot) {
+                    print(snapshot.data);
+                    if (snapshot.hasData) {
+                      List<Post> posts = snapshot.data;
+                      return ListView.builder(
+                          itemCount: posts.length,
+                          itemBuilder: (context, index) {
+                            _imageButton(posts[index].title.rendered);
+                            return ListTile(
+                              title: Text(posts[index].title.rendered),
+                              subtitle: Text(posts[index]
+                                  .embedded
+                                  .wpFeaturedmedia[0]
+                                  .mediaDetails
+                                  .sizes
+                                  .onepressBlogSmall
+                                  .sourceUrl),
+                            );
+                          });
+                      //   (
+                      //   children: posts
+                      //       .map((Post post) => ListTile(
+                      //             title: Text(post.title.rendered),
+                      //             // subtitle: Text(post
+                      //             //     .embedded
+                      //             //     .wpFeaturedmedia[0]
+                      //             //     .mediaDetails
+                      //             //     .sizes
+                      //             //     .onepressBlogSmall
+                      //             //     .sourceUrl),
+                      //           ))
+                      //       .toList(),
+                      // );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  },
+                ),
               ),
-            ),
 
-            //Padding(
-            //padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
-            // child: FutureBuilder(
-            //   future: httpService.getPosts(),
-            //   builder:
-            //       (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-            //     print(snapshot.data);
-            //     if (snapshot.hasData) {
-            //       List<Post> posts = snapshot.data;
+              //Padding(
+              //padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+              // child: FutureBuilder(
+              //   future: httpService.getPosts(),
+              //   builder:
+              //       (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+              //     print(snapshot.data);
+              //     if (snapshot.hasData) {
+              //       List<Post> posts = snapshot.data;
 
-            //       return ListView(
-            //         children: posts
-            //             .map((Post post) => ListTile(
-            //                   title: Text(post.),
-            //                 ))
-            //             .toList(),
-            //       );
-            //     }
-            //     return Center(child: CircularProgressIndicator());
-            //   },
-            // ),
-            // Column(
-            //   children: [
-            //     _imageButton(
-            //       'In der 30er Zone geblitzt?',
-            //       context,
-            //       BussgeldRatgeberDetailScreen('In der 30er Zone geblitzt?'),
-            //     ),
-            //     _padding(),
-            //     _imageButton('In der 30er Zone geblitzt?'),
-            //   ],
-            // ),
-            // ),
-          ],
+              //       return ListView(
+              //         children: posts
+              //             .map((Post post) => ListTile(
+              //                   title: Text(post.),
+              //                 ))
+              //             .toList(),
+              //       );
+              //     }
+              //     return Center(child: CircularProgressIndicator());
+              //   },
+              // ),
+              // Column(
+              //   children: [
+              //     _imageButton(
+              //       'In der 30er Zone geblitzt?',
+              //       context,
+              //       BussgeldRatgeberDetailScreen('In der 30er Zone geblitzt?'),
+              //     ),
+              //     _padding(),
+              //     _imageButton('In der 30er Zone geblitzt?'),
+              //   ],
+              // ),
+              // ),
+            ],
+          ),
         ),
       ),
     );

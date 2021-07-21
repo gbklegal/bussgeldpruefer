@@ -426,24 +426,24 @@ class Sizes {
     this.full,
   });
 
-  final Full medium;
-  final Full large;
-  final Full thumbnail;
-  final Full mediumLarge;
-  final Full onepressBlogSmall;
-  final Full onepressSmall;
-  final Full onepressMedium;
-  final Full full;
+  final SizeAttribute medium;
+  final SizeAttribute large;
+  final SizeAttribute thumbnail;
+  final SizeAttribute mediumLarge;
+  final SizeAttribute onepressBlogSmall;
+  final SizeAttribute onepressSmall;
+  final SizeAttribute onepressMedium;
+  final SizeAttribute full;
 
   factory Sizes.fromJson(Map<String, dynamic> json) => Sizes(
-        medium: Full.fromJson(json["medium"]),
-        large: Full.fromJson(json["large"]),
-        thumbnail: Full.fromJson(json["thumbnail"]),
-        mediumLarge: Full.fromJson(json["medium_large"]),
-        onepressBlogSmall: Full.fromJson(json["onepress-blog-small"]),
-        onepressSmall: Full.fromJson(json["onepress-small"]),
-        onepressMedium: Full.fromJson(json["onepress-medium"]),
-        full: Full.fromJson(json["full"]),
+        medium: SizeAttribute.fromJson(json["medium"]),
+        large: SizeAttribute.fromJson(json["large"]),
+        thumbnail: SizeAttribute.fromJson(json["thumbnail"]),
+        mediumLarge: SizeAttribute.fromJson(json["medium_large"]),
+        onepressBlogSmall: SizeAttribute.fromJson(json["onepress-blog-small"]),
+        onepressSmall: SizeAttribute.fromJson(json["onepress-small"]),
+        onepressMedium: SizeAttribute.fromJson(json["onepress-medium"]),
+        full: SizeAttribute.fromJson(json["full"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -458,8 +458,8 @@ class Sizes {
       };
 }
 
-class Full {
-  Full({
+class SizeAttribute {
+  SizeAttribute({
     this.file,
     this.width,
     this.height,
@@ -473,12 +473,12 @@ class Full {
   final String mimeType;
   final String sourceUrl;
 
-  factory Full.fromJson(Map<String, dynamic> json) => Full(
-        file: json["file"],
-        width: json["width"],
-        height: json["height"],
-        mimeType: json["mime_type"],
-        sourceUrl: json["source_url"],
+  factory SizeAttribute.fromJson(Map<String, dynamic> json) => SizeAttribute(
+        file: json != null ? json["file"] : "",
+        width: json != null ? json["width"] : 0,
+        height: json != null ? json["height"] : 0,
+        mimeType: json != null ? json["mime_type"] : "",
+        sourceUrl: json != null ? json["source_url"] : "",
       );
 
   Map<String, dynamic> toJson() => {

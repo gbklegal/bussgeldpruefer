@@ -5,20 +5,19 @@ import 'package:http/http.dart';
 
 class HttpService {
   final String postsUrl =
-      "https://xn--bussgeldprfer-5ob.com/wp-json/wp/v2/posts?_embed";
-
+      "https://xn--bussgeldprfer-5ob.com/wp-json/wp/v2/posts?_embed&_fields=id,date,link,title,content,_links,_embedded";
+  // ignore: missing_return
   Future<List<Post>> getPosts() async {
-    Response response = await get(
-      Uri.parse(postsUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
+    Response response = await get(Uri.parse(postsUrl));
     try {
+      // final post = postFromJson(response.body);
+      // print(post.embedded.wpFeaturedmedia[0].mediaDetails.sizes
+      //     .onepressBlogSmall.sourceUrl);
       if (response.statusCode == 200) {
-        List<dynamic> body = jsonDecode(response.body);
+        Iterable body = jsonDecode(response.body);
         List<Post> posts =
-            body.map((dynamic item) => Post.fromJson(item)).toList();
+            List<Post>.from(body.map((model) => Post.fromJson(model)));
+        print(posts);
         return posts;
       } else {
         throw "Can't get posts.";
