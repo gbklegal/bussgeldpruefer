@@ -1,5 +1,6 @@
 import 'package:app/functions/newscreen.dart';
 import 'package:app/functions/webview.dart';
+import 'package:app/models/post.dart';
 import 'package:app/screens/ablauf.dart';
 import 'package:app/screens/bussgeldkatalog.dart';
 import 'package:app/screens/bussgeldkatalogdetail.dart';
@@ -20,7 +21,10 @@ import 'package:flutter/material.dart';
 
 import '../global.dart';
 
+// ignore: must_be_immutable
 class HiddenDevScreen extends StatelessWidget {
+  Post post;
+
   @override
   Widget build(BuildContext context) {
     _simpleButton(text, screen) {
@@ -39,7 +43,6 @@ class HiddenDevScreen extends StatelessWidget {
 
     Future<String> createAlertDialog(BuildContext context) {
       TextEditingController customController = TextEditingController();
-
       return showDialog(
         context: context,
         builder: (context) {
@@ -87,7 +90,7 @@ class HiddenDevScreen extends StatelessWidget {
                   'Bußgeldkatalog Detail', BussgeldkatalogDetailScreen()),
               _simpleButton('Bußgeld Ratgeber', BussgeldratgeberScreen()),
               _simpleButton('Bußgeld Ratgeber Detail',
-                  BussgeldRatgeberDetailScreen('empty string [HDS]')),
+                  BussgeldRatgeberDetailScreen(post)),
               _simpleButton('Kontakt', ContactScreen()),
               _simpleButton('Kontakt Feedback', ContactFeedbackScreen()),
               _simpleButton('Dummy', DummyScreen()),

@@ -10,14 +10,10 @@ class HttpService {
   Future<List<Post>> getPosts() async {
     Response response = await get(Uri.parse(postsUrl));
     try {
-      // final post = postFromJson(response.body);
-      // print(post.embedded.wpFeaturedmedia[0].mediaDetails.sizes
-      //     .onepressBlogSmall.sourceUrl);
       if (response.statusCode == 200) {
         Iterable body = jsonDecode(response.body);
         List<Post> posts =
             List<Post>.from(body.map((model) => Post.fromJson(model)));
-        print(posts);
         return posts;
       } else {
         throw "Can't get posts.";

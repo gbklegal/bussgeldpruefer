@@ -281,7 +281,6 @@ class _ProfileDocumentsOverviewScreenState
               return Container(
                 child: GestureDetector(
                   onTap: () {
-                    print("YEs");
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return FullScreenImage(
                         imageUrl: _getImages[index],
