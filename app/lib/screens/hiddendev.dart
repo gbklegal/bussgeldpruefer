@@ -87,7 +87,7 @@ class HiddenDevScreen extends StatelessWidget {
               _simpleButton('Ablauf', AblaufScreen()),
               _simpleButton('Bußgeldkatalog', BussgeldkatalogScreen()),
               _simpleButton(
-                  'Bußgeldkatalog Detail', BussgeldkatalogDetailScreen()),
+                  'Bußgeldkatalog Detail', BussgeldkatalogDetailScreen(post)),
               _simpleButton('Bußgeld Ratgeber', BussgeldratgeberScreen()),
               _simpleButton('Bußgeld Ratgeber Detail',
                   BussgeldRatgeberDetailScreen(post)),
