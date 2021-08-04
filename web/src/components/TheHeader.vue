@@ -4,7 +4,7 @@
         <nav id="nav" class="py-2 px-3 border-b-2 border-primary shadow" aria-label="primary navigation">
                 <div class="logo py-1">
                     <router-link class="" :to="{name: 'home'}">
-                        <img class="w-44 h-8" src="../assets/img/logo.svg" alt="BussgeldPrüfer" />
+                        <img class="w-44" src="../assets/img/logo.png" alt="BussgeldPrüfer" />
                     </router-link>
                 </div>
 
@@ -43,7 +43,7 @@
                     <router-link :to="{ name: 'faq' }">FAQ</router-link>
                 </li>
                 <li v-on:click="menuOpen = !menuOpen">
-                    <router-link :to="{ name: 'topics' }">relevante Bußgeldthemen</router-link>
+                    <router-link :to="{ name: 'topics' }">Relevante Bußgeldthemen</router-link>
                 </li>
             </ul>
         </nav>
