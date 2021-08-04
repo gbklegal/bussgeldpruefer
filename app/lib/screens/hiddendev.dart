@@ -100,8 +100,7 @@ class HiddenDevScreen extends StatelessWidget {
               _simpleButton('Anleitung', ManualScreen()),
               _simpleButton('Profil', ProfileData()),
               _simpleButton('Quick Check', QuickCheckScreen()),
-              _simpleButton(
-                  'Quick Check Final', QuickCheckFinalScreen('green')),
+              _simpleButton('Quick Check Final', QuickCheckFinalScreen()),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

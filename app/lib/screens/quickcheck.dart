@@ -26,12 +26,6 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   ];
   bool hideDatePicker = false;
 
-  void dispose() {
-    // Clean up the controller when the widget is removed
-    dateController.dispose();
-    super.dispose();
-  }
-
   _title(text) {
     return Text(
       text,
@@ -153,6 +147,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
       _angabenRichtig = null;
       _rechtsschutzversicherung = null;
       letterReceived = null;
+      dateController.clear();
     });
   }
 
@@ -553,7 +548,9 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                                   newScreen(
                                     context: context,
                                     screen: QuickCheckFinalScreen(
-                                        quickCheckTrafficLightColor), // add score as a parameter
+                                        voilationName: quickCheckViolationName,
+                                        trafficLightColor:
+                                            quickCheckTrafficLightColor), // add score as a parameter
                                   );
                                 }
                               },

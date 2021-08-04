@@ -5,10 +5,12 @@ import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class QuickCheckFinalScreen extends StatelessWidget {
+  final String voilationName;
   final String trafficLightColor;
-
-  QuickCheckFinalScreen(this.trafficLightColor);
+  String status;
+  QuickCheckFinalScreen({this.voilationName, this.trafficLightColor});
 
   _padding() {
     return SizedBox(height: 22.0);
@@ -16,8 +18,10 @@ class QuickCheckFinalScreen extends StatelessWidget {
 
   _translateColor(color) {
     String text;
-    if (color == 'red') text = 'nicht ';
-    if (color == 'yellow') text = 'zunächst ';
+    if (color == 'red') text = 'nicht möglich';
+    if (color == 'yellow') text = 'bedingt möglich';
+    if (color == 'green') text = 'möglich';
+    status = text;
     return text;
   }
 
@@ -50,7 +54,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                         TextSpan(text: '\nDie Ersteinschätzung war '),
                         TextSpan(text: _translateColor(trafficLightColor)),
                         TextSpan(
-                            text: 'erfolgreich',
+                            text: ' erfolgreich',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
                             text:
@@ -65,7 +69,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     height: 80,
                   ),
                   Text(
-                    'Eine Verteidigung gegen den behaupteten "XYZ" erscheint "XZY".*',
+                    'Eine Verteidigung gegen den behaupteten "$voilationName" erscheint "$status ".*',
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
@@ -137,17 +141,6 @@ class QuickCheckFinalScreen extends StatelessWidget {
                   _padding(),
                   Row(
                     children: [
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.save_outlined),
-                              onPressed: () => print('save'),
-                            ),
-                            Text('speichern'),
-                          ],
-                        ),
-                      ),
                       Expanded(
                         child: Column(
                           children: <Widget>[
