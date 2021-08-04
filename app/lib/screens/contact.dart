@@ -107,6 +107,14 @@ class _ContactScreenState extends State<ContactScreen> {
     }
   }
 
+  _reset() {
+    _firstnameController.clear();
+    _lastnameController.clear();
+    _emailController.clear();
+    _phoneController.clear();
+    _messageController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -268,8 +276,11 @@ class _ContactScreenState extends State<ContactScreen> {
                                     contactType: _contactType,
                                   );
                                   // clear/reset contact form
-                                  _formKey.currentState.reset();
-                                  setState(() => _contactType = null);
+                                  setState(() {
+                                    _reset();
+                                    _contactType = null;
+                                  });
+
                                   // open next screen, maybe change this to a simple alert
                                   newScreen(
                                     context: context,
