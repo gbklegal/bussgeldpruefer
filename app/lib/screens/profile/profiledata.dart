@@ -85,13 +85,13 @@ class ProfileData extends StatelessWidget {
                   screen: ChatScreen(),
                   badge: true,
                 ),
-                _padding(),
-                _imageTextButton(
-                  icon: Icons.rotate_right_outlined,
-                  text: 'Überprüfe den aktuellen Status Deines Falls',
-                  context: context,
-                  screen: ProfileStatusScreen(),
-                ),
+                // _padding(),
+                // _imageTextButton(
+                //   icon: Icons.rotate_right_outlined,
+                //   text: 'Überprüfe den aktuellen Status Deines Falls',
+                //   context: context,
+                //   screen: ProfileStatusScreen(),
+                // ),
                 _padding(),
                 _imageTextButton(
                   icon: Icons.cloud_upload_outlined,
