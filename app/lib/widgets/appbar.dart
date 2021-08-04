@@ -40,20 +40,18 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       backgroundColor: Colors.white,
       leading: _leadingContent(context),
-      title: Align(
-        alignment: Alignment.center,
-        child: GestureDetector(
-          onDoubleTap: () => newScreen(
-            context: context,
-            screen: HiddenDevScreen(),
-          ),
-          child: Image.asset(
-            'assets/images/Logo-BussgeldPruefer-small.png',
-            height: 30,
-            fit: BoxFit.cover,
-          ),
+      title: GestureDetector(
+        onDoubleTap: () => newScreen(
+          context: context,
+          screen: HiddenDevScreen(),
+        ),
+        child: Image.asset(
+          'assets/images/Logo-BussgeldPruefer-small.png',
+          height: 30,
+          fit: BoxFit.cover,
         ),
       ),
       actions: _actionsContent(context),

@@ -44,6 +44,7 @@ class InformationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBarWidget(
         isHome: false,
+        hideInfoButton: true,
       ),
       body: ListView(
         children: [
