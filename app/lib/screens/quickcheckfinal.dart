@@ -69,7 +69,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     height: 80,
                   ),
                   Text(
-                    'Eine Verteidigung gegen den behaupteten "$voilationName" erscheint "$status ".*',
+                    'Eine Verteidigung gegen den behaupteten "$voilationName" erscheint "$status".*',
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
