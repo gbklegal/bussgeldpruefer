@@ -1,15 +1,58 @@
+import 'package:app/constants.dart';
 import 'package:app/models/post.dart';
+import 'package:app/services/connectivity.dart';
 import 'package:app/services/http_service.dart';
+import 'package:app/utilities/connection_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:app/screens/bussgeldkatalogdetail.dart';
 
-class BussgeldkatalogScreen extends StatelessWidget {
+import '../global.dart';
+
+class BussgeldkatalogScreen extends StatefulWidget {
+  @override
+  _BussgeldkatalogScreenState createState() => _BussgeldkatalogScreenState();
+}
+
+class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
+    with WidgetsBindingObserver {
   final HttpService httpService = HttpService();
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setState(() {
+        _checkConnection();
+      });
+    }
+  }
+
+  _checkConnection() async {
+    isConnection = await ConnectionStatus().checkConnectionStatus();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _checkConnection();
+    isConnection
+        ? Container()
+        : Future.delayed(Duration(seconds: 5), () async {
+            ConnectionDialog().showAlertDialog(
+                context, loginDialogTitle, notConnectedInternet);
+          });
     return Scaffold(
       appBar: AppBarWidget(),
       body: Column(

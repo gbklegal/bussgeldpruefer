@@ -1,13 +1,18 @@
+import 'package:app/constants.dart';
+import 'package:app/global.dart';
 import 'package:app/screens/ablauf.dart';
 import 'package:app/screens/bussgeldkatalog.dart';
 import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
 import 'package:app/screens/pruefungbussgeldbescheid.dart';
+import 'package:app/services/connectivity.dart';
+import 'package:app/utilities/connection_dialog.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/functions/newscreen.dart';
+import 'package:flutter/scheduler.dart';
 
 class HomeScreen extends StatelessWidget {
   _title(text) {
@@ -96,10 +101,7 @@ class HomeScreen extends StatelessWidget {
                       _title('Hinweise'),
                       _padding(),
                       _simpleButton(
-                        'Bußgeldkatalog',
-                        context,
-                        BussgeldkatalogScreen(),
-                      ),
+                          'Bußgeldkatalog', context, BussgeldkatalogScreen()),
                       _simpleButton(
                         'Bußgeld Ratgeber',
                         context,
