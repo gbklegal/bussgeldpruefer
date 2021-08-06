@@ -8,11 +8,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <title>BussgeldPrüfer</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
   </head>
 
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script>
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#eaecf5",
+          "text": "#181919"
+        },
+        "button": {
+          "background": "#5cc8c5",
+          "text": "#ffffff"
+        }
+      },
+      "theme": "classic",
+      "position": "bottom-right",
+      "content": {
+        "message": "Diese Website verwendet Cookies, um Ihnen das beste Erlebnis auf unserer Website zu bieten.",
+        "dismiss": "Einverstanden!",
+        "link": "Mehr erfahren."
+      }
+    });
+    </script>
   </body>
 
 </html>
