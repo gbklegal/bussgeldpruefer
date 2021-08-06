@@ -41,10 +41,7 @@
                 </li>
                 <li v-on:click="menuOpen = !menuOpen">
                     <router-link :to="{ name: 'faq' }">FAQ</router-link>
-                </li>
-                <li v-on:click="menuOpen = !menuOpen">
-                    <router-link :to="{ name: 'topics' }">Relevante Bußgeldthemen</router-link>
-                </li>
+                </li>    
             </ul>
         </nav>
     </header>
