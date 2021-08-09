@@ -77,7 +77,7 @@ class _PruefungBussgeldbescheidFileUploadScreenState
                     elevation: 16,
                     underline: Container(
                       height: 2,
-                      color: Colors.blue,
+                      color: kPrimaryColor,
                     ),
                     onChanged: (String newValue) {
                       setState(() => documentName = newValue);
@@ -139,7 +139,7 @@ class _PruefungBussgeldbescheidFileUploadScreenState
                           CircularProgressIndicator(
                             value: val,
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.blue),
+                                AlwaysStoppedAnimation<Color>(kPrimaryColor),
                           ),
                           _padding(10.0),
                           Container(
@@ -409,7 +409,7 @@ class _PruefungBussgeldbescheidFileUploadScreenState
                             backgroundColor: Colors.grey[50],
                             child: CircleAvatar(
                                 radius: 12.0,
-                                backgroundColor: Colors.blue,
+                                backgroundColor: kPrimaryColor,
                                 child: Icon(Icons.close, color: Colors.white)),
                           ),
                         ),

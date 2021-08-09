@@ -1,14 +1,10 @@
-import 'package:app/constants.dart';
-import 'package:app/global.dart';
 import 'package:app/screens/ablauf.dart';
 import 'package:app/screens/bussgeldkatalog.dart';
 import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
 import 'package:app/screens/pruefungbussgeldbescheid.dart';
-import 'package:app/screens/quickcheck.dart';
 import 'package:app/screens/quickcheckhome.dart';
-import 'package:app/services/connectivity.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
 
@@ -80,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Kostenlose Ersteinschätzung in 90 Sekunden - ganz unverbindlich',
                         image: 'assets/images/icons/fast-time.png',
                         screen: QuickCheckHome(),
+                        flag: 1,
                       ),
                       _padding(),
                       BigButtonWidget(
@@ -88,14 +85,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden',
                         screen: PruefungBussgeldbescheidScreen(),
                         index: 1,
+                        flag: 1,
                       ),
                       _padding(),
                       BigButtonWidget(
-                        title: 'Bußgeldbescheid erhalten?',
-                        text:
-                            'So gehst du vor, um erfolgreich Einspruch einzulegen',
-                        screen: AblaufScreen(),
-                      ),
+                          title: 'Bußgeldbescheid erhalten?',
+                          text:
+                              'So gehst du vor, um erfolgreich Einspruch einzulegen',
+                          screen: AblaufScreen(),
+                          flag: 0),
                       _padding(),
                     ],
                   ),

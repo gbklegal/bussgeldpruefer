@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/pruefungbussgeldbescheidfileupload.dart';
 import 'package:app/widgets/appbar.dart';
@@ -73,9 +74,9 @@ class _PruefungBussgeldbescheidScreenState
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            width: 5,
+            width: 10,
             color: (index == selectedViolationIndex)
-                ? Colors.blue
+                ? kSecondaryColor
                 : Colors.transparent,
           ),
         ),

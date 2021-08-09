@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:flutter/material.dart';
 
 class CircleNumber extends StatelessWidget {
@@ -12,7 +13,7 @@ class CircleNumber extends StatelessWidget {
       width: containerSize,
       height: containerSize,
       decoration: BoxDecoration(
-        color: Colors.blueAccent,
+        color: kSecondaryColor,
         borderRadius: BorderRadius.all(Radius.circular(containerSize)),
       ),
       child: Center(

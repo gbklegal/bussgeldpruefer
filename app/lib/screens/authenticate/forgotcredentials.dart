@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:app/services/validators.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
@@ -127,7 +128,7 @@ class _ForgotCredentialsScreenState extends State<ForgotCredentialsScreen> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
-                          primary: Color(0xff5CC8C5),
+                          primary: kSecondaryColor,
                           onPrimary: Colors.white,
                         ),
                         onPressed: () {

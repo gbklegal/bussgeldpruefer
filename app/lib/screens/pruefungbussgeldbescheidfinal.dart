@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/allconfetti.dart';
 import 'package:app/widgets/pagetitle.dart';
@@ -14,9 +15,7 @@ class _PruefungBussgeldbescheidFinalScreenState
   _title(text) {
     return Text(
       text,
-      style: TextStyle(
-        fontSize: 22.0,
-      ),
+      style: TextStyle(fontSize: 22.0, color: kSecondaryColor),
     );
   }
 
@@ -46,7 +45,8 @@ class _PruefungBussgeldbescheidFinalScreenState
                 children: <Widget>[
                   Text(
                     'Geschafft!',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: kSecondaryColor),
                   ),
                   RichText(
                     text: TextSpan(
@@ -78,14 +78,20 @@ class _PruefungBussgeldbescheidFinalScreenState
                     children: <TableRow>[
                       TableRow(
                         children: <Widget>[
-                          Text('1.'),
+                          Text(
+                            '1.',
+                            style: TextStyle(color: kSecondaryColor),
+                          ),
                           Text(
                               'Du erhältst nun eine E-Mail mit allen wichtigen Daten.'),
                         ],
                       ),
                       TableRow(
                         children: <Widget>[
-                          Text('2.'),
+                          Text(
+                            '2.',
+                            style: TextStyle(color: kSecondaryColor),
+                          ),
                           RichText(
                             text: TextSpan(
                               style: TextStyle(color: Colors.black),

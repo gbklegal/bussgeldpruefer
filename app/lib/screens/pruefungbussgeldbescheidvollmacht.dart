@@ -88,7 +88,7 @@ class _PruefungBussgeldbescheidVollmachtState
                           _padding(10.0),
                           CircularProgressIndicator(
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.blue),
+                                AlwaysStoppedAnimation<Color>(kPrimaryColor),
                           ),
                         ],
                       ))

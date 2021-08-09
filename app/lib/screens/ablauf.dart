@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/contact.dart';
 import 'package:app/widgets/appbar.dart';
@@ -97,7 +98,7 @@ class AblaufScreen extends StatelessWidget {
                     child: Text(
                       'Du brauchst Hilfe?',
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: kSecondaryColor,
                       ),
                     ),
                   ),

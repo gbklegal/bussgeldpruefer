@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/appbar.dart';
@@ -18,6 +19,7 @@ class InfoKanzleiScreen extends StatelessWidget {
         text,
         style: TextStyle(
           fontSize: 15.0,
+          color: kSecondaryColor,
           fontWeight: FontWeight.bold,
         ),
       ),

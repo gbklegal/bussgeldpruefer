@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/authenticate/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ class BigButtonWidget extends StatelessWidget {
   final String image;
   final Widget screen;
   final int index;
+  final int flag;
 
   BigButtonWidget({
     this.title,
@@ -16,6 +18,7 @@ class BigButtonWidget extends StatelessWidget {
     this.image: '',
     this.screen,
     this.index,
+    this.flag,
   });
 
   initState() {
@@ -49,6 +52,8 @@ class BigButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          primary: flag == 1 ? kSecondaryColor : kPrimaryColor),
       child: Padding(
         padding: EdgeInsets.symmetric(
           vertical: 12.0,

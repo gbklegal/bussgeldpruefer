@@ -69,7 +69,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
           border: Border.all(
             width: 10,
             color: (index == selectedViolationIndex)
-                ? Colors.blue
+                ? Color(0xff5CC8C5)
                 : Colors.transparent,
           ),
         ),
@@ -349,7 +349,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                       elevation: 16,
                       underline: Container(
                         height: 2,
-                        color: Colors.blue,
+                        color: Color(0xff183B63),
                       ),
                       onChanged: (String newValue) {
                         setState(() {

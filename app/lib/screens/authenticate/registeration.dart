@@ -214,7 +214,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
-                  primary: Color(0xff5CC8C5),
+                  primary: kSecondaryColor,
                   onPrimary: Colors.white,
                 ),
                 onPressed: () async {

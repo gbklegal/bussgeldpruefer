@@ -79,7 +79,21 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   _padding(),
-                  Image.asset('assets/images/icons/happy.png', height: 80),
+                  (trafficLightColor == 'red')
+                      ? Image.asset('assets/images/icons/sad.png', height: 80)
+                      : (trafficLightColor == 'yellow')
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/icons/sad.png',
+                                    height: 80),
+                                Image.asset('assets/images/icons/question.png',
+                                    height: 25),
+                              ],
+                            )
+                          : Image.asset('assets/images/icons/happy.png',
+                              height: 80),
+                  _padding(),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -106,7 +120,8 @@ class QuickCheckFinalScreen extends StatelessWidget {
                       Expanded(
                         child: Text(
                           '$voilationName kann im schlimmsten Fall zum Führerscheinverlust führen.',
-                          style: TextStyle(fontSize: 18, color: Colors.blue),
+                          style:
+                              TextStyle(fontSize: 18, color: Color(0xff5CC8C5)),
                           softWrap: true,
                         ),
                       ),

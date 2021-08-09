@@ -6,6 +6,7 @@ import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
 import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
 import 'package:app/services/connectivity.dart';
+import 'package:app/utilities/theme_data.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,6 +38,7 @@ void main() async {
     ChangeNotifierProvider(
       create: (context) => GoogleSignInProvider(),
       child: MaterialApp(
+        theme: themeData,
         home: MyApp(), // In prod. MyApp()
         routes: <String, WidgetBuilder>{
           '/screen1': (BuildContext context) => new MyApp(),
@@ -144,7 +146,7 @@ class _MyAppState extends State<MyApp> {
           // )),
           _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xff183B63),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
         currentIndex: _currentIndex,

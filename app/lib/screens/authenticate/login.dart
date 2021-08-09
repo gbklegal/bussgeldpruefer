@@ -212,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
-                    primary: Color(0xff5CC8C5),
+                    primary: kSecondaryColor,
                     onPrimary: Colors.white,
                   ),
                   onPressed: () async {
@@ -241,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
-                    primary: Color(0xff5CC8C5),
+                    primary: kSecondaryColor,
                     onPrimary: Colors.white,
                   ),
                   onPressed: () {

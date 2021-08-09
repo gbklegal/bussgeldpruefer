@@ -51,6 +51,7 @@ dependencies:
   open_settings: ^2.0.1
   fluttertoast: ^8.0.7
 
+  flutter_native_splash: ^1.2.1
   connectivity_plus: ^1.0.6
   data_connection_checker: ^0.3.4
 
@@ -114,6 +115,8 @@ flutter:
     - assets/images/icons/right.png
     - assets/images/icons/driving-license.png
     - assets/images/icons/happy.png
+    - assets/images/icons/sad.png
+    - assets/images/icons/question.png
     - assets/images/icons/traffic-light-green.png
     - assets/images/icons/traffic-light-red.png
     - assets/images/icons/traffic-light-yellow.png

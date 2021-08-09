@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/hiddendev.dart';
 import 'package:app/screens/information.dart';
@@ -27,7 +28,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       IconButton(
         icon: Icon(
           Icons.help_outline,
-          color: Colors.black,
+          color: kSecondaryColor,
         ),
         onPressed: () => Navigator.push(
           context,
