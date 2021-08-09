@@ -6,6 +6,8 @@ import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
 import 'package:app/screens/pruefungbussgeldbescheid.dart';
+import 'package:app/screens/quickcheck.dart';
+import 'package:app/screens/quickcheckhome.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         text:
                             'Kostenlose Ersteinschätzung in 90 Sekunden - ganz unverbindlich',
                         image: 'assets/images/icons/fast-time.png',
+                        screen: QuickCheckHome(),
                       ),
                       _padding(),
                       BigButtonWidget(
