@@ -31,7 +31,7 @@ class BussgeldRatgeberDetailScreen extends StatelessWidget {
                     child: FadeInImage.assetNetwork(
                       placeholder: "assets/loading.gif",
                       image: post.embedded.wpFeaturedmedia[0].sourceUrl,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                     height: 200.0,
                     width: double.infinity,
