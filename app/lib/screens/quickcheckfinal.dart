@@ -18,11 +18,16 @@ class QuickCheckFinalScreen extends StatelessWidget {
 
   _translateColor(color) {
     String text;
-    if (color == 'red') text = 'nicht möglich';
-    if (color == 'yellow') text = 'bedingt möglich';
-    if (color == 'green') text = 'möglich';
-    status = text;
+    if (color == 'red') text = 'nicht ';
+    if (color == 'yellow') text = 'zunächst ';
+    _checkStatus(color);
     return text;
+  }
+
+  _checkStatus(color) {
+    if (color == 'red') status = 'nicht möglich';
+    if (color == 'yellow') status = 'bedingt möglich';
+    if (color == 'green') status = 'möglich';
   }
 
   @override
@@ -54,7 +59,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                         TextSpan(text: '\nDie Ersteinschätzung war '),
                         TextSpan(text: _translateColor(trafficLightColor)),
                         TextSpan(
-                            text: ' erfolgreich',
+                            text: 'erfolgreich',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
                             text:
@@ -69,7 +74,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     height: 80,
                   ),
                   Text(
-                    'Eine Verteidigung gegen den behaupteten "$voilationName" erscheint "$status".*',
+                    'Eine Verteidigung gegen den behaupteten $voilationName erscheint $status.*',
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
@@ -100,7 +105,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '"XYZ" kann im schlimmsten Fall zum Führerscheinverlust führen.',
+                          '$voilationName kann im schlimmsten Fall zum Führerscheinverlust führen.',
                           style: TextStyle(fontSize: 18, color: Colors.blue),
                           softWrap: true,
                         ),
@@ -146,7 +151,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                           children: <Widget>[
                             IconButton(
                               icon: Icon(Icons.refresh),
-                              onPressed: () => print('restart'),
+                              onPressed: () => Navigator.pop(context),
                             ),
                             Text('neu starten'),
                           ],
