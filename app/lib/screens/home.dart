@@ -7,14 +7,17 @@ import 'package:app/screens/infokanzlei.dart';
 import 'package:app/screens/manual.dart';
 import 'package:app/screens/pruefungbussgeldbescheid.dart';
 import 'package:app/services/connectivity.dart';
-import 'package:app/utilities/connection_dialog.dart';
 import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/functions/newscreen.dart';
-import 'package:flutter/scheduler.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   _title(text) {
     return Text(
       text,

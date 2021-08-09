@@ -3,10 +3,13 @@ import 'package:app/models/post.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/http_service.dart';
 import 'package:app/utilities/connection_dialog.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:app/screens/bussgeldkatalogdetail.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../global.dart';
 
@@ -18,9 +21,15 @@ class BussgeldkatalogScreen extends StatefulWidget {
 class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
     with WidgetsBindingObserver {
   final HttpService httpService = HttpService();
+  List<Post> posts;
+  int pageNumber = 1;
+  var data;
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
+    _checkConnection();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -40,16 +49,30 @@ class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
     }
   }
 
+  void _onLoading() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    ++pageNumber;
+    data = await httpService.getPosts(pageNumber);
+    if (data == null) {
+      return _refreshController.loadNoData();
+    } else
+      posts += data;
+
+    if (mounted) setState(() {});
+
+    _refreshController.loadComplete();
+  }
+
   _checkConnection() async {
     isConnection = await ConnectionStatus().checkConnectionStatus();
   }
 
   @override
   Widget build(BuildContext context) {
-    _checkConnection();
     isConnection
         ? Container()
-        : Future.delayed(Duration(seconds: 5), () async {
+        : Future.delayed(Duration(seconds: 3), () async {
             ConnectionDialog().showAlertDialog(
                 context, loginDialogTitle, notConnectedInternet);
           });
@@ -59,28 +82,51 @@ class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
         children: [
           PageTitle('Bußgeldkatalog',
               'In den unterschiedlichen Kategorien findest Du aktuelle Informationen zum Thema Verkehrsrecht. Es wird erklärt wann mit Bußgeldern, Punkten oder sogar Fahrverbot zu rechnen ist.'),
-          Flexible(
-            child: Container(
-              padding: EdgeInsets.all(20.0),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: FutureBuilder(
-                future: httpService.getPosts(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-                  if (snapshot.hasData) {
-                    List<Post> posts = snapshot.data;
-                    return ListView.builder(
+          Expanded(
+            child: FutureBuilder(
+              future: httpService.getPosts(pageNumber),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+                if (snapshot.hasData) {
+                  if (pageNumber == 1) {
+                    posts = snapshot.data;
+                  }
+                  return SmartRefresher(
+                    controller: _refreshController,
+                    enablePullDown: false,
+                    enablePullUp: true,
+                    onLoading: _onLoading,
+                    footer: CustomFooter(
+                      builder: (BuildContext context, LoadStatus mode) {
+                        Widget body;
+                        if (mode == LoadStatus.idle) {
+                          body = Text("pull up load");
+                        } else if (mode == LoadStatus.loading) {
+                          body = CupertinoActivityIndicator();
+                        } else if (mode == LoadStatus.failed) {
+                          body = Text("Load Failed!Click retry!");
+                        } else if (mode == LoadStatus.canLoading) {
+                          body = Text("release to load more");
+                        } else {
+                          body = Text("No more Data");
+                        }
+                        return Container(
+                          height: 55.0,
+                          child: Center(child: body),
+                        );
+                      },
+                    ),
+                    child: ListView.builder(
                         itemCount: posts.length,
                         itemBuilder: (context, index) {
                           return CatalogTile(
                             post: posts[index],
                           );
-                        });
-                  }
-                  return Center(child: CircularProgressIndicator());
-                },
-              ),
+                        }),
+                  );
+                }
+                return Center(child: CircularProgressIndicator());
+              },
             ),
           ),
         ],
@@ -97,8 +143,7 @@ class CatalogTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(

@@ -5,6 +5,7 @@ import 'package:app/screens/authenticate/login.dart';
 import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
 import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
+import 'package:app/services/connectivity.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -72,8 +73,8 @@ class _MyAppState extends State<MyApp> {
   bool userIsLoggedIn;
 
   Future initFCM() async {
+    isConnection = await ConnectionStatus().checkConnectionStatus();
     FirebaseMessaging.instance.requestPermission();
-
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage message) {

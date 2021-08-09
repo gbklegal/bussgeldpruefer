@@ -51,7 +51,11 @@ dependencies:
   open_settings: ^2.0.1
   fluttertoast: ^8.0.7
 
+  connectivity_plus: ^1.0.6
+  data_connection_checker: ^0.3.4
+
   flutter_widget_from_html_core: ^0.6.1
+  pull_to_refresh: ^2.0.0
   
   # create signature pad
   syncfusion_flutter_signaturepad: ^19.1.69-beta

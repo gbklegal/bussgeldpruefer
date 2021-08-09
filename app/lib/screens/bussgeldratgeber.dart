@@ -4,9 +4,11 @@ import 'package:app/screens/bussgeldratgeberdetail.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/http_service.dart';
 import 'package:app/utilities/connection_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../constants.dart';
 
@@ -18,6 +20,12 @@ class BussgeldratgeberScreen extends StatefulWidget {
 class _BussgeldratgeberScreenState extends State<BussgeldratgeberScreen>
     with WidgetsBindingObserver {
   final HttpService httpService = HttpService();
+  List<Post> posts;
+  int pageNumber = 1;
+  var data;
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -43,6 +51,21 @@ class _BussgeldratgeberScreenState extends State<BussgeldratgeberScreen>
     isConnection = await ConnectionStatus().checkConnectionStatus();
   }
 
+  void _onLoading() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    ++pageNumber;
+    data = await httpService.getPosts(pageNumber);
+    if (data == null) {
+      return _refreshController.loadNoData();
+    } else
+      posts += data;
+
+    if (mounted) setState(() {});
+
+    _refreshController.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
     _checkConnection();
@@ -58,28 +81,51 @@ class _BussgeldratgeberScreenState extends State<BussgeldratgeberScreen>
         children: [
           PageTitle('Bußgeld Ratgeber',
               'In unserem Bußgeld Ratgeber findest du aktuelle Bußgelder, Punkte & Fahrverbote. Hier kannst Du Dich über Bußgelder im Straßenverkehr informieren.'),
-          Flexible(
-            child: Container(
-              padding: EdgeInsets.all(20.0),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: FutureBuilder(
-                future: httpService.getPosts(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-                  if (snapshot.hasData) {
-                    List<Post> posts = snapshot.data;
-                    return ListView.builder(
+          Expanded(
+            child: FutureBuilder(
+              future: httpService.getPosts(pageNumber),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+                if (snapshot.hasData) {
+                  if (pageNumber == 1) {
+                    posts = snapshot.data;
+                  }
+                  return SmartRefresher(
+                    controller: _refreshController,
+                    enablePullDown: false,
+                    enablePullUp: true,
+                    onLoading: _onLoading,
+                    footer: CustomFooter(
+                      builder: (BuildContext context, LoadStatus mode) {
+                        Widget body;
+                        if (mode == LoadStatus.idle) {
+                          body = Text("pull up load");
+                        } else if (mode == LoadStatus.loading) {
+                          body = CupertinoActivityIndicator();
+                        } else if (mode == LoadStatus.failed) {
+                          body = Text("Load Failed!Click retry!");
+                        } else if (mode == LoadStatus.canLoading) {
+                          body = Text("release to load more");
+                        } else {
+                          body = Text("No more Data");
+                        }
+                        return Container(
+                          height: 55.0,
+                          child: Center(child: body),
+                        );
+                      },
+                    ),
+                    child: ListView.builder(
                         itemCount: posts.length,
                         itemBuilder: (context, index) {
                           return PostTile(
                             post: posts[index],
                           );
-                        });
-                  }
-                  return Center(child: CircularProgressIndicator());
-                },
-              ),
+                        }),
+                  );
+                }
+                return Center(child: CircularProgressIndicator());
+              },
             ),
           ),
         ],
@@ -96,7 +142,7 @@ class PostTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(
@@ -106,27 +152,29 @@ class PostTile extends StatelessWidget {
           );
         },
         style: ElevatedButton.styleFrom(padding: EdgeInsets.all(15.0)),
-        child: Column(
-          children: [
-            Container(
-              height: 140.0,
-              width: double.infinity,
-              child: FadeInImage.assetNetwork(
-                placeholder: "assets/loading.gif",
-                image: post.embedded.wpFeaturedmedia[0].mediaDetails.sizes
-                    .onepressBlogSmall.sourceUrl,
-                fit: BoxFit.cover,
+        child: Container(
+          child: Column(
+            children: [
+              Container(
+                height: 140.0,
+                width: double.infinity,
+                child: FadeInImage.assetNetwork(
+                  placeholder: "assets/loading.gif",
+                  image: post.embedded.wpFeaturedmedia[0].mediaDetails.sizes
+                      .onepressBlogSmall.sourceUrl,
+                  fit: BoxFit.cover,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                ),
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              SizedBox(height: 8.0),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(post.title.rendered),
               ),
-            ),
-            SizedBox(height: 8.0),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(post.title.rendered),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
