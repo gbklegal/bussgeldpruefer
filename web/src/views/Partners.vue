@@ -37,7 +37,7 @@
                 <!-- <p>Herr Tobias Gussmann</p> -->
                 <div>
                     <span class="mr-2">E-mail:</span>
-                    <a href="mailto:dialog@bussgeldpruefer.de">dialog@bussgeldpruefer.com</a>
+                    <a href="mailto:dialog@bussgeldpruefer.com">dialog@bussgeldpruefer.com</a>
                 </div>
                 <!--
                 <div>

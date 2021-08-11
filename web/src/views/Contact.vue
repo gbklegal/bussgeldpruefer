@@ -4,7 +4,7 @@
         <h1>Kontakt</h1>
         <section>
             <h2>Du hast Fragen?</h2>
-            <p class="mb-5">Falls noch offene Fragen bestehen, kannst du uns gerne kontaktieren.</p>
+            <p class="mb-5">Falls noch offene Fragen bestehen, kannst Du uns gerne kontaktieren.</p>
 
             <form id="contactform" @submit.prevent="redirect">
                 <fieldset class="mb-4">
@@ -59,15 +59,17 @@
         </section>
 
         <section class="mt-8">
-            <h2>Du kannst uns auch direkt erreichen</h2>
+            <h2>Du kannst uns gerne auch direktper E-Mail erreichen:</h2>
             <div>
-                <span class="mr-2">Email:</span>
-                <a href="mailto:dialog@bussgeldpruefer.de">dialog@bussgeldpruefer.de</a>
-            </div>
+                <span class="mr-2">E-mail:</span>
+                <a href="mailto:dialog@bussgeldpruefer.com">dialog@bussgeldpruefer.com</a>
+            </div>  
+            <!--
             <div>
                 <span class="mr-2">Tel:</span>
                 <a href="tel:091112345678">0911/12345678</a>
             </div>
+            -->
         </section>
     </div>
 </template>
