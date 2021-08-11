@@ -49,7 +49,7 @@ class InfoKanzleiScreen extends StatelessWidget {
                     children: [
                       _title('Die Kanzlei'),
                       _text(
-                          'Seit vielen Jahren berät die /// GBK Legal Kanzlei in Sachen Verkehrsrecht. Wir sind der Experte in allen Rechtsgebieten rund um Verkehr. Uns ist ein enger Austausch mit den Klienten wichtig, um den bestmöglichen Service zu bieten. GBK ist darauf spezialisiert deine Rechte im Verkehr zu verteidigen. Dabei ist es uns wichtig, Dich voll und ganz zu entlasten und Angelegenheiten einfach, verständlich zu vermitteln. Führerschein weg? Punkte in Flensburg? Fahrverbot? MPU-Test? Wir sind Experten auf diesem Gebiet. Als kompetente Berater setzen wir uns für Dich ein.'),
+                          'Seit vielen Jahren beraten die GBK LEGAL Fachanwaltskanzlei sowie GHR Partnerkanzlein Sachen rund ums Thema Auto und Verkehrsrecht. Unsere Partnerkanzleien sind Experten in allen Rechtsgebieten rund um den Verkehr. Dabei ist ein enger Austausch mit den Mandanten wichtig, um den bestmöglichen Service zu bieten. Unseren Partnerkanzleien ist es wichtig, Dich voll und ganz zu entlasten sowie Angelegenheiten einfach, verständlich zu vermitteln. Führerschein weg? Punkte in Flensburg? Fahrverbot? Als kompetente Berater setzen sich unsere Partnerkanzleien für Dich ein.'),
                       SizedBox(height: 16.0),
                     ],
                   ),

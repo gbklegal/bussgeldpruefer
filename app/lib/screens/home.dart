@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       BigButtonWidget(
                         title: 'Prüfung Bußgeldbescheid',
                         text:
-                            'Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden',
+                            'kostenlose Erstprüfung durch Anwalt – Antwort in der Regel binnen 24 Stunden',
                         screen: PruefungBussgeldbescheidScreen(),
                         index: 1,
                         flag: 1,
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ManualScreen(),
                       ),
                       _simpleButton(
-                        'Deine Experten Im Verkehrsrecht',
+                        'Deine Experten im Verkehrsrecht',
                         context,
                         InfoKanzleiScreen(),
                       ),
