@@ -45,10 +45,10 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       backgroundColor: Colors.white,
       leading: _leadingContent(context),
       title: GestureDetector(
-        onDoubleTap: () => newScreen(
-          context: context,
-          screen: HiddenDevScreen(),
-        ),
+        // onDoubleTap: () => newScreen(
+        //   context: context,
+        //   screen: HiddenDevScreen(),
+        // ),
         child: Image.asset(
           'assets/images/Logo-BussgeldPruefer-small.png',
           height: 30,

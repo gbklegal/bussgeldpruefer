@@ -51,7 +51,6 @@ dependencies:
   open_settings: ^2.0.1
   fluttertoast: ^8.0.7
 
-  flutter_native_splash: ^1.2.1
   connectivity_plus: ^1.0.6
   data_connection_checker: ^0.3.4
 
@@ -71,6 +70,8 @@ dependencies:
   google_sign_in: ^5.0.4
 
 
+  
+
   flutter_localizations:
     sdk: flutter
 
@@ -79,12 +80,21 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  
+
 dependency_overrides:
   intl: ^0.17.0-nullsafety.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^1.2.1
+  
+
+flutter_native_splash:  
+  image: assets/images/splash.png
+  color: "#ffffff"
+  android: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -107,6 +117,7 @@ flutter:
     - assets/images/phone.jpg
     - assets/images/redlight.jpg
     - assets/images/speed.jpg
+    # - assets/images/splashxhdpi.png
 
     - assets/images/icons/fast-time.png
     - assets/images/icons/assignment.png
