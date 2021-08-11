@@ -7,8 +7,8 @@
             <nav class="bg-gray-200 rounded-sm md:w-1/3 mb-8 md:mb-0 md:mr-8" aria-label="In Page Navigation">
                 <ul class="break-words">
                     <li class="block my-2"><router-link :to="{ name: 'catalog-alcohol' }">Alkohol</router-link></li>
-                    <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Geschwindigkeitsüberschreitung</router-link></li>
-                    <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Geschwindigkeitsüberschreitung</router-link></li>
+                    <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Abstand</router-link></li>
+                    <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Geblitzt</router-link></li>
                     <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Geschwindigkeitsüberschreitung</router-link></li>
                 </ul>
             </nav>

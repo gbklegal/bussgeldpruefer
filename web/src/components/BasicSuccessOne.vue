@@ -9,8 +9,8 @@
           </h2>
           <ul role="list" class="w-max mb-5 list-disc list-inside">
             <li>Unverbindliche Ersteinschätzung in 90 Sekunden</li>
-            <li>Kostenlose telefonische Beratung</li>
-            <li>Schnelle Überprüfung Deiner Erfolgsaussichten</li>
+            <li>Kostenlose anwaltliche Ersteinschätzung</li>
+            <li>Schnelle Prüfung Deiner Erfolgsaussichten</li>
           </ul>
         </div>
 

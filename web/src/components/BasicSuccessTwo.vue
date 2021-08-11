@@ -7,8 +7,7 @@
             Maximiere deine Erfolgsaussichten
           </h2>
           <p class="">
-            Mit dem BussgeldPrüfer erhöhst du deine Chance erfolgreich gegen
-            deinen Bußgeldbescheid vorzugehen. Klicke jetzt auf <router-link :to="{ name: 'order' }" class="underline">“Prüfung
+            Mit dem BussgeldPrüfer erhöhst Du Deine Chance erfolgreich gegen Deinen Bußgeldbescheid vorzugehen. Klicke jetzt auf <router-link :to="{ name: 'order' }" class="underline">“Prüfung
             Bußgeldbescheid”</router-link> um deinen Bußgeldbescheid anzufechten.
           </p>
         </div>

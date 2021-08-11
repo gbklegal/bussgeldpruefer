@@ -11,11 +11,11 @@
                 </div>
                 <div class="mb-10">
                     <img src="../assets/img/communication.svg" alt="Icon mit Personen." class="mx-auto border-2 rounded-full border-white w-32 h-32" />
-                    <p class="mt-3">Kontaktaufnahme mit Patnerkanzlei &amp; Planung der Verteidigungsstrategie</p>
+                    <p class="mt-3">Kontaktaufnahme mit Partnerkanzlei &amp; Planung der Verteidigungsstrategie</p>
                 </div>
                 <div class="">
                     <img src="../assets/img/innovation.svg" alt="Icon mit einer Glühbirne." class="mx-auto border-2 rounded-full border-white w-32 h-32" />
-                    <p class="mt-3">Gerichtsurteil &amp; erfolgreicher Fallabschluss</p>
+                    <p class="mt-3">Behörden oder Gerichtsentscheid &amp; erfolgreicher Fallabschluss</p>
                 </div>
             </div>
         </div>

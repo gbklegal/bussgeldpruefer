@@ -34,7 +34,7 @@
             </ul>
           </div>
           <p class="text-center mt-4 text-white font-light">
-            überall - digital - verbunden
+            überall - jederzeit - digital
           </p>
           <div></div>
         </div>
