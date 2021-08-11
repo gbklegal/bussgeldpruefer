@@ -12,6 +12,7 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_buttons/auth_buttons.dart';
@@ -37,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
     FirebaseMessaging.instance.getToken().then((token) {
       _token = token;
       HelperFunctions().saveUserTokenSharedPreference(token);
-      print(token);
     });
   }
 
@@ -62,12 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (validate()) {
       try {
         // ignore: unused_local_variable
-        final user = (await _auth.signInWithEmailAndPassword(
-                email: _email.trim(), password: _password))
-            .user;
+
         QuerySnapshot userInfoSnapshot =
             await DatabaseMethods().getUserInfo(_email.trim());
-        print("I am user : " + userInfoSnapshot.docs[0]['name']);
         HelperFunctions().saveUserLoggedInSharedPreference(true);
         HelperFunctions()
             .saveUserNameSharedPreference(userInfoSnapshot.docs[0]['name']);
@@ -77,10 +74,21 @@ class _LoginScreenState extends State<LoginScreen> {
             .saveUserEmailSharedPreference(userInfoSnapshot.docs[0]['email']);
         HelperFunctions().saveUserLoggedInSharedPreference(true);
         DatabaseMethods().updateUserToken(_token);
-        Navigator.popUntil(
-          context,
-          ModalRoute.withName('/'),
-        );
+        // Navigator.popUntil(
+        //   context,
+        //   ModalRoute.withName('/'),
+        // );
+        final user = (await _auth
+                .signInWithEmailAndPassword(
+                    email: _email.trim(), password: _password)
+                .whenComplete(() => Fluttertoast.showToast(
+                      msg: "Logged in",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                    )))
+            .user;
+        Navigator.pop(context);
       } catch (e) {
         print(e);
         setState(() {
@@ -261,12 +269,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   final provider =
                       Provider.of<GoogleSignInProvider>(context, listen: false);
                   isConnection
-                      ? provider.googleLogin(_token).whenComplete(() => {
-                            Navigator.popUntil(
-                              context,
-                              ModalRoute.withName('/'),
-                            )
-                          })
+                      ? provider.googleLogin(_token).whenComplete(() {
+                          // Navigator.popUntil(
+                          //   context,
+                          //   ModalRoute.withName('/'),
+                          // )
+                          Navigator.pop(context);
+                          Fluttertoast.showToast(
+                            msg: "Logged in",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                          );
+                        })
                       : ConnectionDialog().showAlertDialog(
                           context, loginDialogTitle, notConnectedInternet);
                 },

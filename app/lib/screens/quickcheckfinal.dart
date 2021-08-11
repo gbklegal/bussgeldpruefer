@@ -3,7 +3,10 @@ import 'package:app/screens/contact.dart';
 import 'package:app/screens/pruefungbussgeldbescheid.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'authenticate/login.dart';
 
 // ignore: must_be_immutable
 class QuickCheckFinalScreen extends StatelessWidget {
@@ -97,10 +100,18 @@ class QuickCheckFinalScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => newScreen(
-                        context: context,
-                        screen: PruefungBussgeldbescheidScreen(),
-                      ),
+                      onPressed: () {
+                        FirebaseAuth.instance.currentUser == null
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        LoginScreen()))
+                            : newScreen(
+                                context: context,
+                                screen: PruefungBussgeldbescheidScreen(),
+                              );
+                      },
                       child: Text(
                         'Prüfung Bußgeldbescheid',
                         style: TextStyle(

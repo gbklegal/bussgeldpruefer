@@ -7,6 +7,7 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../global.dart';
 
 class ProfileData extends StatelessWidget {
@@ -99,6 +100,7 @@ class ProfileData extends StatelessWidget {
                   context: context,
                   screen: ProfileDocumentsOverviewScreen(),
                 ),
+                _padding(),
                 SizedBox(
                   width: 200.0,
                   child: ElevatedButton(
@@ -112,7 +114,14 @@ class ProfileData extends StatelessWidget {
                       onPrimary: Colors.white,
                     ),
                     onPressed: () {
-                      FirebaseAuth.instance.signOut();
+                      FirebaseAuth.instance
+                          .signOut()
+                          .whenComplete(() => Fluttertoast.showToast(
+                                msg: "Logged Out",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                              ));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
