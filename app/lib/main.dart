@@ -44,7 +44,8 @@ void main() async {
           '/screen1': (BuildContext context) => new MyApp(),
           '/screen2': (BuildContext context) =>
               new PruefungBussgeldbescheidFinalScreen(),
-          '/ProfileData': (BuildContext context) => new ProfileData()
+          '/ProfileData': (BuildContext context) => new ProfileData(),
+          '/LoginScreen': (BuildContext context) => new LoginScreen()
         },
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [

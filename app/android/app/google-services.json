@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "344295509824",
-    "firebase_url": "https://bussgledpruefer-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "bussgledpruefer",
-    "storage_bucket": "bussgledpruefer.appspot.com"
+    "project_number": "329140781548",
+    "project_id": "bussgeldpruefer-d940a",
+    "storage_bucket": "bussgeldpruefer-d940a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:344295509824:android:efd7d0f67335d8b91934a5",
+        "mobilesdk_app_id": "1:329140781548:android:a7b8b1a7aa99432a93c0c9",
         "android_client_info": {
-          "package_name": "com.bussgledpruefer.app.app"
+          "package_name": "com.bussgeldpruefer.app.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "344295509824-sak50meo3da900nd8ebg45jkjo1c7kps.apps.googleusercontent.com",
+          "client_id": "329140781548-mmob3f53s0ekhtqep3sdabseqqcbpiv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bussgeldpruefer.app.app",
+            "certificate_hash": "5ef851735417ac5f483dace88602f1f494b5f2d0"
+          }
+        },
+        {
+          "client_id": "329140781548-g5bcu61u6ukugb37d2uo6tcn2f6g70it.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAnVKEPVhJMU3gFG0w-AfoChHSER8twE5M"
+          "current_key": "AIzaSyAgUFKryHXwKkmuJkqMRyU839Us7ozLAn8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "344295509824-sak50meo3da900nd8ebg45jkjo1c7kps.apps.googleusercontent.com",
+              "client_id": "329140781548-g5bcu61u6ukugb37d2uo6tcn2f6g70it.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

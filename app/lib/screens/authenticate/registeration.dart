@@ -54,8 +54,9 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
     if (validate()) {
       try {
         // ignore: unused_local_variable
-        UserCredential user = (await _auth.createUserWithEmailAndPassword(
-            email: _email, password: _password));
+        UserCredential user = (await _auth
+            .createUserWithEmailAndPassword(email: _email, password: _password)
+            .whenComplete(() => Navigator.pop(context)));
 
         Map<String, String> userInfoMap = {
           "name": _firstName + ' ' + _lastName,
@@ -68,10 +69,6 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
 
         HelperFunctions().saveUserLoggedInSharedPreference(true);
         databaseMethods.addUserInfo(userInfoMap);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => LoginScreen()));
       } catch (e) {
         print(e);
         setState(() {
