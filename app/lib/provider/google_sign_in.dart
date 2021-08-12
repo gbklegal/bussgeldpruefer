@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,25 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   GoogleSignInAccount _user;
   GoogleSignInAccount get user => _user;
+
+  static Map<String, dynamic> parseJwt(String token) {
+    // validate token
+    if (token == null) return null;
+    final List<String> parts = token.split('.');
+    if (parts.length != 3) {
+      return null;
+    }
+    // retrieve token payload
+    final String payload = parts[1];
+    final String normalized = base64Url.normalize(payload);
+    final String resp = utf8.decode(base64Url.decode(normalized));
+    // convert to Map
+    final payloadMap = json.decode(resp);
+    if (payloadMap is! Map<String, dynamic>) {
+      return null;
+    }
+    return payloadMap;
+  }
 
   Future googleLogin(_token) async {
     final googleUser = await googleSignIn.signIn();
@@ -23,16 +44,18 @@ class GoogleSignInProvider extends ChangeNotifier {
     );
 
     await FirebaseAuth.instance.signInWithCredential(credential);
-    //notifyListeners();
-
-    Map<String, String> userInfoMap = {
-      "name": _user.displayName,
+    Map<String, dynamic> idMap = parseJwt(googleAuth.idToken);
+    final String firstName = idMap["given_name"];
+    final String lastName = idMap["family_name"];
+    var userInfoMap = {
+      "name": {"first": firstName, "last": lastName},
       "email": _user.email,
       "token": _token
     };
     HelperFunctions().saveUserEmailSharedPreference(_user.email);
     HelperFunctions().saveUserNameSharedPreference(_user.displayName);
-
+    HelperFunctions().saveFirstNameSharedPreference(firstName);
+    HelperFunctions().saveLastNameSharedPreference(lastName);
     HelperFunctions().saveUserLoggedInSharedPreference(true);
     DatabaseMethods().addUserInfo(userInfoMap);
   }

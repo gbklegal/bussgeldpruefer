@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/helper/helperfunctions.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/utilities/connection_dialog.dart';
 import 'package:http/http.dart' as http;
@@ -60,16 +61,26 @@ enum TypeOfContact { phone, email }
 
 class _ContactScreenState extends State<ContactScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _firstnameController = TextEditingController();
-  final _lastnameController = TextEditingController();
-  final _emailController = TextEditingController();
+  var _firstnameController = TextEditingController();
+  var _lastnameController = TextEditingController();
+  var _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _messageController = TextEditingController();
   TypeOfContact _contactType;
 
   @override
   void initState() {
+    _getSavedInfo();
     super.initState();
+  }
+
+  _getSavedInfo() async {
+    _firstnameController.text =
+        (await HelperFunctions().getFirstNameSharedPreference());
+    _lastnameController.text =
+        (await HelperFunctions().getLastNameSharedPreference());
+    _emailController.text =
+        (await HelperFunctions().getUserEmailSharedPreference());
   }
 
   @override

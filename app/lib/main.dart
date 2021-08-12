@@ -1,7 +1,7 @@
 import 'package:app/global.dart';
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/provider/google_sign_in.dart';
-import 'package:app/screens/authenticate/login.dart';
+import 'package:app/screens/auth/login.dart';
 import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
 import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';

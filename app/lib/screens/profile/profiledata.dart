@@ -1,4 +1,5 @@
 import 'package:app/functions/newscreen.dart';
+import 'package:app/helper/helperfunctions.dart';
 import 'package:app/main.dart';
 import 'package:app/screens/chat/chatscreen.dart';
 import 'package:app/screens/documentoverview/profiledocumentsoverview.dart';
@@ -114,14 +115,15 @@ class ProfileData extends StatelessWidget {
                       onPrimary: Colors.white,
                     ),
                     onPressed: () {
-                      FirebaseAuth.instance
-                          .signOut()
-                          .whenComplete(() => Fluttertoast.showToast(
-                                msg: "Logged Out",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                              ));
+                      FirebaseAuth.instance.signOut().whenComplete(() {
+                        HelperFunctions().clearValues();
+                        Fluttertoast.showToast(
+                          msg: "Logged Out",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                        );
+                      });
                       Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -5,6 +5,8 @@ class HelperFunctions {
   static String sharedPreferenceUserNameKey = "USERNAMEKEY";
   static String sharedPreferenceUserEmailKey = "USEREMAILKEY";
   static String sharedPreferenceUserTokenKey = "USERTOKENKEY";
+  static String sharedPreferenceFirstNameKey = "FIRSTNAMEKEY";
+  static String sharedPreferenceLastNameKey = "LASTNAMEKEY";
 
   /// saving data to sharedpreference
   Future<bool> saveUserLoggedInSharedPreference(bool isUserLoggedIn) async {
@@ -16,6 +18,16 @@ class HelperFunctions {
   Future<bool> saveUserNameSharedPreference(String userName) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.setString(sharedPreferenceUserNameKey, userName);
+  }
+
+  Future<bool> saveFirstNameSharedPreference(String firstName) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setString(sharedPreferenceFirstNameKey, firstName);
+  }
+
+  Future<bool> saveLastNameSharedPreference(String lastName) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setString(sharedPreferenceLastNameKey, lastName);
   }
 
   Future<bool> saveUserEmailSharedPreference(String userEmail) async {
@@ -39,6 +51,16 @@ class HelperFunctions {
     return preferences.getString(sharedPreferenceUserNameKey);
   }
 
+  Future<String> getFirstNameSharedPreference() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(sharedPreferenceFirstNameKey);
+  }
+
+  Future<String> getLastNameSharedPreference() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(sharedPreferenceLastNameKey);
+  }
+
   Future<String> getUserEmailSharedPreference() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(sharedPreferenceUserEmailKey);
@@ -47,5 +69,12 @@ class HelperFunctions {
   Future<String> getUserTokenSharedPreference() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(sharedPreferenceUserTokenKey);
+  }
+
+  clearValues() {
+    HelperFunctions().saveFirstNameSharedPreference('');
+    HelperFunctions().saveLastNameSharedPreference('');
+    HelperFunctions().saveUserNameSharedPreference('');
+    HelperFunctions().saveUserEmailSharedPreference('');
   }
 }

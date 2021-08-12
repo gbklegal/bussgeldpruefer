@@ -1,5 +1,4 @@
-// import 'package:app/functions/newscreen.dart';
-import 'package:app/screens/authenticate/login.dart';
+import 'package:app/screens/auth/login.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {

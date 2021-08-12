@@ -5,8 +5,7 @@ import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'authenticate/login.dart';
+import 'auth/login.dart';
 
 // ignore: must_be_immutable
 class QuickCheckFinalScreen extends StatelessWidget {

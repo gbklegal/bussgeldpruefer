@@ -1,8 +1,8 @@
 import 'package:app/constants.dart';
 import 'package:app/provider/google_sign_in.dart';
 import 'package:app/helper/helperfunctions.dart';
-import 'package:app/screens/authenticate/forgotcredentials.dart';
-import 'package:app/screens/authenticate/registeration.dart';
+import 'package:app/screens/auth/forgotcredentials.dart';
+import 'package:app/screens/auth/registeration.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/database.dart';
 import 'package:app/services/validators.dart';
@@ -66,8 +66,14 @@ class _LoginScreenState extends State<LoginScreen> {
         QuerySnapshot userInfoSnapshot =
             await DatabaseMethods().getUserInfo(_email.trim());
         HelperFunctions().saveUserLoggedInSharedPreference(true);
-        HelperFunctions()
-            .saveUserNameSharedPreference(userInfoSnapshot.docs[0]['name']);
+        var userName = userInfoSnapshot.docs[0]['name']['first'] +
+            ' ' +
+            userInfoSnapshot.docs[0]['name']['last'];
+        HelperFunctions().saveUserNameSharedPreference(userName);
+        HelperFunctions().saveFirstNameSharedPreference(
+            userInfoSnapshot.docs[0]['name']['first']);
+        HelperFunctions().saveLastNameSharedPreference(
+            userInfoSnapshot.docs[0]['name']['last']);
         // String name;
         // name = await HelperFunctions().getUserNameSharedPreference();
         HelperFunctions()

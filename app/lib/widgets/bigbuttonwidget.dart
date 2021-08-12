@@ -1,6 +1,6 @@
 import 'package:app/constants.dart';
 import 'package:app/functions/newscreen.dart';
-import 'package:app/screens/authenticate/login.dart';
+import 'package:app/screens/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

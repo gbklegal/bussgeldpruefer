@@ -1,6 +1,5 @@
 import 'package:app/constants.dart';
 import 'package:app/helper/helperfunctions.dart';
-import 'package:app/screens/authenticate/login.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/database.dart';
 import 'package:app/services/validators.dart';
@@ -10,6 +9,7 @@ import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../global.dart';
 
@@ -53,22 +53,31 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   void register() async {
     if (validate()) {
       try {
-        // ignore: unused_local_variable
-        UserCredential user = (await _auth
-            .createUserWithEmailAndPassword(email: _email, password: _password)
-            .whenComplete(() => Navigator.pop(context)));
-
-        Map<String, String> userInfoMap = {
-          "name": _firstName + ' ' + _lastName,
+        var userInfoMap = {
+          "name": {"first": _firstName, "last": _lastName},
           "email": _email,
           "token": _token
         };
         HelperFunctions().saveUserEmailSharedPreference(_email);
         HelperFunctions()
             .saveUserNameSharedPreference(_firstName + ' ' + _lastName);
+        HelperFunctions().saveFirstNameSharedPreference(_firstName);
+        HelperFunctions().saveLastNameSharedPreference(_lastName);
 
         HelperFunctions().saveUserLoggedInSharedPreference(true);
         databaseMethods.addUserInfo(userInfoMap);
+        UserCredential user = (await _auth
+            .createUserWithEmailAndPassword(email: _email, password: _password)
+            .whenComplete(() {
+          Fluttertoast.showToast(
+            msg: "Logged in",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+          );
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+        }));
       } catch (e) {
         print(e);
         setState(() {
