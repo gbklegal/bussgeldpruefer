@@ -56,7 +56,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         var userInfoMap = {
           "name": {"first": _firstName, "last": _lastName},
           "email": _email,
-          "token": _token
+          "FCMtoken": _token,
+          "orderId": null
         };
         HelperFunctions().saveValues(_firstName, _lastName, _email);
         UserCredential user = (await _auth

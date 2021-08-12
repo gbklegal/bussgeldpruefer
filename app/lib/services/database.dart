@@ -96,7 +96,7 @@ class DatabaseMethods {
         .collection('users')
         .doc(_auth.currentUser.uid)
         .update({
-      'token': token.toString(),
+      'FCMtoken': token.toString(),
     });
   }
 
@@ -105,7 +105,7 @@ class DatabaseMethods {
           .where('email', isEqualTo: email)
           .get()
           .then((value) {
-        return value.docs[0]['token'].toString();
+        return value.docs[0]['FCMtoken'].toString();
       });
 
   getUserChats(String itIsMyName) async {
