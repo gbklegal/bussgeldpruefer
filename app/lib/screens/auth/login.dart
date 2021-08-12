@@ -65,21 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
         QuerySnapshot userInfoSnapshot =
             await DatabaseMethods().getUserInfo(_email.trim());
-        HelperFunctions().saveUserLoggedInSharedPreference(true);
-        var userName = userInfoSnapshot.docs[0]['name']['first'] +
-            ' ' +
-            userInfoSnapshot.docs[0]['name']['last'];
-        HelperFunctions().saveUserNameSharedPreference(userName);
-        HelperFunctions().saveFirstNameSharedPreference(
-            userInfoSnapshot.docs[0]['name']['first']);
-        HelperFunctions().saveLastNameSharedPreference(
-            userInfoSnapshot.docs[0]['name']['last']);
-        // String name;
-        // name = await HelperFunctions().getUserNameSharedPreference();
-        HelperFunctions()
-            .saveUserEmailSharedPreference(userInfoSnapshot.docs[0]['email']);
-        HelperFunctions().saveUserLoggedInSharedPreference(true);
-        DatabaseMethods().updateUserToken(_token);
+        var firstName = userInfoSnapshot.docs[0]['name']['first'];
+        var lastName = userInfoSnapshot.docs[0]['name']['last'];
+        var email = userInfoSnapshot.docs[0]['email'];
+        HelperFunctions().saveValues(
+          firstName,
+          lastName,
+          email,
+        );
         // Navigator.popUntil(
         //   context,
         //   ModalRoute.withName('/'),
@@ -87,12 +80,15 @@ class _LoginScreenState extends State<LoginScreen> {
         final user = (await _auth
                 .signInWithEmailAndPassword(
                     email: _email.trim(), password: _password)
-                .whenComplete(() => Fluttertoast.showToast(
-                      msg: "Logged in",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                    )))
+                .whenComplete(() {
+          DatabaseMethods().updateUserToken(_token);
+          Fluttertoast.showToast(
+            msg: "Logged in",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+          );
+        }))
             .user;
         Navigator.pop(context);
       } catch (e) {

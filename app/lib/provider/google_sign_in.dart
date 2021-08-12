@@ -42,8 +42,6 @@ class GoogleSignInProvider extends ChangeNotifier {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-
-    await FirebaseAuth.instance.signInWithCredential(credential);
     Map<String, dynamic> idMap = parseJwt(googleAuth.idToken);
     final String firstName = idMap["given_name"];
     final String lastName = idMap["family_name"];
@@ -52,11 +50,11 @@ class GoogleSignInProvider extends ChangeNotifier {
       "email": _user.email,
       "token": _token
     };
-    HelperFunctions().saveUserEmailSharedPreference(_user.email);
-    HelperFunctions().saveUserNameSharedPreference(_user.displayName);
-    HelperFunctions().saveFirstNameSharedPreference(firstName);
-    HelperFunctions().saveLastNameSharedPreference(lastName);
-    HelperFunctions().saveUserLoggedInSharedPreference(true);
-    DatabaseMethods().addUserInfo(userInfoMap);
+    await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .whenComplete(() {
+      HelperFunctions().saveValues(firstName, lastName, _user.email);
+      DatabaseMethods().addUserInfo(userInfoMap);
+    });
   }
 }

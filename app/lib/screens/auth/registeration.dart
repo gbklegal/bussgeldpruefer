@@ -58,17 +58,11 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
           "email": _email,
           "token": _token
         };
-        HelperFunctions().saveUserEmailSharedPreference(_email);
-        HelperFunctions()
-            .saveUserNameSharedPreference(_firstName + ' ' + _lastName);
-        HelperFunctions().saveFirstNameSharedPreference(_firstName);
-        HelperFunctions().saveLastNameSharedPreference(_lastName);
-
-        HelperFunctions().saveUserLoggedInSharedPreference(true);
-        databaseMethods.addUserInfo(userInfoMap);
+        HelperFunctions().saveValues(_firstName, _lastName, _email);
         UserCredential user = (await _auth
             .createUserWithEmailAndPassword(email: _email, password: _password)
             .whenComplete(() {
+          DatabaseMethods().addUserInfo(userInfoMap);
           Fluttertoast.showToast(
             msg: "Logged in",
             toastLength: Toast.LENGTH_SHORT,

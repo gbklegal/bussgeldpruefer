@@ -71,6 +71,14 @@ class HelperFunctions {
     return preferences.getString(sharedPreferenceUserTokenKey);
   }
 
+  saveValues(firstName, lastName, email) {
+    HelperFunctions().saveUserNameSharedPreference(firstName + ' ' + lastName);
+    HelperFunctions().saveFirstNameSharedPreference(firstName);
+    HelperFunctions().saveLastNameSharedPreference(lastName);
+    HelperFunctions().saveUserEmailSharedPreference(email);
+    HelperFunctions().saveUserLoggedInSharedPreference(true);
+  }
+
   clearValues() {
     HelperFunctions().saveFirstNameSharedPreference('');
     HelperFunctions().saveLastNameSharedPreference('');
