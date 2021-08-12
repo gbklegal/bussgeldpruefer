@@ -548,7 +548,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                                   newScreen(
                                     context: context,
                                     screen: QuickCheckFinalScreen(
-                                        voilationName: quickCheckViolationName,
+                                        violationName: quickCheckViolationName,
                                         trafficLightColor:
                                             quickCheckTrafficLightColor), // add score as a parameter
                                   );

@@ -10,10 +10,10 @@ import 'authenticate/login.dart';
 
 // ignore: must_be_immutable
 class QuickCheckFinalScreen extends StatelessWidget {
-  final String voilationName;
+  final String violationName;
   final String trafficLightColor;
   String status;
-  QuickCheckFinalScreen({this.voilationName, this.trafficLightColor});
+  QuickCheckFinalScreen({this.violationName, this.trafficLightColor});
 
   _padding() {
     return SizedBox(height: 22.0);
@@ -77,7 +77,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     height: 80,
                   ),
                   Text(
-                    'Eine Verteidigung gegen den behaupteten $voilationName erscheint $status.*',
+                    'Eine Verteidigung gegen den behaupteten $violationName-Verstoß erscheint $status.*',
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
@@ -130,7 +130,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '$voilationName kann im schlimmsten Fall zum Führerscheinverlust führen.',
+                          '$violationName kann im schlimmsten Fall zum Führerscheinverlust führen.',
                           style:
                               TextStyle(fontSize: 18, color: Color(0xff5CC8C5)),
                           softWrap: true,
