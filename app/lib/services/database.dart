@@ -42,7 +42,7 @@ class DatabaseMethods {
       totalUsers++;
       return totalUsers;
     } else {
-      return 0;
+      return 1;
     }
   }
 
