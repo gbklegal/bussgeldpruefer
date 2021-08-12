@@ -14,8 +14,8 @@ class _FaqScreenState extends State<FaqScreen> {
   Future _getFaqs() async {
     // ignore: todo
     // TODO: change url in prod.
-    var response =
-        await http.get(Uri.parse('https://dev02.gbk-rae.de/bgp/app/faq.json'));
+    var response = await http
+        .get(Uri.parse('https://xn--bussgeldprfer-5ob.com/bgp/faq.json'));
     // ignore: todo
     // TODO: check response status code
     return json.decode(utf8.decode(response.bodyBytes));
