@@ -28,8 +28,8 @@ Future sendForm({
   String message,
   TypeOfContact contactType,
 }) async {
-  final Uri apiUrl =
-      Uri.parse('https://dev02.gbk-rae.de/bgp/app/contactform.php');
+  final Uri apiUrl = Uri.parse(
+      'https://xn--bussgeldprfer-5ob.com/bgp/contactform/contactform.php');
   final response = await http.post(
     apiUrl,
     body: {
