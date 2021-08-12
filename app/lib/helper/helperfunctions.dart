@@ -84,5 +84,6 @@ class HelperFunctions {
     HelperFunctions().saveLastNameSharedPreference('');
     HelperFunctions().saveUserNameSharedPreference('');
     HelperFunctions().saveUserEmailSharedPreference('');
+    HelperFunctions().saveUserLoggedInSharedPreference(false);
   }
 }

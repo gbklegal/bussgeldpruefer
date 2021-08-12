@@ -13,17 +13,14 @@ class GoogleSignInProvider extends ChangeNotifier {
   GoogleSignInAccount get user => _user;
 
   static Map<String, dynamic> parseJwt(String token) {
-    // validate token
     if (token == null) return null;
     final List<String> parts = token.split('.');
     if (parts.length != 3) {
       return null;
     }
-    // retrieve token payload
     final String payload = parts[1];
     final String normalized = base64Url.normalize(payload);
     final String resp = utf8.decode(base64Url.decode(normalized));
-    // convert to Map
     final payloadMap = json.decode(resp);
     if (payloadMap is! Map<String, dynamic>) {
       return null;
@@ -45,17 +42,22 @@ class GoogleSignInProvider extends ChangeNotifier {
     Map<String, dynamic> idMap = parseJwt(googleAuth.idToken);
     final String firstName = idMap["given_name"];
     final String lastName = idMap["family_name"];
-    var userInfoMap = {
-      "name": {"first": firstName, "last": lastName},
-      "email": _user.email,
-      "FCMtoken": _token,
-      "orderId": null
-    };
-    await FirebaseAuth.instance
-        .signInWithCredential(credential)
-        .whenComplete(() {
+
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    if (userCredential.additionalUserInfo.isNewUser) {
+      var totalUsers = await DatabaseMethods().getTotalUsers();
+      var _id = totalUsers - 1;
+      var userInfoMap = {
+        "id": _id,
+        "name": {"first": firstName, "last": lastName},
+        "email": _user.email,
+        "FCMtoken": _token,
+      };
+      DatabaseMethods().addUserInfo(userInfoMap, totalUsers, _id);
       HelperFunctions().saveValues(firstName, lastName, _user.email);
-      DatabaseMethods().addUserInfo(userInfoMap);
-    });
+    } else {
+      HelperFunctions().saveValues(firstName, lastName, _user.email);
+    }
   }
 }

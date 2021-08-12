@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart' as Path;
 
 class UserData {
   String name;
@@ -15,15 +17,41 @@ class UserData {
 
 class DatabaseMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  firebase_storage.Reference ref;
+  String _fileURLs;
 
-  Future<void> addUserInfo(userData) async {
+  Future<void> addUserInfo(userData, noOfUsers, id) async {
     FirebaseFirestore.instance
         .collection("users")
-        .doc(_auth.currentUser.uid)
+        .doc(id.toString())
         .set(userData)
         .catchError((e) {
       print(e.toString());
     });
+    setTotalUsers(noOfUsers);
+  }
+
+  Future<int> getTotalUsers() async {
+    int totalUsers = 0;
+    var userQuery = await FirebaseFirestore.instance
+        .collection("totalusers")
+        .doc('All Users')
+        .get();
+    if (userQuery.exists) {
+      totalUsers = userQuery.get('totalUsers');
+      totalUsers++;
+      return totalUsers;
+    } else {
+      return 0;
+    }
+  }
+
+  Future<void> setTotalUsers(noOfUsers) async {
+    Map<String, dynamic> data = <String, dynamic>{"totalUsers": noOfUsers};
+    await FirebaseFirestore.instance
+        .collection("totalusers")
+        .doc('All Users')
+        .set(data);
   }
 
   getUserInfo(String email) async {
@@ -135,5 +163,50 @@ class DatabaseMethods {
         .collection("chats")
         .orderBy('time')
         .snapshots();
+  }
+
+  Future uploadFile(file) async {
+    var totalOrders = await getTotalOrderNumbers();
+    var orderNumber = "2021" + totalOrders.toString().padLeft(4, '0');
+    ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('signatures/${Path.basename(file.path)}');
+    await ref.putFile(file).whenComplete(() async {
+      _fileURLs = await ref.getDownloadURL();
+    });
+    _add(orderNumber, totalOrders);
+  }
+
+  Future<int> getTotalOrderNumbers() async {
+    int totalOrders = 0;
+    var userQuery = await FirebaseFirestore.instance
+        .collection("totalorders")
+        .doc('All Order Numbers')
+        .get();
+    if (userQuery.exists) {
+      totalOrders = userQuery.get('totalOrders');
+      totalOrders++;
+      return totalOrders;
+    } else {
+      return 1;
+    }
+  }
+
+  Future<void> setTotalOrderNumbers(noOfOrders) async {
+    Map<String, dynamic> data = <String, dynamic>{"totalOrders": noOfOrders};
+    await FirebaseFirestore.instance
+        .collection("totalorders")
+        .doc('All Order Numbers')
+        .set(data);
+  }
+
+  Future<void> _add(orderNumber, totalOrders) async {
+    Map<String, dynamic> data = <String, dynamic>{"signatureFile": _fileURLs};
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(orderNumber)
+        .set(data);
+    _fileURLs = null;
+    setTotalOrderNumbers(totalOrders);
   }
 }
