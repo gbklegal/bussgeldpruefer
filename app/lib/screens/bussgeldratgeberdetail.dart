@@ -7,7 +7,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 
 class BussgeldRatgeberDetailScreen extends StatelessWidget {
   final Post post;
-  final f = new DateFormat('dd-MM-yyyy hh:mm');
+  final f = new DateFormat('dd.MM.yyyy hh:mm');
 
   BussgeldRatgeberDetailScreen(this.post);
 

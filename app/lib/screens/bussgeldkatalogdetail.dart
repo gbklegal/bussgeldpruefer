@@ -7,7 +7,7 @@ import 'package:app/widgets/pagetitle.dart';
 
 class BussgeldkatalogDetailScreen extends StatelessWidget {
   final Post post;
-  final f = new DateFormat('yyyy-MM-dd hh:mm');
+  final f = new DateFormat('yyyy.MM.dd hh:mm');
 
   BussgeldkatalogDetailScreen(this.post);
 
