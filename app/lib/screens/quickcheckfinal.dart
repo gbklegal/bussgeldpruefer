@@ -123,13 +123,13 @@ class QuickCheckFinalScreen extends StatelessWidget {
                   _padding(),
                   Text('Nur 1 Schritt fehlt, um den Bescheid anzufechten'),
                   Text(
-                      '\n- Druch Anwalt geprüft\n- in 24h Rückmeldung\n- kostenlose Ersteberatung'),
+                      '\n- Druch Anwalt geprüft\n- binnen 24h Rückmeldung\n- kostenlose Ersteberatung'),
                   _padding(),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          '$violationName kann im schlimmsten Fall zum Führerscheinverlust führen.',
+                          '$violationName-Verstoß kann im schlimmsten Fall zum Führerscheinverlust führen.',
                           style:
                               TextStyle(fontSize: 18, color: Color(0xff5CC8C5)),
                           softWrap: true,
