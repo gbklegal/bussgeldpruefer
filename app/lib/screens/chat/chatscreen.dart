@@ -89,25 +89,30 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 itemBuilder: (context, suggestion) {
+                  var name = suggestion['name']['first'] +
+                      ' ' +
+                      suggestion['name']['last'];
                   if (suggestion['email'] == myEmail) {
                     return const SizedBox();
                   } else
                     return ListTile(
-                      title: Text(suggestion['name']),
+                      title: Text(name),
                       leading: CircleAvatar(
                         backgroundColor: Colors.primaries[
                             Random().nextInt(Colors.primaries.length)],
                         foregroundColor: Colors.white,
                         child: Text(
-                          suggestion['name'].substring(0, 1).toUpperCase(),
+                          name.substring(0, 1).toUpperCase(),
                         ),
                       ),
                     );
                 },
                 onSuggestionSelected: (suggestion) {
                   //this._typeAheadController.text = suggestion['name'];
-                  sendMessage(
-                      suggestion['name'].trim(), suggestion['email'].trim());
+                  var name = suggestion['name']['first'] +
+                      ' ' +
+                      suggestion['name']['last'];
+                  sendMessage(name.trim(), suggestion['email'].trim());
                   userEmail = suggestion['email'].trim();
                   Navigator.push(
                       context,
