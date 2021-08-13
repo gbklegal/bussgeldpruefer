@@ -62,12 +62,11 @@
                         <br>
                         dies gesetzlich zulässig und nach Art. 6 Abs. 1 S. 1 lit. b DSGVO für die Abwicklung von Vertragsverhältnissen mit Ihnen erforderlich ist.
                     </p>
-                    <p></p>
                 </div>
             </li>
             <li>
                 <h2 class="text-lg font-bold">Cookies</h2>
-                <p>
+                <div>
                     Wir setzen auf unserer Seite Cookies ein. Hierbei handelt es sich um kleine Dateien, die Ihr Browser automatisch erstellt und die auf Ihrem Endgerät (Laptop, Tablet, Smartphone o.ä.) gespeichert werden, wenn Sie unsere Seite besuchen. Cookies richten auf Ihrem Endgerät keinen Schaden an, enthalten keine Viren, Trojaner oder sonstige Schadsoftware.
                     <br>
                     <br>
@@ -87,12 +86,12 @@
                     <br>
                     <br>
                     Die meisten Browser akzeptieren Cookies automatisch. Sie können Ihren Browser jedoch so konfigurieren, dass keine Cookies auf Ihrem Computer gespeichert werden oder stets ein Hinweis erscheint, bevor ein neuer Cookie angelegt wird. Die vollständige Deaktivierung von Cookies kann jedoch dazu führen, dass Sie nicht alle Funktionen unserer Website nutzen können.
-                </p>
+                </div>
             </li>
             <br>
             <li>
                 <h2 class="text-lg font-bold">Analyse-Tools</h2>
-                <p>
+                <div>
                     Die im Folgenden aufgeführten und von uns eingesetzten Tracking-Maßnahmen werden auf Grundlage des Art. 6 Abs. 1 S. 1 lit. f DSGVO durchgeführt. Mit den zum Einsatz kommenden Tracking-Maßnahmen wollen wir eine bedarfsgerechte Gestaltung und die fortlaufende Optimierung unserer Webseite sicherstellen. Zum anderen setzen wir die Tracking-Maßnahmen ein, um die Nutzung unserer Webseite statistisch zu erfassen und zum Zwecke der Optimierung unseres Angebotes für Sie auszuwerten. Diese Interessen sind als berechtigt im Sinne der vorgenannten Vorschrift anzusehen.
                     <br>
                     <br>
@@ -127,32 +126,59 @@
                     <br>
                     <br>
                     Weitere Informationen zum Datenschutz im Zusammenhang mit Google Analytics finden Sie etwa in der Google Analytics-Hilfe (https://support.google.com/analytics/answer/6004245?hl=de).
-                </p>
+                </div>
             </li>
             <br>
             <li>
                 <h2 class="text-lg font-bold">Social Media Plug-ins</h2>
-                <p>
-                    Wir setzen auf unserer Seite Cookies ein. Hierbei handelt es sich um kleine Dateien, die Ihr Browser automatisch erstellt und die auf Ihrem Endgerät (Laptop, Tablet, Smartphone o.ä.) gespeichert werden, wenn Sie unsere Seite besuchen. Cookies richten auf Ihrem Endgerät keinen Schaden an, enthalten keine Viren, Trojaner oder sonstige Schadsoftware.
+                <div>
+                    Wir setzen auf unserer Website auf Grundlage des Art. 6 Abs. 1 S. 1 lit. f DSGVO Social Plug-ins der sozialen Netzwerke Facebook, Twitter und Instagram ein, um unsere Kanzlei hierüber bekannter zu machen. Der dahinterstehende werbliche Zweck ist als berechtigtes Interesse im Sinne der DSGVO anzusehen. Die Verantwortung für den datenschutzkonformen Betrieb ist durch deren jeweiligen Anbieter zu gewährleisten. Die Einbindung dieser Plug-ins durch uns erfolgt im Wege der sogenannten Zwei-Klick-Methode um Besucher unserer Webseite bestmöglich zu schützen.
                     <br>
                     <br>
-                    In dem Cookie werden Informationen abgelegt, die sich jeweils im Zusammenhang mit dem spezifisch eingesetzten Endgerät ergeben. Dies bedeutet jedoch nicht, dass wir dadurch unmittelbar Kenntnis von Ihrer Identität erhalten.
+                    <p class="ml-4"> a) Facebook</p>
+                    <br>
+                    Auf unserer Website kommen Social-Media Plug-ins von Facebook zum Einsatz, um deren Nutzung persönlicher zu gestalten. Hierfür nutzen wir den „LIKE“ oder „TEILEN“-Button. Es handelt sich dabei um ein Angebot von Facebook. Wenn Sie eine Seite unseres Webauftritts aufrufen, die ein solches Plug-in enthält, baut Ihr Browser eine direkte Verbindung mit den Servern von Facebook auf. Der Inhalt des Plug-ins wird von Facebook direkt an Ihren Browser übermittelt und von diesem in die Webseite eingebunden.
                     <br>
                     <br>
-                    Der Einsatz von Cookies dient einerseits dazu, die Nutzung unseres Angebots für Sie angenehmer zu gestalten. So setzen wir sogenannte Session-Cookies ein, um zu erkennen, dass Sie einzelne Seiten unserer Website bereits besucht haben. Diese werden nach Verlassen unserer Seite automatisch gelöscht.
+                    Durch die Einbindung der Plug-ins erhält Facebook die Information, dass Ihr Browser die entsprechende Seite unseres Webauftritts aufgerufen hat, auch wenn Sie kein Facebook-Konto besitzen oder gerade nicht bei Facebook eingeloggt sind. Diese Information (einschließlich Ihrer IP-Adresse) wird von Ihrem Browser direkt an einen Server von Facebook in den USA übermittelt und dort gespeichert.
                     <br>
                     <br>
-                    Darüber hinaus setzen wir ebenfalls zur Optimierung der Benutzerfreundlichkeit temporäre Cookies ein, die für einen bestimmten festgelegten Zeitraum auf Ihrem Endgerät gespeichert werden. Besuchen Sie unsere Seite erneut, um unsere Dienste in Anspruch zu nehmen, wird automatisch erkannt, dass Sie bereits bei uns waren und welche Eingaben und Einstellungen sie getätigt haben, um diese nicht noch einmal eingeben zu müssen.
+                    Sind Sie bei Facebook eingeloggt, kann Facebook den Besuch unserer Website Ihrem Facebook-Konto direkt zuordnen. Wenn Sie mit den Plug-ins interagieren, zum Beispiel den „LIKE“ oder „TEILEN“-Button betätigen, wird die entsprechende Information ebenfalls direkt an einen Server von
                     <br>
                     <br>
-                    Zum anderen setzten wir Cookies ein, um die Nutzung unserer Website statistisch zu erfassen und zum Zwecke der Optimierung unseres Angebotes für Sie auszuwerten (siehe Ziff. 5). Diese Cookies ermöglichen es uns, bei einem erneuten Besuch unserer Seite automatisch zu erkennen, dass Sie bereits bei uns waren. Diese Cookies werden nach einer jeweils definierten Zeit automatisch gelöscht.
+                    Facebook übermittelt und dort gespeichert. Die Informationen werden zudem auf Facebook veröffentlicht und Ihren Facebook-Freunden angezeigt.
                     <br>
                     <br>
-                    Die durch Cookies verarbeiteten Daten sind für die genannten Zwecke zur Wahrung unserer berechtigten Interessen sowie der Dritter nach Art. 6 Abs. 1 S. 1 lit. f DSGVO erforderlich.
+                    Facebook kann diese Informationen zum Zwecke der Werbung, Marktforschung und bedarfsgerechten Gestaltung der Facebook-Seiten benutzen. Hierzu werden von Facebook Nutzungs-, Interessen- und Beziehungsprofile erstellt, z.B. um Ihre Nutzung unserer Website im Hinblick auf die Ihnen bei Facebook eingeblendeten Werbeanzeigen auszuwerten, andere Facebook-Nutzer über Ihre Aktivitäten auf unserer Website zu informieren und um weitere mit der Nutzung von Facebook verbundene Dienstleistungen zu erbringen.
                     <br>
                     <br>
-                    Die meisten Browser akzeptieren Cookies automatisch. Sie können Ihren Browser jedoch so konfigurieren, dass keine Cookies auf Ihrem Computer gespeichert werden oder stets ein Hinweis erscheint, bevor ein neuer Cookie angelegt wird. Die vollständige Deaktivierung von Cookies kann jedoch dazu führen, dass Sie nicht alle Funktionen unserer Website nutzen können.
-                </p>
+                    Wenn Sie nicht möchten, dass Facebook die über unseren Webauftritt gesammelten Daten Ihrem Facebook-Konto zuordnet, müssen Sie sich vor Ihrem Besuch unserer Website bei Facebook ausloggen.
+                    <br>
+                    <br>
+                    Zweck und Umfang der Datenerhebung und die weitere Verarbeitung und Nutzung der Daten durch Facebook sowie Ihre diesbezüglichen Rechte und Einstellungsmöglichkeiten zum Schutz Ihrer Privatsphäre entnehmen Sie bitte den Datenschutzhinweisen (https://www.facebook.com/about/privacy/) von Facebook.
+                    <br>
+                    <br>
+                    <p class="ml-4">b) Twitter</p>
+                    <br>
+                    Auf unseren Internetseiten sind Plugins des Kurznachrichtennetzwerks der Twitter Inc. (Twitter) integriert. Die Twitter-Plugins (tweet-Button) erkennen Sie an dem Twitter-Logo auf unserer Seite. Eine Übersicht über tweet-Buttons finden Sie hier (https://about.twitter.com/resources/buttons). Wenn Sie eine Seite unseres Webauftritts aufrufen, die ein solches Plugin enthält, wird eine direkte Verbindung zwischen Ihrem Browser und dem Twitter-Server hergestellt.
+                    <br>
+                    <br>
+                    Twitter erhält dadurch die Information, dass Sie mit Ihrer IP-Adresse unsere Seite besucht haben. Wenn Sie den Twitter „tweet-Button“ anklicken, während Sie in Ihrem Twitter-Account eingeloggt sind, können Sie die Inhalte unserer Seiten auf Ihrem Twitter-Profil verlinken. Dadurch kann Twitter den Besuch unserer Seiten Ihrem Benutzerkonto zuordnen.
+                    <br>
+                    <br>
+                    Wir weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch Twitter erhalten.
+                    <br>
+                    <br>
+                    Wenn Sie nicht wünschen, dass Twitter den Besuch unserer Seiten zuordnen kann, loggen Sie sich bitte aus Ihrem Twitter-Benutzerkonto aus.
+                    <br>
+                    <br>
+                    Weitere Informationen hierzu finden Sie in der Datenschutzerklärung von Twitter (https://twitter.com/privacy).
+                    <br>
+                </div>
+            </li>
+            <br>
+            <li>
+                <h2 class="text-lg font-bold">Betroffenenrechte</h2> 
             </li>
             <br>
         </ol>
