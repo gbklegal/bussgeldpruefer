@@ -44,26 +44,6 @@ class _PruefungBussgeldbescheidScreenState
     return SizedBox(height: height);
   }
 
-  //double _demoPadding = 10.0;
-
-  // _demoBlockPadding(direction) {
-  //   if (direction == 'width') {
-  //     return SizedBox(width: _demoPadding);
-  //   }
-  //   return SizedBox(height: _demoPadding);
-  // }
-
-  // _demoBlock() {
-  //   return Container(
-  //     width: (MediaQuery.of(context).size.width * 0.5) - 25,
-  //     height: 100.0,
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
-  //       color: Colors.grey.shade300,
-  //     ),
-  //   );
-  // }
-
   void changeViolationIndex(int index) {
     setState(() => selectedViolationIndex = index);
   }
@@ -163,35 +143,6 @@ class _PruefungBussgeldbescheidScreenState
                     ),
                   ],
                 ),
-                // Column(
-                //   children: <Widget>[
-                //     _demoBlockPadding('height'),
-                //     Row(
-                //       children: <Widget>[
-                //         _demoBlock(),
-                //         _demoBlockPadding('width'),
-                //         _demoBlock()
-                //       ],
-                //     ),
-                //     _demoBlockPadding('height'),
-                //     Row(
-                //       children: <Widget>[
-                //         _demoBlock(),
-                //         _demoBlockPadding('width'),
-                //         _demoBlock()
-                //       ],
-                //     ),
-                //     _demoBlockPadding('height'),
-                //     Row(
-                //       children: <Widget>[
-                //         _demoBlock(),
-                //         _demoBlockPadding('width'),
-                //         _demoBlock()
-                //       ],
-                //     ),
-                //   ],
-                // ),
-
                 _padding(),
                 Row(
                   children: [
@@ -224,8 +175,8 @@ class _PruefungBussgeldbescheidScreenState
                             icon: Icon(Icons.arrow_forward),
                             onPressed: () => newScreen(
                               context: context,
-                              screen:
-                                  PruefungBussgeldbescheidFileUploadScreen(),
+                              screen: PruefungBussgeldbescheidFileUploadScreen(
+                                  violationNames[selectedViolationIndex]),
                             ),
                           ),
                           Text('weiter'),

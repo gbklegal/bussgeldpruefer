@@ -53,19 +53,19 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   void register() async {
     if (validate()) {
       try {
-        var totalUsers = await DatabaseMethods().getTotalUsers();
-        var _id = totalUsers - 1;
-        var userInfoMap = {
-          "id": _id,
-          "name": {"first": _firstName, "last": _lastName},
-          "email": _email,
-          "FCMtoken": _token,
-        };
         HelperFunctions().saveValues(_firstName, _lastName, _email);
         UserCredential user = (await _auth
             .createUserWithEmailAndPassword(email: _email, password: _password)
-            .whenComplete(() {
-          DatabaseMethods().addUserInfo(userInfoMap, totalUsers, _id);
+            .whenComplete(() async {
+          var totalUsers = await DatabaseMethods().getTotalUsers();
+          var _id = totalUsers - 1;
+          var userInfoMap = {
+            "id": FirebaseAuth.instance.currentUser.uid,
+            "name": {"first": _firstName, "last": _lastName},
+            "email": _email,
+            "FCMtoken": _token,
+          };
+          DatabaseMethods().addUserInfo(userInfoMap, totalUsers);
           Fluttertoast.showToast(
             msg: "Logged in",
             toastLength: Toast.LENGTH_SHORT,

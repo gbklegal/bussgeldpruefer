@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'dart:ui';
+import 'package:intl/intl.dart';
 import 'package:app/constants.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/database.dart';
 import 'package:app/utilities/connection_dialog.dart';
 import 'package:app/helper/helperfunctions.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:app/Api/pdfapi.dart';
 import 'package:app/functions/newscreen.dart';
@@ -18,6 +20,8 @@ import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import '../global.dart';
 
 class PruefungBussgeldbescheidVollmacht extends StatefulWidget {
+  final String violatioName;
+  PruefungBussgeldbescheidVollmacht(this.violatioName);
   @override
   _PruefungBussgeldbescheidVollmachtState createState() =>
       _PruefungBussgeldbescheidVollmachtState();
@@ -29,13 +33,21 @@ class _PruefungBussgeldbescheidVollmachtState
   String myName = '';
   var file;
   final keySignaturePad = GlobalKey<SfSignaturePadState>();
+  String firstName, lastName, email;
   _padding([height = 20.0]) {
     return SizedBox(height: height);
   }
 
   @override
   void initState() {
+    getUserData();
     super.initState();
+  }
+
+  getUserData() async {
+    firstName = await HelperFunctions().getFirstNameSharedPreference();
+    lastName = await HelperFunctions().getLastNameSharedPreference();
+    email = await HelperFunctions().getUserEmailSharedPreference();
   }
 
   @override
@@ -94,8 +106,10 @@ class _PruefungBussgeldbescheidVollmachtState
                         isConnection =
                             await ConnectionStatus().checkConnectionStatus();
                         isConnection
-                            ? showAlertDialog(context,
-                                "Möchten Sie das signierte Dokument wirklich senden?")
+                            ? showAlertDialog(
+                                context,
+                                "Möchten Sie das signierte Dokument wirklich senden?",
+                                widget.violatioName)
                             : ConnectionDialog().showAlertDialog(context,
                                 uploadDialogTitle, notConnectedInternet);
                       }),
@@ -150,7 +164,7 @@ class _PruefungBussgeldbescheidVollmachtState
     );
   }
 
-  showAlertDialog(BuildContext context, String dialog) {
+  showAlertDialog(BuildContext context, String dialog, String violationName) {
     Widget okButton = ElevatedButton(
       child: Text("OK"),
       onPressed: () async {
@@ -158,7 +172,23 @@ class _PruefungBussgeldbescheidVollmachtState
         setState(() {
           uploading = true;
         });
-        await DatabaseMethods().uploadFile(file).whenComplete(() {
+        await DatabaseMethods().uploadFile(file, violationName).then((value) {
+          DateTime now = DateTime.now();
+          String formattedDate = DateFormat('dd.MM.yyyy – kk:mm').format(now);
+          sendForm(
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              dateTime: formattedDate,
+              violationName: violationName,
+              orderId: value);
+          // print(firstName);
+          // print(lastName);
+          // print(email);
+          // print();
+          // print(violationName);
+          // print(value);
+        }).whenComplete(() {
           setState(() {
             uploading = false;
           });
@@ -197,6 +227,44 @@ class _PruefungBussgeldbescheidVollmachtState
         return alert;
       },
     );
+  }
+
+  Future sendForm({
+    String firstName,
+    String lastName,
+    String email,
+    String dateTime,
+    String violationName,
+    String orderId,
+  }) async {
+    final Uri apiUrl =
+        Uri.parse('https://xn--bussgeldprfer-5ob.com/bgp/mail/order/mail.php');
+    final response = await http.post(
+      apiUrl,
+      body: {
+        'key':
+            'nKP6Wu7m315BOkxSW0NE1r1KDH7RibWD601xdvrsjH1fDwqQdJIzUhbmpIOmCR1q',
+        'firstname': firstName,
+        'lastname': lastName,
+        'email': email.isEmpty ? '/' : email,
+        'datetime': dateTime,
+        'violation': violationName,
+        'orderId': orderId,
+        'medium': 'app',
+      },
+    );
+    final statusCode = response.statusCode;
+
+    if (statusCode != 200) {
+      throw new Exception(
+          // ignore: todo
+          'Error while fetching data'); // TODO: change this message text
+    }
+
+    final data = json.decode(response.body);
+    // ignore: todo
+    // TODO: return feedback
+    print('sendmail: ' + data['sendmail'].toString());
   }
 
   Future saveSignature({orderNumber}) async {

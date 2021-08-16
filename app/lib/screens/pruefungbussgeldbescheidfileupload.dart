@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:app/services/connectivity.dart';
+import 'package:app/services/database.dart';
 import 'package:app/utilities/connection_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -16,6 +17,8 @@ import '../constants.dart';
 import '../global.dart';
 
 class PruefungBussgeldbescheidFileUploadScreen extends StatefulWidget {
+  final String violatioName;
+  PruefungBussgeldbescheidFileUploadScreen(this.violatioName);
   @override
   _PruefungBussgeldbescheidFileUploadScreenState createState() =>
       _PruefungBussgeldbescheidFileUploadScreenState();
@@ -200,11 +203,17 @@ class _PruefungBussgeldbescheidFileUploadScreenState
                                     uploading = false;
                                   });
                                   if (_image.length == 0) {
-                                    showAlertDialog(context, 0,
-                                        "Es ist kein Dokument ausgewählt. Durch Klicken auf OK gelangen Sie zum nächsten Bildschirm.");
+                                    showAlertDialog(
+                                        context,
+                                        0,
+                                        "Es ist kein Dokument ausgewählt. Durch Klicken auf OK gelangen Sie zum nächsten Bildschirm.",
+                                        widget.violatioName);
                                   } else {
-                                    showAlertDialog(context, 1,
-                                        "Alle Dokumenten wurden erfolgreich hochgeladen");
+                                    showAlertDialog(
+                                        context,
+                                        1,
+                                        "Alle Dokumenten wurden erfolgreich hochgeladen",
+                                        widget.violatioName);
                                   }
                                 });
                               } else if (_image.length == 0) {
@@ -216,11 +225,17 @@ class _PruefungBussgeldbescheidFileUploadScreenState
                                     uploading = false;
                                   });
                                   if (_image.length == 0) {
-                                    showAlertDialog(context, 0,
-                                        "Es ist kein Dokument ausgewählt. Durch Klicken auf OK gelangen Sie zum nächsten Bildschirm.");
+                                    showAlertDialog(
+                                        context,
+                                        0,
+                                        "Es ist kein Dokument ausgewählt. Durch Klicken auf OK gelangen Sie zum nächsten Bildschirm.",
+                                        widget.violatioName);
                                   } else {
-                                    showAlertDialog(context, 1,
-                                        "Alle Dokumenten wurden erfolgreich hochgeladen");
+                                    showAlertDialog(
+                                        context,
+                                        1,
+                                        "Alle Dokumenten wurden erfolgreich hochgeladen",
+                                        widget.violatioName);
                                   }
                                 });
                               } else {
@@ -243,7 +258,8 @@ class _PruefungBussgeldbescheidFileUploadScreenState
     );
   }
 
-  showAlertDialog(BuildContext context, int status, String dialog) {
+  showAlertDialog(
+      BuildContext context, int status, String dialog, violatioName) {
     // set up the button
     Widget okButton = ElevatedButton(
       child: Text("OK"),
@@ -254,7 +270,7 @@ class _PruefungBussgeldbescheidFileUploadScreenState
         });
         newScreen(
           context: context,
-          screen: PruefungBussgeldbescheidVollmacht(),
+          screen: PruefungBussgeldbescheidVollmacht(violatioName),
         );
       },
     );
@@ -324,25 +340,10 @@ class _PruefungBussgeldbescheidFileUploadScreenState
         i++;
       });
     }
-    print(_fileURLs);
-    if (_image.length != 0 && _fileURLs.length != 0) _add();
-  }
-
-  Future<void> _add() async {
-    final uid = (_firebaseAuth.currentUser.uid);
-    Map<String, dynamic> data = <String, dynamic>{
-      "name": documentName,
-      "fileURLs": FieldValue.arrayUnion(_fileURLs)
-    };
-    await FirebaseFirestore.instance
-        .collection("userData")
-        .doc(uid)
-        .collection("Files")
-        .add(data)
-        .whenComplete(() {
-      print("Document Added");
-    });
-    clearAll();
+    if (_image.length != 0 && _fileURLs.length != 0)
+      DatabaseMethods()
+          .addFile(documentName, _fileURLs)
+          .whenComplete(() => clearAll());
   }
 
   clearAll() {

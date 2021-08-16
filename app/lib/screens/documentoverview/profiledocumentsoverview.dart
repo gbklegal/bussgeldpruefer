@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:app/global.dart';
 import 'package:app/screens/documentoverview/fullscreenimage.dart';
 import 'package:app/services/connectivity.dart';
+import 'package:app/services/database.dart';
 import 'package:app/utilities/connection_dialog.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
@@ -33,7 +34,6 @@ class _ProfileDocumentsOverviewScreenState
   final picker = ImagePicker();
   List<String> _fileURLs = [];
   List<String> _getImages = [];
-  final db = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -249,23 +249,6 @@ class _ProfileDocumentsOverviewScreenState
     );
   }
 
-  Future<void> _add() async {
-    final uid = (_firebaseAuth.currentUser.uid);
-    Map<String, dynamic> data = <String, dynamic>{
-      "name": documentName,
-      "fileURLs": FieldValue.arrayUnion(_fileURLs)
-    };
-    await db
-        .collection("userData")
-        .doc(uid)
-        .collection("Files")
-        .add(data)
-        .whenComplete(() {
-      print("Document Added");
-    });
-    clearAll();
-  }
-
   Widget _buildGridViewForOverview() {
     fetchData();
     return _getImages.length == 0
@@ -301,9 +284,9 @@ class _ProfileDocumentsOverviewScreenState
   fetchData() async {
     List<String> img = [];
     var data = await FirebaseFirestore.instance
-        .collection("userData")
+        .collection("files")
         .doc(_firebaseAuth.currentUser.uid)
-        .collection("Files")
+        .collection("docs")
         .get();
     for (int i = 0; i < data.docs.length; i++) {
       DocumentSnapshot files = data.docs[i];
@@ -313,7 +296,6 @@ class _ProfileDocumentsOverviewScreenState
     }
     _getImages.clear();
     _getImages = img;
-    //print(_getImages);
     if (mounted) {
       setState(() {});
     }
@@ -412,8 +394,11 @@ class _ProfileDocumentsOverviewScreenState
         i++;
       });
     }
-    print(_fileURLs);
-    if (_image.length != 0 && _fileURLs.length != 0) _add();
+
+    if (_image.length != 0 && _fileURLs.length != 0)
+      DatabaseMethods()
+          .addFile(documentName, _fileURLs)
+          .whenComplete(() => clearAll());
   }
 
   showAlertDialog(BuildContext context, String dialog) {

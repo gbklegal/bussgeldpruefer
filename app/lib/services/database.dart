@@ -20,10 +20,10 @@ class DatabaseMethods {
   firebase_storage.Reference ref;
   String _fileURLs;
 
-  Future<void> addUserInfo(userData, noOfUsers, id) async {
+  Future<void> addUserInfo(userData, noOfUsers) async {
     FirebaseFirestore.instance
         .collection("users")
-        .doc(id.toString())
+        .doc(FirebaseAuth.instance.currentUser.uid)
         .set(userData)
         .catchError((e) {
       print(e.toString());
@@ -73,23 +73,6 @@ class DatabaseMethods {
           return userLower.contains(queryLower);
         }).toList();
       });
-
-  // static Future<List<UserData>> getUsersList() async {
-  //   var userData = new UserData();
-  //   List<UserData> allData = [];
-  //   await FirebaseFirestore.instance
-  //       .collection("users")
-  //       .get()
-  //       .then((querySnapshot) {
-  //     querySnapshot.docs.forEach((result) {
-  //       print(result.data());
-  //       userData.fromMap(result.data());
-  //       allData.add(userData);
-  //       print(userData.name);
-  //     });
-  //   });
-  //   return List.of(userData).toList();
-  // }
 
   addChatRoom(chatRoom, chatRoomId) async {
     final snapShot = await FirebaseFirestore.instance
@@ -165,7 +148,7 @@ class DatabaseMethods {
         .snapshots();
   }
 
-  Future uploadFile(file) async {
+  Future uploadFile(file, violationName) async {
     var totalOrders = await getTotalOrderNumbers();
     var orderNumber = "2021" + totalOrders.toString().padLeft(4, '0');
     ref = firebase_storage.FirebaseStorage.instance
@@ -174,7 +157,8 @@ class DatabaseMethods {
     await ref.putFile(file).whenComplete(() async {
       _fileURLs = await ref.getDownloadURL();
     });
-    _add(orderNumber, totalOrders);
+    _add(orderNumber, totalOrders, violationName);
+    return orderNumber;
   }
 
   Future<int> getTotalOrderNumbers() async {
@@ -200,13 +184,60 @@ class DatabaseMethods {
         .set(data);
   }
 
-  Future<void> _add(orderNumber, totalOrders) async {
-    Map<String, dynamic> data = <String, dynamic>{"signatureFile": _fileURLs};
+  Future<void> _add(orderNumber, totalOrders, violationName) async {
+    Map<String, dynamic> data = <String, dynamic>{
+      "userId": FirebaseAuth.instance.currentUser.uid,
+      "fileId": FirebaseAuth.instance.currentUser.uid,
+      "signatureFile": _fileURLs,
+      "violationName": violationName
+    };
     await FirebaseFirestore.instance
         .collection("orders")
         .doc(orderNumber)
         .set(data);
     _fileURLs = null;
     setTotalOrderNumbers(totalOrders);
+  }
+
+  Future<int> getTotalFiles() async {
+    int totalFiles = 0;
+    var userQuery = await FirebaseFirestore.instance
+        .collection("totalfiles")
+        .doc('All Files')
+        .get();
+    if (userQuery.exists) {
+      totalFiles = userQuery.get('totalFiles');
+      totalFiles++;
+      return totalFiles;
+    } else {
+      return 1;
+    }
+  }
+
+  Future<void> setTotalFiles(noOfFiles) async {
+    Map<String, dynamic> data = <String, dynamic>{"totalFiles": noOfFiles};
+    await FirebaseFirestore.instance
+        .collection("totalfiles")
+        .doc('All Files')
+        .set(data);
+  }
+
+  Future<void> addFile(
+    docName,
+    fileUrl,
+  ) async {
+    Map<String, dynamic> data = <String, dynamic>{
+      "id": FirebaseAuth.instance.currentUser.uid,
+      "name": docName,
+      "fileURLs": FieldValue.arrayUnion(fileUrl)
+    };
+    await FirebaseFirestore.instance
+        .collection("files")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection("docs")
+        .add(data)
+        .catchError((e) {
+      print(e.toString());
+    });
   }
 }

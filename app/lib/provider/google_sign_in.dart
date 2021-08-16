@@ -49,12 +49,12 @@ class GoogleSignInProvider extends ChangeNotifier {
       var totalUsers = await DatabaseMethods().getTotalUsers();
       var _id = totalUsers - 1;
       var userInfoMap = {
-        "id": _id,
+        "id": FirebaseAuth.instance.currentUser.uid,
         "name": {"first": firstName, "last": lastName},
         "email": _user.email,
         "FCMtoken": _token,
       };
-      DatabaseMethods().addUserInfo(userInfoMap, totalUsers, _id);
+      DatabaseMethods().addUserInfo(userInfoMap, totalUsers);
       HelperFunctions().saveValues(firstName, lastName, _user.email);
     } else {
       HelperFunctions().saveValues(firstName, lastName, _user.email);
