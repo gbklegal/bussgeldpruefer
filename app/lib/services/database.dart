@@ -20,7 +20,7 @@ class DatabaseMethods {
   firebase_storage.Reference ref;
   String _fileURLs;
 
-  Future<void> addUserInfo(userData, noOfUsers) async {
+  Future<void> addUserInfo(userData) async {
     FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser.uid)
@@ -28,7 +28,6 @@ class DatabaseMethods {
         .catchError((e) {
       print(e.toString());
     });
-    setTotalUsers(noOfUsers);
   }
 
   Future<int> getTotalUsers() async {

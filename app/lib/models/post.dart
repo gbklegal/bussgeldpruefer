@@ -1,7 +1,6 @@
 // To parse this JSON data, do
 //
 //     final post = postFromJson(jsonString);
-import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
 List<Post> postFromJson(String str) =>
@@ -10,7 +9,6 @@ List<Post> postFromJson(String str) =>
 String postToJson(List<Post> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-@JsonSerializable()
 class Post {
   Post({
     this.id,
@@ -51,7 +49,6 @@ class Post {
       };
 }
 
-@JsonSerializable()
 class Content {
   Content({
     this.rendered,
@@ -72,7 +69,6 @@ class Content {
       };
 }
 
-@JsonSerializable()
 class Embedded {
   Embedded({
     this.author,
@@ -103,7 +99,6 @@ class Embedded {
       };
 }
 
-@JsonSerializable()
 class EmbeddedAuthor {
   EmbeddedAuthor({
     this.id,
@@ -150,7 +145,6 @@ class EmbeddedAuthor {
       };
 }
 
-@JsonSerializable()
 class AuthorLinks {
   AuthorLinks({
     this.self,
@@ -172,7 +166,6 @@ class AuthorLinks {
       };
 }
 
-@JsonSerializable()
 class About {
   About({
     this.href,
@@ -189,7 +182,6 @@ class About {
       };
 }
 
-@JsonSerializable()
 class WpFeaturedmedia {
   WpFeaturedmedia({
     this.id,
@@ -259,7 +251,6 @@ class WpFeaturedmedia {
       };
 }
 
-@JsonSerializable()
 class Title {
   Title({
     this.rendered,
@@ -276,7 +267,6 @@ class Title {
       };
 }
 
-@JsonSerializable()
 class WpFeaturedmediaLinks {
   WpFeaturedmediaLinks({
     this.self,
@@ -323,7 +313,6 @@ class WpFeaturedmediaLinks {
       };
 }
 
-@JsonSerializable()
 class ReplyElement {
   ReplyElement({
     this.embeddable,
@@ -344,7 +333,6 @@ class ReplyElement {
       };
 }
 
-@JsonSerializable()
 class MediaDetails {
   MediaDetails({
     this.width,
@@ -377,7 +365,6 @@ class MediaDetails {
       };
 }
 
-@JsonSerializable()
 class ImageMeta {
   ImageMeta({
     this.aperture,
@@ -438,7 +425,6 @@ class ImageMeta {
       };
 }
 
-@JsonSerializable()
 class Sizes {
   Sizes({
     this.medium,
@@ -481,7 +467,6 @@ class Sizes {
       };
 }
 
-@JsonSerializable()
 class Full {
   Full({
     this.file,
@@ -514,7 +499,6 @@ class Full {
       };
 }
 
-@JsonSerializable()
 class EmbeddedWpTerm {
   EmbeddedWpTerm({
     this.id,
@@ -551,7 +535,6 @@ class EmbeddedWpTerm {
       };
 }
 
-@JsonSerializable()
 class WpTermLinks {
   WpTermLinks({
     this.self,
@@ -586,7 +569,6 @@ class WpTermLinks {
       };
 }
 
-@JsonSerializable()
 class Cury {
   Cury({
     this.name,
@@ -611,7 +593,6 @@ class Cury {
       };
 }
 
-@JsonSerializable()
 class PostLinks {
   PostLinks({
     this.self,
@@ -681,7 +662,6 @@ class PostLinks {
       };
 }
 
-@JsonSerializable()
 class PredecessorVersion {
   PredecessorVersion({
     this.id,
@@ -703,7 +683,6 @@ class PredecessorVersion {
       };
 }
 
-@JsonSerializable()
 class VersionHistory {
   VersionHistory({
     this.count,
@@ -724,7 +703,6 @@ class VersionHistory {
       };
 }
 
-@JsonSerializable()
 class LinksWpTerm {
   LinksWpTerm({
     this.taxonomy,

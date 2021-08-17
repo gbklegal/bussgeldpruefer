@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //   context,
         //   ModalRoute.withName('/'),
         // );
-        final user = (await _auth
+        (await _auth
                 .signInWithEmailAndPassword(
                     email: _email.trim(), password: _password)
                 .whenComplete(() {

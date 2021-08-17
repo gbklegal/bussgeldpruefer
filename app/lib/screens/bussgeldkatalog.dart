@@ -3,7 +3,6 @@ import 'package:app/models/post.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/http_service.dart';
 import 'package:app/utilities/connection_dialog.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/appbar.dart';
