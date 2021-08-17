@@ -1,13 +1,16 @@
 // To parse this JSON data, do
 //
 //     final post = postFromJson(jsonString);
-
+import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
-Post postFromJson(String str) => Post.fromJson(json.decode(str));
+List<Post> postFromJson(String str) =>
+    List<Post>.from(json.decode(str).map((x) => Post.fromJson(x)));
 
-String postToJson(Post data) => json.encode(data.toJson());
+String postToJson(List<Post> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+@JsonSerializable()
 class Post {
   Post({
     this.id,
@@ -48,6 +51,7 @@ class Post {
       };
 }
 
+@JsonSerializable()
 class Content {
   Content({
     this.rendered,
@@ -68,6 +72,7 @@ class Content {
       };
 }
 
+@JsonSerializable()
 class Embedded {
   Embedded({
     this.author,
@@ -98,6 +103,7 @@ class Embedded {
       };
 }
 
+@JsonSerializable()
 class EmbeddedAuthor {
   EmbeddedAuthor({
     this.id,
@@ -144,6 +150,7 @@ class EmbeddedAuthor {
       };
 }
 
+@JsonSerializable()
 class AuthorLinks {
   AuthorLinks({
     this.self,
@@ -165,6 +172,7 @@ class AuthorLinks {
       };
 }
 
+@JsonSerializable()
 class About {
   About({
     this.href,
@@ -181,6 +189,7 @@ class About {
       };
 }
 
+@JsonSerializable()
 class WpFeaturedmedia {
   WpFeaturedmedia({
     this.id,
@@ -217,7 +226,7 @@ class WpFeaturedmedia {
   factory WpFeaturedmedia.fromJson(Map<String, dynamic> json) =>
       WpFeaturedmedia(
         id: json["id"],
-        date: DateTime.parse(json["date"]),
+        date: json["date"] == null ? null : DateTime.parse(json["date"]),
         slug: json["slug"],
         type: json["type"],
         link: json["link"],
@@ -250,6 +259,7 @@ class WpFeaturedmedia {
       };
 }
 
+@JsonSerializable()
 class Title {
   Title({
     this.rendered,
@@ -258,7 +268,7 @@ class Title {
   final String rendered;
 
   factory Title.fromJson(Map<String, dynamic> json) => Title(
-        rendered: json["rendered"],
+        rendered: json == null ? "" : json["rendered"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -266,6 +276,7 @@ class Title {
       };
 }
 
+@JsonSerializable()
 class WpFeaturedmediaLinks {
   WpFeaturedmediaLinks({
     this.self,
@@ -283,14 +294,24 @@ class WpFeaturedmediaLinks {
 
   factory WpFeaturedmediaLinks.fromJson(Map<String, dynamic> json) =>
       WpFeaturedmediaLinks(
-        self: List<About>.from(json["self"].map((x) => About.fromJson(x))),
-        collection:
-            List<About>.from(json["collection"].map((x) => About.fromJson(x))),
-        about: List<About>.from(json["about"].map((x) => About.fromJson(x))),
-        author: List<ReplyElement>.from(
-            json["author"].map((x) => ReplyElement.fromJson(x))),
-        replies: List<ReplyElement>.from(
-            json["replies"].map((x) => ReplyElement.fromJson(x))),
+        self: json == null
+            ? null
+            : List<About>.from(json["self"].map((x) => About.fromJson(x))),
+        collection: json == null
+            ? null
+            : List<About>.from(
+                json["collection"].map((x) => About.fromJson(x))),
+        about: json == null
+            ? null
+            : List<About>.from(json["about"].map((x) => About.fromJson(x))),
+        author: json == null
+            ? null
+            : List<ReplyElement>.from(
+                json["author"].map((x) => ReplyElement.fromJson(x))),
+        replies: json == null
+            ? null
+            : List<ReplyElement>.from(
+                json["replies"].map((x) => ReplyElement.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -302,6 +323,7 @@ class WpFeaturedmediaLinks {
       };
 }
 
+@JsonSerializable()
 class ReplyElement {
   ReplyElement({
     this.embeddable,
@@ -322,6 +344,7 @@ class ReplyElement {
       };
 }
 
+@JsonSerializable()
 class MediaDetails {
   MediaDetails({
     this.width,
@@ -338,11 +361,11 @@ class MediaDetails {
   final ImageMeta imageMeta;
 
   factory MediaDetails.fromJson(Map<String, dynamic> json) => MediaDetails(
-        width: json["width"],
-        height: json["height"],
-        file: json["file"],
-        sizes: Sizes.fromJson(json["sizes"]),
-        imageMeta: ImageMeta.fromJson(json["image_meta"]),
+        width: json == null ? 0 : json["width"],
+        height: json == null ? 0 : json["height"],
+        file: json == null ? "" : json["file"],
+        sizes: json == null ? null : Sizes.fromJson(json["sizes"]),
+        imageMeta: json == null ? null : ImageMeta.fromJson(json["image_meta"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -354,6 +377,7 @@ class MediaDetails {
       };
 }
 
+@JsonSerializable()
 class ImageMeta {
   ImageMeta({
     this.aperture,
@@ -414,10 +438,10 @@ class ImageMeta {
       };
 }
 
+@JsonSerializable()
 class Sizes {
   Sizes({
     this.medium,
-    this.large,
     this.thumbnail,
     this.mediumLarge,
     this.onepressBlogSmall,
@@ -426,29 +450,28 @@ class Sizes {
     this.full,
   });
 
-  final SizeAttribute medium;
-  final SizeAttribute large;
-  final SizeAttribute thumbnail;
-  final SizeAttribute mediumLarge;
-  final SizeAttribute onepressBlogSmall;
-  final SizeAttribute onepressSmall;
-  final SizeAttribute onepressMedium;
-  final SizeAttribute full;
+  final Full medium;
+  final Full thumbnail;
+  final Full mediumLarge;
+  final Full onepressBlogSmall;
+  final Full onepressSmall;
+  final Full onepressMedium;
+  final Full full;
 
   factory Sizes.fromJson(Map<String, dynamic> json) => Sizes(
-        medium: SizeAttribute.fromJson(json["medium"]),
-        large: SizeAttribute.fromJson(json["large"]),
-        thumbnail: SizeAttribute.fromJson(json["thumbnail"]),
-        mediumLarge: SizeAttribute.fromJson(json["medium_large"]),
-        onepressBlogSmall: SizeAttribute.fromJson(json["onepress-blog-small"]),
-        onepressSmall: SizeAttribute.fromJson(json["onepress-small"]),
-        onepressMedium: SizeAttribute.fromJson(json["onepress-medium"]),
-        full: SizeAttribute.fromJson(json["full"]),
+        medium: Full.fromJson(json["medium"]),
+        thumbnail: Full.fromJson(json["thumbnail"]),
+        mediumLarge: Full.fromJson(json["medium_large"]),
+        onepressBlogSmall: json["onepress-blog-small"] == null
+            ? null
+            : Full.fromJson(json["onepress-blog-small"]),
+        onepressSmall: Full.fromJson(json["onepress-small"]),
+        onepressMedium: Full.fromJson(json["onepress-medium"]),
+        full: Full.fromJson(json["full"]),
       );
 
   Map<String, dynamic> toJson() => {
         "medium": medium.toJson(),
-        "large": large.toJson(),
         "thumbnail": thumbnail.toJson(),
         "medium_large": mediumLarge.toJson(),
         "onepress-blog-small": onepressBlogSmall.toJson(),
@@ -458,8 +481,9 @@ class Sizes {
       };
 }
 
-class SizeAttribute {
-  SizeAttribute({
+@JsonSerializable()
+class Full {
+  Full({
     this.file,
     this.width,
     this.height,
@@ -473,12 +497,12 @@ class SizeAttribute {
   final String mimeType;
   final String sourceUrl;
 
-  factory SizeAttribute.fromJson(Map<String, dynamic> json) => SizeAttribute(
-        file: json != null ? json["file"] : "",
-        width: json != null ? json["width"] : 0,
-        height: json != null ? json["height"] : 0,
-        mimeType: json != null ? json["mime_type"] : "",
-        sourceUrl: json != null ? json["source_url"] : "",
+  factory Full.fromJson(Map<String, dynamic> json) => Full(
+        file: json["file"],
+        width: json["width"],
+        height: json["height"],
+        mimeType: json["mime_type"],
+        sourceUrl: json["source_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -490,6 +514,7 @@ class SizeAttribute {
       };
 }
 
+@JsonSerializable()
 class EmbeddedWpTerm {
   EmbeddedWpTerm({
     this.id,
@@ -526,6 +551,7 @@ class EmbeddedWpTerm {
       };
 }
 
+@JsonSerializable()
 class WpTermLinks {
   WpTermLinks({
     this.self,
@@ -560,6 +586,7 @@ class WpTermLinks {
       };
 }
 
+@JsonSerializable()
 class Cury {
   Cury({
     this.name,
@@ -584,6 +611,7 @@ class Cury {
       };
 }
 
+@JsonSerializable()
 class PostLinks {
   PostLinks({
     this.self,
@@ -653,6 +681,7 @@ class PostLinks {
       };
 }
 
+@JsonSerializable()
 class PredecessorVersion {
   PredecessorVersion({
     this.id,
@@ -674,6 +703,7 @@ class PredecessorVersion {
       };
 }
 
+@JsonSerializable()
 class VersionHistory {
   VersionHistory({
     this.count,
@@ -694,6 +724,7 @@ class VersionHistory {
       };
 }
 
+@JsonSerializable()
 class LinksWpTerm {
   LinksWpTerm({
     this.taxonomy,
