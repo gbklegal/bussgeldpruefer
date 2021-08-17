@@ -17,6 +17,7 @@ class BussgeldRatgeberDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(post.embedded.author[0].name);
     return Scaffold(
       appBar: AppBarWidget(),
       body: SingleChildScrollView(

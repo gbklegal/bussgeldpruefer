@@ -140,6 +140,8 @@ class PostTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(post.embedded.wpFeaturedmedia[0].mediaDetails.sizes.onepressBlogSmall
+        .sourceUrl);
     return Container(
       padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: ElevatedButton(

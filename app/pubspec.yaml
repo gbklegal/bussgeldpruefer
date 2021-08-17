@@ -50,12 +50,11 @@ dependencies:
   connectivity: ^3.0.6
   open_settings: ^2.0.1
   fluttertoast: ^8.0.7
-
   connectivity_plus: ^1.0.6
   data_connection_checker: ^0.3.4
-
   flutter_widget_from_html_core: ^0.6.1
   pull_to_refresh: ^2.0.0
+
   
   # create signature pad
   syncfusion_flutter_signaturepad: ^19.1.69-beta
@@ -68,9 +67,8 @@ dependencies:
 
   sign_in_with_apple: ^3.0.0
   google_sign_in: ^5.0.4
+  json_annotation: ^3.0.1
 
-
-  
 
   flutter_localizations:
     sdk: flutter
@@ -83,13 +81,18 @@ dependencies:
   
 
 dependency_overrides:
-  intl: ^0.17.0-nullsafety.2
+  intl: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^1.2.1
+  build_runner: ^1.8.0
+  json_serializable: ^3.3.0
+
+
   
+
 
 flutter_native_splash:  
   image: assets/images/splash.png
