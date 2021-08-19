@@ -128,9 +128,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        isHome: true,
-      ),
+      appBar: AppBarWidget(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

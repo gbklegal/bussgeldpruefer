@@ -147,9 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return WillPopScope(
       onWillPop: () => Future.value(true),
       child: Scaffold(
-        appBar: AppBarWidget(
-          isHome: true,
-        ),
+        appBar: AppBarWidget(),
         body: SingleChildScrollView(
           child: Column(
             children: [
