@@ -45,13 +45,13 @@ class GoogleSignInProvider extends ChangeNotifier {
 
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
+    var userInfoMap = {
+      "id": FirebaseAuth.instance.currentUser.uid,
+      "name": {"first": firstName, "last": lastName},
+      "email": _user.email,
+      "FCMtoken": _token,
+    };
     if (userCredential.additionalUserInfo.isNewUser) {
-      var userInfoMap = {
-        "id": FirebaseAuth.instance.currentUser.uid,
-        "name": {"first": firstName, "last": lastName},
-        "email": _user.email,
-        "FCMtoken": _token,
-      };
       DatabaseMethods().addUserInfo(userInfoMap);
       HelperFunctions().saveValues(firstName, lastName, _user.email);
     } else {

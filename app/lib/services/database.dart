@@ -30,6 +30,16 @@ class DatabaseMethods {
     });
   }
 
+  Future<void> updateUserInfo(userData) async {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .set(userData)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
   Future<int> getTotalUsers() async {
     int totalUsers = 0;
     var userQuery = await FirebaseFirestore.instance
