@@ -1,6 +1,7 @@
 // To parse this JSON data, do
 //
 //     final post = postFromJson(jsonString);
+
 import 'dart:convert';
 
 List<Post> postFromJson(String str) =>
@@ -29,13 +30,13 @@ class Post {
   final Embedded embedded;
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
-        id: json["id"],
-        date: DateTime.parse(json["date"]),
-        link: json["link"],
-        title: Title.fromJson(json["title"]),
-        content: Content.fromJson(json["content"]),
-        links: PostLinks.fromJson(json["_links"]),
-        embedded: Embedded.fromJson(json["_embedded"]),
+        id: json == null ? null : json["id"],
+        date: json == null ? null : DateTime.parse(json["date"]),
+        link: json == null ? null : json["link"],
+        title: json == null ? null : Title.fromJson(json["title"]),
+        content: json == null ? null : Content.fromJson(json["content"]),
+        links: json == null ? null : PostLinks.fromJson(json["_links"]),
+        embedded: json == null ? null : Embedded.fromJson(json["_embedded"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -210,7 +211,7 @@ class WpFeaturedmedia {
   final Title caption;
   final String altText;
   final String mediaType;
-  final String mimeType;
+  final MimeType mimeType;
   final MediaDetails mediaDetails;
   final String sourceUrl;
   final WpFeaturedmediaLinks links;
@@ -218,7 +219,7 @@ class WpFeaturedmedia {
   factory WpFeaturedmedia.fromJson(Map<String, dynamic> json) =>
       WpFeaturedmedia(
         id: json["id"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
+        date: DateTime.parse(json["date"]),
         slug: json["slug"],
         type: json["type"],
         link: json["link"],
@@ -227,7 +228,7 @@ class WpFeaturedmedia {
         caption: Title.fromJson(json["caption"]),
         altText: json["alt_text"],
         mediaType: json["media_type"],
-        mimeType: json["mime_type"],
+        mimeType: mimeTypeValues.map[json["mime_type"]],
         mediaDetails: MediaDetails.fromJson(json["media_details"]),
         sourceUrl: json["source_url"],
         links: WpFeaturedmediaLinks.fromJson(json["_links"]),
@@ -244,7 +245,7 @@ class WpFeaturedmedia {
         "caption": caption.toJson(),
         "alt_text": altText,
         "media_type": mediaType,
-        "mime_type": mimeType,
+        "mime_type": mimeTypeValues.reverse[mimeType],
         "media_details": mediaDetails.toJson(),
         "source_url": sourceUrl,
         "_links": links.toJson(),
@@ -259,7 +260,7 @@ class Title {
   final String rendered;
 
   factory Title.fromJson(Map<String, dynamic> json) => Title(
-        rendered: json == null ? "" : json["rendered"],
+        rendered: json["rendered"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -284,24 +285,14 @@ class WpFeaturedmediaLinks {
 
   factory WpFeaturedmediaLinks.fromJson(Map<String, dynamic> json) =>
       WpFeaturedmediaLinks(
-        self: json == null
-            ? null
-            : List<About>.from(json["self"].map((x) => About.fromJson(x))),
-        collection: json == null
-            ? null
-            : List<About>.from(
-                json["collection"].map((x) => About.fromJson(x))),
-        about: json == null
-            ? null
-            : List<About>.from(json["about"].map((x) => About.fromJson(x))),
-        author: json == null
-            ? null
-            : List<ReplyElement>.from(
-                json["author"].map((x) => ReplyElement.fromJson(x))),
-        replies: json == null
-            ? null
-            : List<ReplyElement>.from(
-                json["replies"].map((x) => ReplyElement.fromJson(x))),
+        self: List<About>.from(json["self"].map((x) => About.fromJson(x))),
+        collection:
+            List<About>.from(json["collection"].map((x) => About.fromJson(x))),
+        about: List<About>.from(json["about"].map((x) => About.fromJson(x))),
+        author: List<ReplyElement>.from(
+            json["author"].map((x) => ReplyElement.fromJson(x))),
+        replies: List<ReplyElement>.from(
+            json["replies"].map((x) => ReplyElement.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -349,11 +340,11 @@ class MediaDetails {
   final ImageMeta imageMeta;
 
   factory MediaDetails.fromJson(Map<String, dynamic> json) => MediaDetails(
-        width: json == null ? 0 : json["width"],
-        height: json == null ? 0 : json["height"],
-        file: json == null ? "" : json["file"],
-        sizes: json == null ? null : Sizes.fromJson(json["sizes"]),
-        imageMeta: json == null ? null : ImageMeta.fromJson(json["image_meta"]),
+        width: json["width"],
+        height: json["height"],
+        file: json["file"],
+        sizes: Sizes.fromJson(json["sizes"]),
+        imageMeta: ImageMeta.fromJson(json["image_meta"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -434,6 +425,8 @@ class Sizes {
     this.onepressSmall,
     this.onepressMedium,
     this.full,
+    this.large,
+    this.the1536X1536,
   });
 
   final Full medium;
@@ -443,17 +436,20 @@ class Sizes {
   final Full onepressSmall;
   final Full onepressMedium;
   final Full full;
+  final Full large;
+  final Full the1536X1536;
 
   factory Sizes.fromJson(Map<String, dynamic> json) => Sizes(
         medium: Full.fromJson(json["medium"]),
         thumbnail: Full.fromJson(json["thumbnail"]),
         mediumLarge: Full.fromJson(json["medium_large"]),
-        onepressBlogSmall: json["onepress-blog-small"] == null
-            ? null
-            : Full.fromJson(json["onepress-blog-small"]),
+        onepressBlogSmall: Full.fromJson(json["onepress-blog-small"]),
         onepressSmall: Full.fromJson(json["onepress-small"]),
         onepressMedium: Full.fromJson(json["onepress-medium"]),
         full: Full.fromJson(json["full"]),
+        large: json["large"] == null ? null : Full.fromJson(json["large"]),
+        the1536X1536:
+            json["1536x1536"] == null ? null : Full.fromJson(json["1536x1536"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -464,6 +460,8 @@ class Sizes {
         "onepress-small": onepressSmall.toJson(),
         "onepress-medium": onepressMedium.toJson(),
         "full": full.toJson(),
+        "large": large == null ? null : large.toJson(),
+        "1536x1536": the1536X1536 == null ? null : the1536X1536.toJson(),
       };
 }
 
@@ -479,14 +477,14 @@ class Full {
   final String file;
   final int width;
   final int height;
-  final String mimeType;
+  final MimeType mimeType;
   final String sourceUrl;
 
   factory Full.fromJson(Map<String, dynamic> json) => Full(
         file: json["file"],
         width: json["width"],
         height: json["height"],
-        mimeType: json["mime_type"],
+        mimeType: mimeTypeValues.map[json["mime_type"]],
         sourceUrl: json["source_url"],
       );
 
@@ -494,10 +492,15 @@ class Full {
         "file": file,
         "width": width,
         "height": height,
-        "mime_type": mimeType,
+        "mime_type": mimeTypeValues.reverse[mimeType],
         "source_url": sourceUrl,
       };
 }
+
+enum MimeType { IMAGE_JPEG, IMAGE_PNG }
+
+final mimeTypeValues = EnumValues(
+    {"image/jpeg": MimeType.IMAGE_JPEG, "image/png": MimeType.IMAGE_PNG});
 
 class EmbeddedWpTerm {
   EmbeddedWpTerm({
@@ -513,7 +516,7 @@ class EmbeddedWpTerm {
   final String link;
   final String name;
   final String slug;
-  final String taxonomy;
+  final Taxonomy taxonomy;
   final WpTermLinks links;
 
   factory EmbeddedWpTerm.fromJson(Map<String, dynamic> json) => EmbeddedWpTerm(
@@ -521,7 +524,7 @@ class EmbeddedWpTerm {
         link: json["link"],
         name: json["name"],
         slug: json["slug"],
-        taxonomy: json["taxonomy"],
+        taxonomy: taxonomyValues.map[json["taxonomy"]],
         links: WpTermLinks.fromJson(json["_links"]),
       );
 
@@ -530,7 +533,7 @@ class EmbeddedWpTerm {
         "link": link,
         "name": name,
         "slug": slug,
-        "taxonomy": taxonomy,
+        "taxonomy": taxonomyValues.reverse[taxonomy],
         "_links": links.toJson(),
       };
 }
@@ -576,22 +579,36 @@ class Cury {
     this.templated,
   });
 
-  final String name;
-  final String href;
+  final Name name;
+  final Href href;
   final bool templated;
 
   factory Cury.fromJson(Map<String, dynamic> json) => Cury(
-        name: json["name"],
-        href: json["href"],
+        name: nameValues.map[json["name"]],
+        href: hrefValues.map[json["href"]],
         templated: json["templated"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "href": href,
+        "name": nameValues.reverse[name],
+        "href": hrefValues.reverse[href],
         "templated": templated,
       };
 }
+
+enum Href { HTTPS_API_W_ORG_REL }
+
+final hrefValues =
+    EnumValues({"https://api.w.org/{rel}": Href.HTTPS_API_W_ORG_REL});
+
+enum Name { WP }
+
+final nameValues = EnumValues({"wp": Name.WP});
+
+enum Taxonomy { CATEGORY, POST_TAG }
+
+final taxonomyValues =
+    EnumValues({"category": Taxonomy.CATEGORY, "post_tag": Taxonomy.POST_TAG});
 
 class PostLinks {
   PostLinks({
@@ -710,19 +727,33 @@ class LinksWpTerm {
     this.href,
   });
 
-  final String taxonomy;
+  final Taxonomy taxonomy;
   final bool embeddable;
   final String href;
 
   factory LinksWpTerm.fromJson(Map<String, dynamic> json) => LinksWpTerm(
-        taxonomy: json["taxonomy"],
+        taxonomy: taxonomyValues.map[json["taxonomy"]],
         embeddable: json["embeddable"],
         href: json["href"],
       );
 
   Map<String, dynamic> toJson() => {
-        "taxonomy": taxonomy,
+        "taxonomy": taxonomyValues.reverse[taxonomy],
         "embeddable": embeddable,
         "href": href,
       };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

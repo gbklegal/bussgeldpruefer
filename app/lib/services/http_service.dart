@@ -10,9 +10,8 @@ class HttpService {
         "https://xn--bussgeldprfer-5ob.com/bgp/wp-api.php/posts?page=$pageNumber&_embed&_fields=id,date,link,title,content,_links,_embedded"));
     try {
       if (response.statusCode == 200) {
-        Iterable body = jsonDecode(response.body);
-        List<Post> posts =
-            List<Post>.from(body.map((model) => Post.fromJson(model)));
+        var body = jsonDecode(response.body);
+        var posts = List<Post>.from(body.map((model) => Post.fromJson(model)));
         return posts;
       } else if (response.statusCode == 400) {
         return null;

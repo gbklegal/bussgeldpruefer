@@ -115,7 +115,7 @@ class _BussgeldratgeberScreenState extends State<BussgeldratgeberScreen>
                       },
                     ),
                     child: ListView.builder(
-                        itemCount: 6,
+                        itemCount: posts.length,
                         itemBuilder: (context, index) {
                           return PostTile(
                             post: posts[index],
