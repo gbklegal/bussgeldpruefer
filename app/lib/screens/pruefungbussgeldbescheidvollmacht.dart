@@ -102,7 +102,6 @@ class _PruefungBussgeldbescheidVollmachtState
                       child: Text('senden'),
                       onPressed: () async {
                         await saveSignature();
-                        print(keySignaturePad.currentState);
                         isConnection =
                             await ConnectionStatus().checkConnectionStatus();
                         isConnection
@@ -182,12 +181,6 @@ class _PruefungBussgeldbescheidVollmachtState
               dateTime: formattedDate,
               violationName: violationName,
               orderId: value);
-          // print(firstName);
-          // print(lastName);
-          // print(email);
-          // print();
-          // print(violationName);
-          // print(value);
         }).whenComplete(() {
           setState(() {
             uploading = false;
@@ -260,11 +253,6 @@ class _PruefungBussgeldbescheidVollmachtState
           // ignore: todo
           'Error while fetching data'); // TODO: change this message text
     }
-
-    final data = json.decode(response.body);
-    // ignore: todo
-    // TODO: return feedback
-    print('sendmail: ' + data['sendmail'].toString());
   }
 
   Future saveSignature({orderNumber}) async {

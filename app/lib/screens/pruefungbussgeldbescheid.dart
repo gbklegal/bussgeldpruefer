@@ -176,7 +176,9 @@ class _PruefungBussgeldbescheidScreenState
                             onPressed: () => newScreen(
                               context: context,
                               screen: PruefungBussgeldbescheidFileUploadScreen(
-                                  violationNames[selectedViolationIndex]),
+                                  selectedViolationIndex == 0
+                                      ? 'Geschwindigkeit'
+                                      : violationNames[selectedViolationIndex]),
                             ),
                           ),
                           Text('weiter'),

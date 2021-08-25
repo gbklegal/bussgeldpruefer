@@ -7,18 +7,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:329140781548:android:a7b8b1a7aa99432a93c0c9",
+        "mobilesdk_app_id": "1:329140781548:android:8c7ffb06d7d2527593c0c9",
         "android_client_info": {
-          "package_name": "com.bussgeldpruefer.app.app"
+          "package_name": "com.bussgeldpruefer.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "329140781548-mmob3f53s0ekhtqep3sdabseqqcbpiv2.apps.googleusercontent.com",
+          "client_id": "329140781548-95d4cabglmhk43kn2oce0u8bnk68pj3t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.bussgeldpruefer.app.app",
+            "package_name": "com.bussgeldpruefer.com",
             "certificate_hash": "5ef851735417ac5f483dace88602f1f494b5f2d0"
+          }
+        },
+        {
+          "client_id": "329140781548-k1jd9bm2c0q5lhe2m8rmqv3bgc9i0pbg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bussgeldpruefer.com",
+            "certificate_hash": "252eb307e80ce981e08e3f35f24d3ddb4c00e825"
           }
         },
         {
@@ -37,6 +45,13 @@
             {
               "client_id": "329140781548-g5bcu61u6ukugb37d2uo6tcn2f6g70it.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "329140781548-1i7i64crfcf8ji87j1l9b0j77k8lhaou.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bussgledpruefer.app.app"
+              }
             }
           ]
         }
