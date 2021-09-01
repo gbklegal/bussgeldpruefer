@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/constants.dart';
 import 'package:app/provider/google_sign_in.dart';
 import 'package:app/helper/helperfunctions.dart';
@@ -303,25 +305,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               _padding(10.0),
-              // AppleAuthButton(
-              //   onPressed: () {},
-              //   darkMode: true,
-              //   style: AuthButtonStyle(
-              //     buttonColor: Colors.black,
-              //     borderColor: Colors.black.withOpacity(0.2),
-              //     borderRadius: 10.0,
-              //     width: 250.0,
-              //     height: 50.0,
-              //     iconSize: 25.0,
-              //     iconType: AuthIconType.outlined,
-              //     buttonType: AuthButtonType.secondary,
-              //     padding: const EdgeInsets.all(8.0),
-              //     textStyle: const TextStyle(
-              //       color: Colors.white,
-              //       fontSize: 16,
-              //     ),
-              //   ),
-              // ),
+              Platform.isIOS ? AppleAuthButton(
+                onPressed: () {},
+                darkMode: true,
+                style: AuthButtonStyle(
+                  buttonColor: Colors.black,
+                  borderColor: Colors.black.withOpacity(0.2),
+                  borderRadius: 10.0,
+                  width: 250.0,
+                  height: 50.0,
+                  iconSize: 25.0,
+                  iconType: AuthIconType.outlined,
+                  buttonType: AuthButtonType.secondary,
+                  padding: const EdgeInsets.all(8.0),
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ):SizedBox(),
             ],
           ),
         ),
