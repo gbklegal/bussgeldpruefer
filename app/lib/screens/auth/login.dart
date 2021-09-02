@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:app/constants.dart';
 import 'package:app/provider/google_sign_in.dart';
 import 'package:app/helper/helperfunctions.dart';
@@ -18,6 +18,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_buttons/auth_buttons.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../global.dart';
 
@@ -305,25 +306,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               _padding(10.0),
-              Platform.isIOS ? AppleAuthButton(
-                onPressed: () {},
-                darkMode: true,
-                style: AuthButtonStyle(
-                  buttonColor: Colors.black,
-                  borderColor: Colors.black.withOpacity(0.2),
-                  borderRadius: 10.0,
-                  width: 250.0,
-                  height: 50.0,
-                  iconSize: 25.0,
-                  iconType: AuthIconType.outlined,
-                  buttonType: AuthButtonType.secondary,
-                  padding: const EdgeInsets.all(8.0),
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-              ):SizedBox(),
+              Platform.isIOS
+                  ? AppleAuthButton(
+                      onPressed: _appleLogin(),
+                      darkMode: true,
+                      style: AuthButtonStyle(
+                        buttonColor: Colors.black,
+                        borderColor: Colors.black.withOpacity(0.2),
+                        borderRadius: 10.0,
+                        width: 250.0,
+                        height: 50.0,
+                        iconSize: 25.0,
+                        iconType: AuthIconType.outlined,
+                        buttonType: AuthButtonType.secondary,
+                        padding: const EdgeInsets.all(8.0),
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
             ],
           ),
         ),
@@ -331,46 +334,45 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-  // _appleLogin() async {
-  //   final credential = await SignInWithApple.getAppleIDCredential(
-  //     scopes: [
-  //       AppleIDAuthorizationScopes.email,
-  //       AppleIDAuthorizationScopes.fullName,
-  //     ],
-  //     webAuthenticationOptions: WebAuthenticationOptions(
-  //       clientId: 'com.aboutyou.dart_packages.sign_in_with_apple.example',
-  //       redirectUri: Uri.parse(
-  //         'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
-  //       ),
-  //     ),
-  //     nonce: 'example-nonce',
-  //     state: 'example-state',
-  //   );
 
-  //   print(credential);
+_appleLogin() async {
+  final credential = await SignInWithApple.getAppleIDCredential(
+    scopes: [
+      AppleIDAuthorizationScopes.email,
+      AppleIDAuthorizationScopes.fullName,
+    ],
+    webAuthenticationOptions: WebAuthenticationOptions(
+      clientId: 'com.aboutyou.dart_packages.sign_in_with_apple.example',
+      redirectUri: Uri.parse(
+        'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
+      ),
+    ),
+    nonce: 'example-nonce',
+    state: 'example-state',
+  );
 
-  //   // This is the endpoint that will convert an authorization code obtained
-  //   // via Sign in with Apple into a session in your system
-  //   final signInWithAppleEndpoint = Uri(
-  //     scheme: 'https',
-  //     host: 'flutter-sign-in-with-apple-example.glitch.me',
-  //     path: '/sign_in_with_apple',
-  //     queryParameters: <String, String>{
-  //       'code': credential.authorizationCode,
-  //       if (credential.givenName != null) 'firstName': credential.givenName,
-  //       if (credential.familyName != null) 'lastName': credential.familyName,
-  //       'useBundleId':
-  //           Platform.isAndroid || Platform.isMacOS ? 'true' : 'false',
-  //       if (credential.state != null) 'state': credential.state,
-  //     },
-  //   );
+  print(credential);
 
-  //   final session = await http.Client().post(
-  //     signInWithAppleEndpoint,
-  //   );
+  // This is the endpoint that will convert an authorization code obtained
+  // via Sign in with Apple into a session in your system
+  final signInWithAppleEndpoint = Uri(
+    scheme: 'https',
+    host: 'flutter-sign-in-with-apple-example.glitch.me',
+    path: '/sign_in_with_apple',
+    queryParameters: <String, String>{
+      'code': credential.authorizationCode,
+      if (credential.givenName != null) 'firstName': credential.givenName,
+      if (credential.familyName != null) 'lastName': credential.familyName,
+      'useBundleId': Platform.isAndroid || Platform.isMacOS ? 'true' : 'false',
+      if (credential.state != null) 'state': credential.state,
+    },
+  );
 
-  //   // If we got this far, a session based on the Apple ID credential has been created in your system,
-  //   // and you can now set this as the app's session
-  //   print(session);
-  // }
+  final session = await http.Client().post(
+    signInWithAppleEndpoint,
+  );
 
+  // If we got this far, a session based on the Apple ID credential has been created in your system,
+  // and you can now set this as the app's session
+  print(session);
+}
