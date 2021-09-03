@@ -1,57 +1,70 @@
 <template>
-    <div class="container">
-        <h1 class="text-secondary">Bussgeldratgeber</h1>
-        <BlogSearch />
-        <div class="mt-10">
-            <router-link :to="{ name: 'blog-single' }">
-                <BlogPreview imgsrc="/src/assets/img/alcohol.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Alkoholkonsum" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein." />
-            </router-link>
-
-            <router-link :to="{ name: 'blog-single' }">
-                <BlogPreview imgsrc="/src/assets/img/distance.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Abstand" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein." />
-            </router-link>
-
-            <router-link :to="{ name: 'blog-single' }">
-                <BlogPreview imgsrc="/src/assets/img/parking.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Alkoholkonsum" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein." />
-            </router-link>
-
-            <router-link :to="{ name: 'blog-single' }">
-                <BlogPreview imgsrc="/src/assets/img/alcohol.jpg" imgalt="Bild mit Alkohol" blogtitle="Führerscheinverlust bei Alkoholkonsum" previewtext="Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein." />
-            </router-link>
-
-            <!-- test -->
-            <div v-for="bus in buss" :key="bus.id">
-                <h2> Date - {{ bus.date }} </h2>
-                <h2> Title - {{ bus.title.rendered }} </h2>
-                <p> {{ bus.content.rendered }} </p>
-                <p> {{ bus._embedded["wp:featuredmedia"][0].media_details.file }} </p>
-                <p> {{ bus._embedded["wp:featuredmedia"][0].media_details.sizes.thumbnail.source_url }} </p>
-            </div>
-        </div>
-
-        <button class="btn-primary mt-10 mx-auto block">Mehr laden</button>
+  <div class="container">
+    <h1 class="text-secondary">Bussgeldratgeber</h1>
+    <BlogSearch />
+    <div class="mt-10" v-for="blogPost in blogPosts" :key="blogPost.id">
+      <router-link :to="{ name: 'blog-single' }">
+        <BlogPreview
+          :imgsrc="blogPost.images.openpress.medium"
+          :imgalt="blogPost.imageCaption"
+          :blogtitle="blogPost.title"
+          :previewtext="blogPost.content"
+        />
+      </router-link>
     </div>
+
+    <button class="btn-primary mt-10 mx-auto block">Mehr laden</button>
+  </div>
 </template>
 <script>
-import BlogPreview from '../components/BlogPreview.vue'
-import BlogSearch from '../components/BasicSearchForm.vue'
+import BlogPreview from "../components/BlogPreview.vue";
+import BlogSearch from "../components/BasicSearchForm.vue";
 
 export default {
-    components: {
-        BlogPreview,
-        BlogSearch
-    },
-    data() {
-        return {
-            buss: []
-        }
-    },
+  components: {
+    BlogPreview,
+    BlogSearch,
+  },
+  data() {
+    return {
+      blogPosts: [],
+    };
+  },
 
-    created() {
-    fetch('https://xn--bussgeldprfer-5ob.com/wp-json/wp/v2/posts?_embed&_fields=id,date,link,title,content,_links,_embedded')
+  created() {
+    fetch(
+      "https://xn--bussgeldprfer-5ob.com/wp-json/wp/v2/posts?_embed&_fields=id,date,link,title,content,_links,_embedded"
+    )
       .then((res) => res.json())
-      .then(data => this.buss = data)
-      .catch(err => console.log(err.message))
-    }
-}
+      .then((postsData) => {
+        // console.log(postsData);
+        this.blogPosts = [];
+
+        postsData.forEach(postData => {
+            // console.log(postData);
+            let filteredData = {
+                id: postData.id,
+                date: postData.date,
+                title: postData.title.rendered,
+                content: postData.content.rendered,
+                images: {
+                    full: postData._embedded["wp:featuredmedia"][0].source_url,
+                    medium: postData._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url,
+                    thumbnail: postData._embedded["wp:featuredmedia"][0].media_details.sizes.thumbnail.source_url,
+                    openpress: {
+                        blogSmall: postData._embedded["wp:featuredmedia"][0].media_details.sizes['onepress-blog-small'].source_url,
+                        small: postData._embedded["wp:featuredmedia"][0].media_details.sizes['onepress-small'].source_url,
+                        medium: postData._embedded["wp:featuredmedia"][0].media_details.sizes['onepress-medium'].source_url
+                    }
+                },
+                imageCaption: postData._embedded["wp:featuredmedia"][0].caption.rendered
+            };
+
+            this.blogPosts.push(filteredData)
+        });
+      })
+      .catch((err) => console.error(err.message));
+
+  },
+};
 </script>
