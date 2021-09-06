@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from './views/Home.vue'
+import NotFound from './views/NotFound.vue'
 import Order from './views/Order.vue'
 import Partners from './views/Partners.vue'
 import Contact from './views/Contact.vue'
@@ -11,6 +12,8 @@ import HowTo from './views/HowTo.vue'
 import Profile from './views/Profile.vue'
 import Catalog from './views/Catalog.vue'
 import Blog from './views/Blog.vue'
+import BlogSingle from './views/BlogSingle.vue'
+import BlogAuthor from './views/BlogAuthor.vue'
 import FAQ from './views/FAQ.vue'
 import Topics from './views/Topics.vue'
 import SignUp from './views/SignUp.vue'
@@ -28,7 +31,6 @@ import ProfileMailElse from './views/ProfileMailElse.vue'
 import ProfileMailSent from './views/ProfileMailSent.vue'
 import ProfileMailMarked from './views/ProfileMailMarked.vue'
 import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
-import BlogSingle from './views/BlogSingle.vue'
 import ContactThankYou from './views/ContactThankYou.vue'
 
 
@@ -145,9 +147,14 @@ const routes = [
         component: Blog
     },
     {
-        path: '/blog-single',
+        path: '/ratgeber/:postSlug',
         name: 'blog-single',
         component: BlogSingle
+    },
+    {
+        path: '/ratgeber/autor/:authorSlug',
+        name: 'blog-author',
+        component: BlogAuthor
     },
     {
         path: '/faq',
@@ -195,8 +202,18 @@ const routes = [
         path: '/profile-signup',
         name: 'profile-signup',
         component: ProfileSignUp
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: NotFound
     }
 ]
 
 const router = createRouter({ history, routes })
 export default router
+
+// router.resolve({
+//     name: 'not-found',
+//     component: NotFound
+// })
