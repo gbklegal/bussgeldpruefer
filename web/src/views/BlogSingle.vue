@@ -1,8 +1,93 @@
 <template>
-    <div class="container">
-        <img src="/src/assets/img/alcohol.jpg" alt="Bild mit Alkohol" class="rounded-sm object-cover h-4auto w-full">
-        <h1 class="mt-5">In der 30er Zone geblitzt?</h1>
-        <p class="mb-3">Die Tempo-30er-Zone erfüllt drei grundlegende Funktionen. So soll die 30-Zone die Verkehrssicherheit erhöhen. Aufgrund eines Verkehrssicherheitsprogrammes führte Berlin vor fast allen Schulen und Kitas die 30er Zone ein. Hier ist die Drosselung der Geschwindigkeit besonders wichtig, da Schulkinder meist wenig auf den Verkehr achten und die Wahrscheinlichkeit sinkt, einen tödlichen oder verletzenden Unfall zu verursachen. Zudem zeigten Studien, dass Autofahrer in einer Tempo-30er-Zone öfter dazu bereit sind, abzubremsen, wenn sie ein Kind am Straßenrand sehen.</p>
-        <p>Grundsätzlich gelten für alle Verkehrsteilnehmer, die in der 30-Zone geblitzt wurden, die normalen Bußgelder, die eine Geschwindigkeitsüberschreitung innerorts mit sich bringt. Das Tempo in einer 30er Zone ist auf 30 km/h beschränkt. Achten Sie deshalb besonders in Wohngebieten und vor Schulen auf die runden Schilder mit einer schwarzen „30“ darauf. Oftmals stellen die Beamten hier Blitzer auf, da an diesen Stellen gefährliche Situationen in Folge von einer überhöhten Geschwindigkeit entstehen können</p>
+    <div class="container" v-for="post in blogPost" :key="post.id">
+        <img :src="post.image" :alt="post.imageCaption" class="rounded-sm object-cover h-4auto w-full">
+        <h1 class="mt-5">{{ post.title }}</h1>
+        <p>
+            <span>Veröffentlicht am {{ formatDate(post.date) }} von <router-link :to="{ name: 'blog-author', params: { authorSlug: post.authorSlug } }" class="hover:underline">{{ post.author }}</router-link></span><br>
+            <span class="text-sm">Lesedauer: {{ post.readingTime }}</span>
+        </p>
+        <hr class="my-4">
+        <p v-html="post.content" class="text-justify"></p>
     </div>
 </template>
+
+
+<script>
+import dayjs from 'dayjs';
+import dayjsUpdateLocale from 'dayjs/plugin/updateLocale';
+
+export default {
+    data() {
+        return {
+            postSlug: this.$route.params.postSlug,
+            apiURL: 'https://xn--bussgeldprfer-5ob.com/wp-json/wp/v2/posts?_embed&_fields=id,date,modified,link,title,content,_links,_embedded&slug=' + this.$route.params.postSlug,
+            blogPost: [],
+        }
+    },
+
+    methods: {
+        formatDate: dateString => {
+            dayjs.extend(dayjsUpdateLocale);
+            dayjs.updateLocale('de', {
+                months: [
+                    'Januar',
+                    'Februar',
+                    'März',
+                    'April',
+                    'Mai',
+                    'Juni',
+                    'Juli',
+                    'August',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Dezember',
+                ]
+            });
+            const date = dayjs(dateString);
+
+            return date.format('DD. MMMM YYYY');
+        },
+        removeHtmlTags: htmlString => {
+            return htmlString.replace(/<[^>]*>/gim, '');
+        },
+        readingTime: string => {
+            const wordsCount = string.split(' ').length;
+            const readingTime = Math.floor(wordsCount / 200);
+            let timerText = '';
+
+            if (readingTime > 1) {
+                timerText = readingTime + ' Minuten';
+            }
+            else if (readingTime === 1) {
+                timerText = readingTime + ' Minute';
+            }
+            else {
+                readingTime = 1;
+                timerText = '>' + readingTime + ' Minuten';
+            }
+
+            return timerText;
+        }
+    },
+
+    created() {
+        fetch(this.apiURL).then(resp => resp.json()).then(data => {
+            let postData = data[0];
+            let blogPostData = {
+                id: postData.id,
+                date: postData.date,
+                modified: postData.modified,
+                title: postData.title.rendered,
+                content: postData.content.rendered,
+                author: postData._embedded.author[0].name,
+                authorSlug: postData._embedded.author[0].slug,
+                image: postData._embedded["wp:featuredmedia"][0].source_url,
+                imageCaption: postData._embedded["wp:featuredmedia"][0].caption.rendered,
+                readingTime: this.readingTime(postData.content.rendered)
+            };
+            this.blogPost.push(blogPostData);
+        });
+    }
+}
+</script>
