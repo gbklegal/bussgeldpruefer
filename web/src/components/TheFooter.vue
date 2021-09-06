@@ -23,7 +23,7 @@
         <div class="footer-contact">
             <div>
                 <span class="mr-2">Email:</span>
-                <a href="mailto:dialog@bussgeldpruefer.de">dialog@bussgeldpruefer.de</a>
+                <a href="mailto:dialog@bussgeldpruefer.com">dialog@bussgeldpruefer.com</a>
             </div>
             <div>
                 <span class="mr-2">Tel:</span>
