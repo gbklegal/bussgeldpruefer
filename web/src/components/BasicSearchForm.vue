@@ -1,12 +1,16 @@
 <template>
     <p class="text-xl">Themenübersicht</p>
     <div class="relative">
-        <input type="text" name="search-text" id="searchText" placeholder="Nach welches Thema suchst Du?"
+        <input type="text" name="search-query" v-model="searchQuery" id="searchQuery" placeholder="Nach welchem Thema suchst Du?"
         class="w-72 mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50">
-        <label for="searchText" class="absolute">Nach welches Thema suchst Du?</label>
-        <img src="src/assets/img/search.svg" alt="Icon mit Lupe." class="w-5 absolute" />
+        <label for="searchQuery" class="absolute">Nach welchem Thema suchst Du?</label>
+        <button type="submit" @click.stop.prevent="submit()">
+            <img src="/src/assets/img/search.svg" alt="Icon mit Lupe." class="w-5 absolute" />
+        </button>
     </div>
 </template>
+
+
 <style lang="scss" scoped>
     // floating labels
     label {
@@ -31,3 +35,22 @@
         left: 16rem;
     }
 </style>
+
+
+<script>
+export default {
+    data() {
+        return {
+            searchQuery: null
+        }
+    },
+
+    methods: {
+        submit() {
+            // TODO: replace reload with rerender
+            // this.$router.push('/ratgeber?search=' + encodeURIComponent(this.searchQuery))
+            window.location.href = '/ratgeber?search=' + encodeURIComponent(this.searchQuery);
+        }
+    }
+}
+</script>
