@@ -21,15 +21,15 @@
                 </button>
                 <div class="navigation-buttons">
                     <router-link class="btn-primary" :to="{ name: 'order'}">Bussgeldbescheid Prüfung</router-link>
-                    <router-link class="btn-secondary" :to="{ name: 'login' }">Login</router-link>
+                    <!-- <router-link class="btn-secondary" :to="{ name: 'login' }">Login</router-link> -->
                 </div>
             <ul class="header-navigation" :class="{ block: menuOpen }">
                 <li v-on:click="menuOpen = !menuOpen">
                     <router-link :to="{ name: 'howto' }">Wie funktioniert's</router-link>
                 </li>
-                <li v-on:click="menuOpen = !menuOpen">
+                <!-- <li v-on:click="menuOpen = !menuOpen">
                     <router-link :to="{ name: 'profile-mail'}">Mein Profil</router-link>
-                </li>
+                </li> -->
                 <li v-on:click="menuOpen = !menuOpen">
                     <router-link :to="{ name: 'contact' }">Kontakt</router-link>
                 </li>
