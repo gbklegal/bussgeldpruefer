@@ -2,7 +2,10 @@
     <div class="container">
         <h1 class="text-secondary">FAQ - Häufig gestellt Fragen</h1>
         <Search />
-        <div class="mt-7">
+        <div class="mt-7" v-for="faq in faqs" :key="faq">
+            <FAQItem :faqTitle="faq.question" :faqText="faq.answer" />
+        </div>
+        <div class="mt-7 hidden">
             <FAQItem faqTitle="Welche Fälle können über BussgeldPrüfer eingereicht werden?" faqText="<p>Über BussgeldPrüfer kannst Du alle Fälle mit den häufigsten Themen zu Bußgeldbescheiden wie: Abstand, Anhörungsbogen, Alkohol, Blitzer, Drogen, Flensburg, Geschwindigkeit, Rote Ampel, Rotlichtverstoß, Parken und Halten, Probezeit sowie MPU und Punkte einreichenUnsere Partner- und Fachanwälte im Verkehrsrecht beraten Dich bei allen Bußgeldverfahren aus dem innerdeutschen Straßenverkehr. Zögere nicht auch Bußgeldfälle im Zusammenhang mit einem Verkehrsunfall über BussgeldPrüfer einzureichen. Bußgeld schnell und unkompliziert per Einspruch abwehren lassen.</p>" />
 
             <FAQItem faqTitle=" Lohnt es sich für mich gegen einen Bussgeldbescheid vorzugehen?" faqText="<p>Unsere Partneranwälte empfehlen grundsätzlich immer die Einschätzung eines Anwalts einzuholen, wofür die Akteneinsicht unumgänglich ist. Keinesfalls sollten Bußgeldbescheide voreilig akzeptiert werden. Dies gilt mittlerweile auch für bereits bestandskräftige Bescheide. Dabei kann eine Prüfung durch einen Anwalt bereits bei Erhalt eines Anhörungsbogens erfolgen. Nutzen Sie die Möglichkeit der kostenlosen, unverbindlichen Erstberatung und über die Möglichkeit des Quick-Checks.</p>" />
@@ -42,6 +45,7 @@
     </div>
 </template>
 <script>
+import global from '../global.js';
 import Search from '../components/BasicSearchForm.vue'
 import FAQItem from '../components/FAQItem.vue'
 
@@ -49,6 +53,26 @@ export default {
     components: {
         Search,
         FAQItem
+    },
+
+    data() {
+        return {
+            faqs: null
+        }
+    },
+
+    methods: {
+        getFAQData: function(callback) {
+            let apiURL = global.api.bgp + '/force.php/faq'; // /faq.json
+
+            fetch(apiURL).then(resp => resp.json()).then(faqData => {
+                if (callback) callback(faqData);
+            });
+        }
+    },
+
+    beforeMount() {
+        this.getFAQData(faqData => this.faqs = faqData);
     }
 }
 </script>
