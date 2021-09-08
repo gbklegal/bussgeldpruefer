@@ -1,7 +1,10 @@
 <template>
+    <div class="container" v-if="!hideSkeleton">
+        <Skeleton />
+    </div>
     <div class="container" v-for="post in blogPost" :key="post.id">
         <img :src="post.image" :alt="post.imageCaption" class="rounded-sm object-cover h-4auto w-full">
-        <h1 class="mt-5">{{ post.title }}</h1>
+        <h1 v-html="post.title" class="mt-5"></h1>
         <p>
             <span>Veröffentlicht am {{ formatDate(post.date) }} von <router-link :to="{ name: 'blog-author', params: { authorSlug: post.authorSlug } }" class="hover:underline">{{ post.author }}</router-link></span><br>
             <span class="text-sm">Lesedauer: {{ post.readingTime }}</span>
@@ -12,16 +15,32 @@
 </template>
 
 
+<style>
+h4 {
+    font-weight: 500;
+    font-size: 1.25rem;
+    padding-bottom: 0.25rem;
+}
+</style>
+
+
 <script>
+import global from '../global';
 import dayjs from 'dayjs';
 import dayjsUpdateLocale from 'dayjs/plugin/updateLocale';
+import Skeleton from '../components/BasicSkeleton.vue';
 
 export default {
+    components: {
+        Skeleton
+    },
+
     data() {
         return {
             postSlug: this.$route.params.postSlug,
-            apiURL: 'https://xn--bussgeldprfer-5ob.com/wp-json/wp/v2/posts?_embed&_fields=id,date,modified,link,title,content,_links,_embedded&slug=' + this.$route.params.postSlug,
+            apiURL: global.api.urlBuilder() + '&slug=' + this.$route.params.postSlug,
             blogPost: [],
+            hideSkeleton: false
         }
     },
 
@@ -73,6 +92,8 @@ export default {
 
     created() {
         fetch(this.apiURL).then(resp => resp.json()).then(data => {
+            this.hideSkeleton = true;
+
             let postData = data[0];
             let blogPostData = {
                 id: postData.id,
