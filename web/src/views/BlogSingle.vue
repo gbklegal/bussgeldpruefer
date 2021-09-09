@@ -72,7 +72,7 @@ export default {
         },
         readingTime: string => {
             const wordsCount = string.split(' ').length;
-            const readingTime = Math.floor(wordsCount / 200);
+            let readingTime = Math.floor(wordsCount / 200);
             let timerText = '';
 
             if (readingTime > 1) {
