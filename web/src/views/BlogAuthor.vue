@@ -8,7 +8,7 @@
                 :imgsrc="blogPost.images.openpress.medium"
                 :imgalt="blogPost.imageCaption"
                 :blogtitle="blogPost.title"
-                :previewtext="blogPost.contentTeaser"
+                :previewtext="blogPost.contentPreview"
             />
         </router-link>
         </div>

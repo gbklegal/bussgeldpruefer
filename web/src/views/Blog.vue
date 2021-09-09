@@ -13,7 +13,7 @@
           :imgsrc="blogPost.images.openpress.medium"
           :imgalt="blogPost.imageCaption"
           :blogtitle="blogPost.title"
-          :previewtext="blogPost.contentTeaser"
+          :previewtext="blogPost.contentPreview"
         />
       </router-link>
     </div>
@@ -100,7 +100,7 @@ export default {
                     slug: postData.slug,
                     title: postData.title.rendered,
                     content: postData.content.rendered,
-                    contentTeaser: this.removeHtmlTags(postData.content.rendered).substring(0, 250) + '...',
+                    contentPreview: this.removeHtmlTags(postData.content.rendered).substring(0, 250) + '...',
                     images: {
                         full: postData._embedded["wp:featuredmedia"][0].source_url,
                         medium: postData._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url,
