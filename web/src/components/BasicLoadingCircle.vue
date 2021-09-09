@@ -81,7 +81,7 @@
 
 
 <script>
-// export default {
-//     name: 'LoadingCircle'
-// }
+export default {
+    name: 'LoadingCircle'
+}
 </script>
