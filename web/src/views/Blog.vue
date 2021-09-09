@@ -2,6 +2,11 @@
   <div class="container">
     <h1 class="text-secondary">Bussgeldratgeber</h1>
     <BlogSearch />
+
+    <div v-if="!hideSkeleton">
+      <Skeleton v-for="skeleton in skeletonCount" :key="skeleton" type="blogPreview" />
+    </div>
+
     <div class="mt-10" v-for="blogPost in blogPosts" :key="blogPost.id">
       <router-link :to="{ name: 'blog-single', params: { postSlug: blogPost.slug } }">
         <BlogPreview
@@ -22,16 +27,18 @@
 
 
 <script>
-import global from '../global.js';
+import global from '../global';
 import BlogPreview from "../components/BlogPreview.vue";
 import BlogSearch from "../components/BasicSearchForm.vue";
 import LoadingCircle from "../components/BasicLoadingCircle.vue";
+import Skeleton from '../components/BasicSkeleton.vue';
 
 export default {
   components: {
     BlogPreview,
     BlogSearch,
-    LoadingCircle
+    LoadingCircle,
+    Skeleton
   },
 
   data() {
@@ -42,7 +49,9 @@ export default {
       postCount: 0,
       currentPage: 1,
       hideLoadMoreButton: false,
-      hideLoadingCircle: true
+      hideLoadingCircle: true,
+      hideSkeleton: false,
+      skeletonCount: 10,
     };
   },
 
@@ -107,8 +116,9 @@ export default {
 
                 this.blogPosts.push(filteredData)
 
-                // hide loading circle
+                // hide loading circle and skeleton
                 this.hideLoadingCircle = true;
+                this.hideSkeleton = true;
             });
           } else {
             this.hideLoadMoreButton = true;
@@ -144,6 +154,7 @@ export default {
   },
 
   created() {
+    console.log(this.apiURL);
     this.fetchPostData();
   }
 };
