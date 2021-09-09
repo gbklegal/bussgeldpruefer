@@ -88,9 +88,9 @@
       <div class="container">
         <h2 class="text-secondary text-center mb-10">Kundenfeedback</h2>
         <div class="grid sm:grid-cols-3 gap-3 justify-center mb-8">
-          <FeedbackStars :starLength="5" />
-          <FeedbackStars :starLength="5" />
-          <FeedbackStars :starLength="5" />
+          <FeedbackStars :starCount="5" />
+          <FeedbackStars :starCount="5" />
+          <FeedbackStars :starCount="4" />
         </div>
         <div>
           <FeedbackText quote="Ich war anfangs total überfordert, aber das BussgeldPruefer hat mir den gesamten Prozess abgenommen." author="Melis Y." />
