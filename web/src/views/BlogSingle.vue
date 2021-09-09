@@ -1,6 +1,6 @@
 <template>
     <div class="container" v-if="!hideSkeleton">
-        <Skeleton />
+        <Skeleton type="blogSingle" />
     </div>
     <div class="container" v-for="post in blogPost" :key="post.id">
         <img :src="post.image" :alt="post.imageCaption" class="rounded-sm object-cover h-4auto w-full">
