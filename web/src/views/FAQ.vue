@@ -45,7 +45,7 @@
     </div>
 </template>
 <script>
-import global from '../global.js';
+import global from '../global';
 import Search from '../components/BasicSearchForm.vue'
 import FAQItem from '../components/FAQItem.vue'
 
