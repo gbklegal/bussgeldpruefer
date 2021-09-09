@@ -47,7 +47,7 @@ export default {
     methods: {
         formatDate: dateString => {
             dayjs.extend(dayjsUpdateLocale);
-            dayjs.updateLocale('de', {
+            dayjs.updateLocale('en', {
                 months: [
                     'Januar',
                     'Februar',
