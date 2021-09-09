@@ -5,7 +5,7 @@
         <div class="mt-10" v-for="blogPost in blogPosts" :key="blogPost.id">
         <router-link :to="{ name: 'blog-single', params: { postSlug: blogPost.slug } }">
             <BlogPreview
-                :imgsrc="blogPost.images.openpress.medium"
+                :imgsrc="blogPost.images.onepress.medium"
                 :imgalt="blogPost.imageCaption"
                 :blogtitle="blogPost.title"
                 :previewtext="blogPost.contentPreview"

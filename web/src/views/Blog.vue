@@ -10,7 +10,7 @@
     <div class="mt-10" v-for="blogPost in blogPosts" :key="blogPost.id">
       <router-link :to="{ name: 'blog-single', params: { postSlug: blogPost.slug } }">
         <BlogPreview
-          :imgsrc="blogPost.images.openpress.medium"
+          :imgsrc="blogPost.images.onepress.medium"
           :imgalt="blogPost.imageCaption"
           :blogtitle="blogPost.title"
           :previewtext="blogPost.contentPreview"
@@ -105,7 +105,7 @@ export default {
                         full: postData._embedded["wp:featuredmedia"][0].source_url,
                         medium: postData._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url,
                         thumbnail: postData._embedded["wp:featuredmedia"][0].media_details.sizes.thumbnail.source_url,
-                        openpress: {
+                        onepress: {
                             blogSmall: postData._embedded["wp:featuredmedia"][0].media_details.sizes['onepress-blog-small'].source_url,
                             small: postData._embedded["wp:featuredmedia"][0].media_details.sizes['onepress-small'].source_url,
                             medium: postData._embedded["wp:featuredmedia"][0].media_details.sizes['onepress-medium'].source_url
