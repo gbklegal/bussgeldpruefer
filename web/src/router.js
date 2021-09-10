@@ -11,6 +11,7 @@ import Login from './views/Login.vue'
 import HowTo from './views/HowTo.vue'
 import Profile from './views/Profile.vue'
 import Catalog from './views/Catalog.vue'
+import CatalogSingle from './views/CatalogSingle.vue'
 import Blog from './views/Blog.vue'
 import BlogSingle from './views/BlogSingle.vue'
 import BlogAuthor from './views/BlogAuthor.vue'
@@ -176,6 +177,11 @@ const routes = [
         name: 'catalog',
         component: Catalog,
         children: [
+            {
+                path: '/bussgeldkatalog/:docSlug',
+                name: 'catalog-single',
+                component: CatalogSingle
+            },
             {
                 path: '/bussgeldkatalog/alkohol',
                 name: 'catalog-alcohol',
