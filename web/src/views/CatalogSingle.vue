@@ -1,4 +1,5 @@
 <template>
+    <Skeleton type="catalogSingle" v-if="!hideSkeleton" />
     <div v-for="doc in docs" :key="doc.id" class="doc">
         <h2 class="text-secondary" v-html="doc.title"></h2>
         <p v-html="doc.content"></p>
@@ -71,19 +72,26 @@
 
 <script>
 import global from '../global';
+import Skeleton from '../components/BasicSkeleton.vue';
 
 export default {
+    components: {
+        Skeleton
+    },
+
     data() {
         return {
             apiURL: 'http://bussgeldpruefer.local/backend/wp-json/wp/v2/docs?slug=',
             // apiURL: global.api.base + '/docs?slug=',
             docSlug: this.$route.params.docSlug,
             docs: [],
+            hideSkeleton: false
         }
     },
 
     methods: {
         fetchDocData: function() {
+            this.hideSkeleton = false;
             let apiURL = this.apiURL + this.docSlug;
 
             console.log(apiURL);
@@ -97,6 +105,11 @@ export default {
                 };
 
                 this.docs.push(filteredData);
+
+                // hide loading circle
+                this.hideSkeleton = true;
+            });
+        },
             });
         }
     },
