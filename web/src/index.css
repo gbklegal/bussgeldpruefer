@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    a.btn {
+        display: inline-block;
+    }
+
     .container {
         @apply px-3 py-11 max-w-screen-md mx-auto;
     }
@@ -41,7 +45,8 @@
 }
 
 @layer components {
-    .btn-primary {
+    .btn-primary,
+    .btn-theme-primary {
         @apply bg-secondary rounded border-2 border-secondary hover:bg-secondary-hover hover:border-secondary-hover shadow text-white py-2 px-1 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50;
     }
 
