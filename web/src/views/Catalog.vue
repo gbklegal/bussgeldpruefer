@@ -46,7 +46,11 @@ export default {
             this.hideSkeleton = false;
 
             // let apiURL = this.apiURL + '/docs';
-            let apiURL = 'http://bussgeldpruefer.local/backend/wp-json/wp/v2/docs?per_page=100';
+            let apiURL = 'http://localhost:4000/backend/wp-json/wp/v2/docs?per_page=100&order=asc&orderby=title'; // http://bussgeldpruefer.local
+            if (searchQuery) {
+                apiURL += '&search=' + searchQuery;
+            }
+
             console.log(apiURL);
             fetch(apiURL).then(resp => resp.json()).then(docsData => {
                 docsData.forEach(docData => {
@@ -66,6 +70,12 @@ export default {
     },
 
     beforeMount() {
+        if (this.$route.query.search) {
+            let searchQuery = this.$route.query.search;
+            this.fetchDocsData(searchQuery);
+            return;
+        }
+
         this.fetchDocsData();
     }
 }
