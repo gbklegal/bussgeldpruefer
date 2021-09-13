@@ -34,6 +34,8 @@ import ProfileMailMarked from './views/ProfileMailMarked.vue'
 import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
 import ContactThankYou from './views/ContactThankYou.vue'
 
+import DEV from './views/DEV.vue'
+
 
 const history = createWebHistory()
 
@@ -210,16 +212,16 @@ const routes = [
         component: ProfileSignUp
     },
     {
+        path: '/dev',
+        name: 'dev',
+        component: DEV
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'not-found',
         component: NotFound
-    }
+    },
 ]
 
 const router = createRouter({ history, routes })
 export default router
-
-// router.resolve({
-//     name: 'not-found',
-//     component: NotFound
-// })
