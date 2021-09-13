@@ -2,7 +2,8 @@
     <Skeleton type="catalogSingle" v-if="!hideSkeleton" />
     <div v-for="doc in docs" :key="doc.id" class="doc">
         <h2 class="text-secondary" v-html="doc.title"></h2>
-        <p v-html="doc.content"></p>
+        <!-- <div id="toc"></div> -->
+        <p v-html="doc.content" class="catalog-content"></p>
     </div>
 </template>
 
@@ -38,8 +39,10 @@
     margin-bottom: .5em;
 }
 .doc h2 {
-    margin-top: 1.1428em;
     margin-bottom: .5714em;
+}
+.doc h2:not(:first-child) {
+    margin-top: 1.1428em;
 }
 .doc h3 {
     margin-top: 1.3333em;
@@ -110,12 +113,15 @@ export default {
                 this.hideSkeleton = true;
             });
         },
+        loadTableOfContents: function() {
+            global.tableOfContents({
+                'target': '#toc',
+                'parent': '.catalog-content'
             });
         }
     },
 
     beforeMount() {
-        // console.log(this.docSlug);
         this.fetchDocData();
         console.log(this.docSlug);
     }
