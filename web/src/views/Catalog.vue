@@ -5,19 +5,17 @@
         <div class="flex flex-col md:flex-row mt-5">
             <!-- List of all Catalog Posts -->
             <nav class="bg-gray-200 rounded-sm md:w-1/3 mb-8 md:mb-0 md:mr-8 p-3" aria-label="In Page Navigation">
+                <div v-if="!hideSkeleton">
+                    <Skeleton v-for="i in 20" :key="i" type="navList" />
+                </div>
                 <ul class="break-words" v-for="doc in docs" :key="doc.id">
                     <li class="block my-2">
                         <router-link :to="{ name: 'catalog-single', params: { docSlug: doc.slug } }" v-html="doc.title"></router-link>
                     </li>
-                    <!-- <li class="block my-2"><router-link :to="{ name: 'catalog-alcohol' }">Alkohol</router-link></li>
-                    <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Abstand</router-link></li>
-                    <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Geblitzt</router-link></li>
-                    <li class="block my-2"><router-link :to="{ name: 'catalog-else'}">Geschwindigkeitsüberschreitung</router-link></li> -->
                 </ul>
             </nav>
             <!-- Catalog Post -->
             <div class="md:w-2/3 mb-8 md:mb-0 md:mr-8">
-                <LoadingCircle v-if="!hideLoadingCircle" />
                 <router-view :key="$route.fullPath" />
             </div>
         </div>
@@ -26,26 +24,26 @@
 <script>
 import global from '../global';
 import Search from '../components/BasicSearchForm.vue';
-import LoadingCircle from '../components/BasicLoadingCircle.vue';
+import Skeleton from '../components/BasicSkeleton.vue';
 
 export default {
     components: {
         Search,
-        LoadingCircle
+        Skeleton
     },
 
     data() {
         return {
             apiURL: global.api.base,
             docs: [],
-            hideLoadingCircle: false
+            hideSkeleton: false
         }
     },
 
     methods: {
-        fetchDocsData: function() {
-            // display loading circle
-            this.hideLoadingCircle = false;
+        fetchDocsData: function(searchQuery) {
+            // display loading skeleton
+            this.hideSkeleton = false;
 
             // let apiURL = this.apiURL + '/docs';
             let apiURL = 'http://bussgeldpruefer.local/backend/wp-json/wp/v2/docs?per_page=100';
@@ -60,10 +58,10 @@ export default {
 
                     this.docs.push(filteredData);
                 });
-            });
 
-            // hide loading circle
-            this.hideLoadingCircle = true;
+                // hide loading skeleton
+                this.hideSkeleton = true;
+            });
         }
     },
 
