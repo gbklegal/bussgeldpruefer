@@ -1,7 +1,7 @@
 <template>
     <div class="container catalog">
         <h1>Bußgeldkatalog</h1>
-        <Search />
+        <Search url="/bussgeldkatalog/" />
         <div class="flex flex-col md:flex-row mt-5">
             <!-- List of all Catalog Posts -->
             <nav class="bg-gray-200 rounded-sm md:w-1/3 mb-8 md:mb-0 md:mr-8 p-3" aria-label="In Page Navigation">

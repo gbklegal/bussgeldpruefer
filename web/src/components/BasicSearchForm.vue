@@ -39,6 +39,11 @@
 
 <script>
 export default {
+    name: 'Search',
+    props: {
+        url: String
+    },
+
     data() {
         return {
             searchQuery: null
