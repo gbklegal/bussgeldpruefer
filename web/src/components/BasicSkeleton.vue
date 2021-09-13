@@ -17,6 +17,30 @@
             <div class="skeleton-box w-full h-full"></div>
         </div>
     </div>
+
+    <div v-if="type == 'catalogSingle'" class="skeleton">
+        <div class="skeleton-box w-5/12 h-8 mb-4"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-52 h-11 mb-3"></div>
+        <hr class="my-3">
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+    </div>
+
+    <div v-if="type == 'navList'" class="skeleton">
+        <div class="skeleton-box w-full h-5 mb-3"></div>
+    </div>
 </template>
 
 
