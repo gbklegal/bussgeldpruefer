@@ -106,7 +106,7 @@ class _BussgeldratgeberScreenState extends State<BussgeldratgeberScreen>
                         } else if (mode == LoadStatus.canLoading) {
                           body = Text("release to load more");
                         } else {
-                          body = Text("No more Data");
+                          body = Text("");
                         }
                         return Container(
                           height: 55.0,
