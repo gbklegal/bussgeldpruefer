@@ -118,7 +118,7 @@ class ProfileData extends StatelessWidget {
                       FirebaseAuth.instance.signOut().whenComplete(() {
                         HelperFunctions().clearValues();
                         Fluttertoast.showToast(
-                          msg: "Logged Out",
+                          msg: "Abgemeldet",
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIosWeb: 1,

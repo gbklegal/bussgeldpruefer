@@ -1,6 +1,9 @@
 import 'package:app/global.dart';
 import 'package:app/helper/helperfunctions.dart';
+import 'package:app/provider/apple_sign_in_available.dart';
+import 'package:app/provider/authentication_provider.dart';
 import 'package:app/provider/google_sign_in.dart';
+import 'package:app/provider/sign_in_apple.dart';
 import 'package:app/screens/auth/login.dart';
 import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
@@ -31,31 +34,39 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-  //   badge: true,
-  // );
+  final appleSignInAvailable = await AppleSignInAvailable.check();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-        theme: themeData,
-        home: MyApp(), // In prod. MyApp()
-        routes: <String, WidgetBuilder>{
-          '/screen1': (BuildContext context) => new MyApp(),
-          '/screen2': (BuildContext context) =>
-              new PruefungBussgeldbescheidFinalScreen(),
-          '/ProfileData': (BuildContext context) => new ProfileData(),
-          '/LoginScreen': (BuildContext context) => new LoginScreen()
-        },
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('de', 'DE'),
-        ],
+    MultiProvider(
+      providers: [
+        Provider<AppleSignInAvailable>.value(
+          value: appleSignInAvailable,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GoogleSignInProvider(),
+        ),
+      ],
+      child: Provider<AuthService>(
+        create: (_) => AuthService(),
+        child: MaterialApp(
+          theme: themeData,
+          home: MyApp(), // In prod. MyApp()
+          routes: <String, WidgetBuilder>{
+            '/screen1': (BuildContext context) => new MyApp(),
+            '/screen2': (BuildContext context) =>
+                new PruefungBussgeldbescheidFinalScreen(),
+            '/ProfileData': (BuildContext context) => new ProfileData(),
+            '/LoginScreen': (BuildContext context) => new LoginScreen()
+          },
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('de', 'DE'),
+          ],
+        ),
       ),
     ),
   );

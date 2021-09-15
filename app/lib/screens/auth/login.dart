@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:app/provider/apple_sign_in_available.dart';
+import 'package:app/provider/authentication_provider.dart';
+import 'package:app/provider/sign_in_apple.dart';
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/constants.dart';
 import 'package:app/provider/google_sign_in.dart';
@@ -86,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 .whenComplete(() {
           DatabaseMethods().updateUserToken(_token);
           Fluttertoast.showToast(
-            msg: "Logged in",
+            msg: "Eingeloggt",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -147,6 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appleSignInAvailable =
+        Provider.of<AppleSignInAvailable>(context, listen: false);
     return WillPopScope(
       onWillPop: () => Future.value(true),
       child: Scaffold(
@@ -279,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // )
                           Navigator.pop(context);
                           Fluttertoast.showToast(
-                            msg: "Logged in",
+                            msg: "Eingeloggt",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
@@ -308,7 +314,16 @@ class _LoginScreenState extends State<LoginScreen> {
               _padding(10.0),
               Platform.isIOS
                   ? AppleAuthButton(
-                      onPressed: _appleLogin(),
+                      onPressed: () =>
+                          _signInWithApple(context, _token).whenComplete(() {
+                        Navigator.pop(context);
+                        Fluttertoast.showToast(
+                          msg: "Eingeloggt",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                        );
+                      }),
                       darkMode: true,
                       style: AuthButtonStyle(
                         buttonColor: Colors.black,
@@ -335,44 +350,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-_appleLogin() async {
-  final credential = await SignInWithApple.getAppleIDCredential(
-    scopes: [
-      AppleIDAuthorizationScopes.email,
-      AppleIDAuthorizationScopes.fullName,
-    ],
-    webAuthenticationOptions: WebAuthenticationOptions(
-      clientId: 'com.aboutyou.dart_packages.sign_in_with_apple.example',
-      redirectUri: Uri.parse(
-        'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
-      ),
-    ),
-    nonce: 'example-nonce',
-    state: 'example-state',
-  );
+Future<void> _signInWithApple(BuildContext context, _token) async {
+  try {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    final user = await authService
+        .signInWithApple(scopes: [Scope.email, Scope.fullName], token: _token);
 
-  print(credential);
-
-  // This is the endpoint that will convert an authorization code obtained
-  // via Sign in with Apple into a session in your system
-  final signInWithAppleEndpoint = Uri(
-    scheme: 'https',
-    host: 'flutter-sign-in-with-apple-example.glitch.me',
-    path: '/sign_in_with_apple',
-    queryParameters: <String, String>{
-      'code': credential.authorizationCode,
-      if (credential.givenName != null) 'firstName': credential.givenName,
-      if (credential.familyName != null) 'lastName': credential.familyName,
-      'useBundleId': Platform.isAndroid || Platform.isMacOS ? 'true' : 'false',
-      if (credential.state != null) 'state': credential.state,
-    },
-  );
-
-  final session = await http.Client().post(
-    signInWithAppleEndpoint,
-  );
-
-  // If we got this far, a session based on the Apple ID credential has been created in your system,
-  // and you can now set this as the app's session
-  print(session);
+    print('uid: ${user.uid}');
+  } catch (e) {
+    // TODO: Show alert here
+    print(e);
+  }
 }
