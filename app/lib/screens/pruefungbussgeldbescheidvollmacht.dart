@@ -172,13 +172,12 @@ class _PruefungBussgeldbescheidVollmachtState
           uploading = true;
         });
         await DatabaseMethods().uploadFile(file, violationName).then((value) {
-          DateTime now = DateTime.now();
-          String formattedDate = DateFormat('dd.MM.yyyy – kk:mm').format(now);
+          DateTime dateTime = DateTime.now();
           sendForm(
               firstName: firstName,
               lastName: lastName,
               email: email,
-              dateTime: formattedDate,
+              dateTime: dateTime.toString(),
               violationName: violationName,
               orderId: value);
         }).whenComplete(() {
@@ -239,13 +238,14 @@ class _PruefungBussgeldbescheidVollmachtState
             'nKP6Wu7m315BOkxSW0NE1r1KDH7RibWD601xdvrsjH1fDwqQdJIzUhbmpIOmCR1q',
         'firstname': firstName,
         'lastname': lastName,
-        'email': email.isEmpty ? '/' : email,
+        'email': email,
         'datetime': dateTime,
         'violation': violationName,
         'orderId': orderId,
         'medium': 'app',
       },
     );
+    print("Email Send Form : " + email);
     final statusCode = response.statusCode;
 
     if (statusCode != 200) {
