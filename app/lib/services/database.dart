@@ -30,6 +30,16 @@ class DatabaseMethods {
     });
   }
 
+  getUserSavedInfo() async {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .where("id", isEqualTo: FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
   Future<void> updateUserInfo(userData) async {
     FirebaseFirestore.instance
         .collection("users")

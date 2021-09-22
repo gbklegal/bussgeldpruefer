@@ -1,6 +1,7 @@
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/services/database.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
@@ -38,8 +39,16 @@ class AuthService {
           HelperFunctions().saveValues(appleIdCredential.fullName.givenName,
               appleIdCredential.fullName.familyName, appleIdCredential.email);
         } else {
-          HelperFunctions().saveValues(appleIdCredential.fullName.givenName,
-              appleIdCredential.fullName.familyName, appleIdCredential.email);
+          QuerySnapshot userInfoSnapshot =
+              await DatabaseMethods().getUserSavedInfo();
+          var firstName = userInfoSnapshot.docs[0]['name']['first'];
+          var lastName = userInfoSnapshot.docs[0]['name']['last'];
+          var email = userInfoSnapshot.docs[0]['email'];
+          HelperFunctions().saveValues(
+            firstName,
+            lastName,
+            email,
+          );
         }
 
         if (scopes.contains(Scope.fullName)) {
