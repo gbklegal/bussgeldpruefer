@@ -51,6 +51,20 @@
                 <textarea 
                     class="block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                     name="message" id="message" cols="30" rows="10" required v-model="message"></textarea>
+                <fieldset class="mb-4">
+                    <div class="mt-4 mb-3">
+                        <input type="radio" name="contact-by" id="contact-by-phone" required>
+                        <label
+                            class="pl-2 cursor-pointer"
+                            for="contact-by-phone">Ich möchte <strong>telefonisch</strong> kontaktiert werden.</label>
+                    </div>
+                    <div class="mb-3">
+                        <input type="radio" name="contact-by" id="contact-by-email" required>
+                        <label
+                            class="pl-2 cursor-pointer"
+                            for="contact-by-email">Ich möchte <strong>per E-Mail</strong> kontaktiert werden.</label>
+                    </div>
+                </fieldset>
 
                 <button
                     class="btn-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
