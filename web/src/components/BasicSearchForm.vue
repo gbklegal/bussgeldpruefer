@@ -1,8 +1,8 @@
 <template>
-    <p class="text-xl">Themenübersicht</p>
-    <div class="relative">
+    <p v-if="!noHeader" class="text-xl">Themenübersicht</p>
+    <div class="relative mt-8" v-if="!fastSearch">
         <input type="text" name="search-query" @keyup.enter="submit()" v-model="searchQuery" id="searchQuery" placeholder="Nach welchem Thema suchst Du?"
-        class="w-72 mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50">
+        class="w-72 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50">
         <label for="searchQuery" class="absolute">Nach welchem Thema suchst Du?</label>
         <button type="submit" @click.stop.prevent="submit()">
             <img src="/src/assets/img/search.svg" alt="Icon mit Lupe" class="w-5 absolute" />
@@ -42,6 +42,7 @@ export default {
     name: 'Search',
     props: {
         url: String
+        noHeader: Boolean
     },
 
     data() {
