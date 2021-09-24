@@ -90,6 +90,10 @@ export default {
             // console.log(postsData);
             // this.blogPosts = [];
             this.postCount = postsData.length;
+            
+            if (this.postCount < 10) {
+              this.hideLoadMoreButton = true;
+            }
 
             postsData.forEach(postData => {
                 // console.log(postData);
