@@ -1,5 +1,5 @@
 <template>
-    <progress id="order-progress" :value="percentage" max="100" class="bg-gray-200 block w-full rounded">{{ percentage }}%</progress>
+    <label class="text-xs block text-right" for="order-progress">Schritt {{ currentNumber }} von {{ maxNumber }}</label>
     <!-- <progress id="order-progress" :value="percentage" max="100" class="bg-gray-200 block w-full rounded">{{ percentage }}%</progress> -->
     <div class="progress-wrapper bg-gray-200 block w-full rounded">
         <div class="progress bg-gray-200 block rounded" :style="'width:'+percentage+'%'" id="progressBar">&nbsp;</div>
@@ -8,7 +8,8 @@
 <script>
 export default {
     props: {
-        text: String,
+        currentNumber: Number,
+        maxNumber: Number,
         percentage: Number,
     }
 }

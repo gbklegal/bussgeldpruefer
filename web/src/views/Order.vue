@@ -135,14 +135,14 @@ export default {
         //console.log(activeTab.value)
         const progressPercentage = ref(100/6)
 
-        const progressText = [
-            'Schritt 1 von 6',
-            'Schritt 2 von 6',
-            'Schritt 3 von 6',
-            'Schritt 4 von 6',
-            'Schritt 5 von 6',
-            'Schritt 6 von 6'
-        ]
+        // const progressText = [
+        //     'Schritt 1 von 6',
+        //     'Schritt 2 von 6',
+        //     'Schritt 3 von 6',
+        //     'Schritt 4 von 6',
+        //     'Schritt 5 von 6',
+        //     'Schritt 6 von 6'
+        // ]
 
         // form data:
         const violation = ref('')
