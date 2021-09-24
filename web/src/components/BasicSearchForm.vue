@@ -66,6 +66,13 @@ export default {
             // window.location.href = '/ratgeber?search=' + encodeURIComponent(this.searchQuery);
             window.location.href = this.url + '?search=' + encodeURIComponent(this.searchQuery);
         }
+    },
+
+    mounted() {
+        let urlSearchQuery = this.$route.query.search;
+        if (urlSearchQuery) {
+            document.querySelector('#searchQuery').value = urlSearchQuery;
+        }
     }
 }
 </script>
