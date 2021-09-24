@@ -1,7 +1,12 @@
 <template>
     <div class="container catalog">
         <h1>Bußgeldkatalog</h1>
-        <Search url="/bussgeldkatalog/" />
+
+        <Search
+            :oninput="fastSearch"
+            :fastSearch="true"
+        />
+
         <div class="flex flex-col md:flex-row mt-5">
             <!-- List of all Catalog Posts -->
             <nav class="bg-gray-200 rounded-sm md:w-1/3 mb-8 md:mb-0 md:mr-8 p-3" aria-label="In Page Navigation">
@@ -66,6 +71,25 @@ export default {
                 // hide loading skeleton
                 this.hideSkeleton = true;
             });
+        },
+        fastSearch: function() {
+            let elmt = document.querySelector('#fastSearchQuery');
+            let query = elmt.value;
+            let items = document.querySelectorAll('nav#catalog-nav ul li');
+            let regEx = new RegExp(query, 'gi');
+
+            items.forEach(item => {
+                let itemVal = item.innerText;
+                let matches = regEx.test(itemVal);
+                
+                if (matches) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // console.log(query);
         }
     },
 
