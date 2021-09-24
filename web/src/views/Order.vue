@@ -9,10 +9,10 @@
     />
     <div class="container">
         <h1 class="text-secondary">Prüfung Bußgeldbescheid</h1>
-        <p>Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden</p>
+        <p>Unverbindliche Prüfung durch Anwalt - Antwort binnen 24 Stunden</p>
         <form @submit.prevent>
 
-            <OrderProgress :text="progressText[activeTab]" :percentage="progressPercentage" />
+            <OrderProgress :currentNumber="activeTab+1" :maxNumber="maxSteps" :percentage="progressPercentage" />
 
             <div :class="{'sr-only':(activeTab !== 0)}" class="tab">
                 <fieldset class="first-step">
@@ -21,32 +21,32 @@
                     <div class="grid sm:grid-cols-2 md:grid-cols-3">
 
                         <input type="radio" name="case" id="speed" value="speed" v-model="violation" class="sr-only">
-                        <label for="speed" class="speed cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary checked:border-secondary">
+                        <label for="speed" class="speed cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary checked:border-secondary">
                         <span class="text-xl">zu schnell</span></label>
 
                         <input type="radio" name="case" id="redlight" value="redlight" v-model="violation" class="sr-only">                        
-                        <label for="redlight" class="redlight cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
+                        <label for="redlight" class="redlight cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
                         <span class="text-xl">Rotlicht</span></label>
                         
                         <input type="radio" name="case" id="distance" value="distance" v-model="violation" class="sr-only">
-                        <label for="distance" class="distance cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
+                        <label for="distance" class="distance cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
                         <span class="text-xl">Abstand</span></label>
 
                         <input type="radio" name="case" id="alcohol" value="alcohol" v-model="violation" class="sr-only">
-                        <label for="alcohol" class="alcohol cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">                   
+                        <label for="alcohol" class="alcohol cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">                   
                         <span class="text-xl">Alkohol</span></label>
 
                         <input type="radio" name="case" id="phone" value="phone" v-model="violation" class="sr-only">
-                        <label for="phone" class="phone cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">            
+                        <label for="phone" class="phone cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">            
                         <span class="text-xl">Telefon</span></label>
 
                         <input type="radio" name="case" id="parking" value="parking" v-model="violation" class="sr-only">
-                        <label for="parking" class="parking cursor-pointer m-3 h-40 rounded pt-16 text-center border-2 border-white hover:border-secondary">
+                        <label for="parking" class="parking cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
                         <span class="text-xl">Parken</span></label>
                     </div>
                     <!-- for debugging
                     <span>{{ violation }}</span>
-                    -->‚
+                    -->
  
                 </fieldset>
             </div>   
@@ -96,15 +96,16 @@
                 <input type="file" name="document" id="document" multiple>                
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 4)}" class="tab text-center">
+            <!-- <div :class="{'sr-only':(activeTab !== 4)}" class="tab text-center">
                 <p class="mb-6">Um Deinen Bußgeldbescheid prüfen zu lassen <router-link class="underline" to="/login">melde dich an</router-link>. Oder erstelle einen <router-link class="underline" to="/registrieren">Account</router-link>.</p>
                 <p @click="submitOrder()"><br>weiter</p>
-            </div>
+            </div> -->
 
             <div class="controls mt-6 flex items-center justify-center">
                 <button v-if="(activeTab >= 1)" @click.prevent="decrement()" class="btn-secondary mr-4">Zurück</button>
-                <button v-if="(activeTab <= 3)" @click.prevent="increment()" class="btn-secondary mr-4">Weiter</button>
-                <button @click.prevent="reset()" class="btn-secondary block">
+                <button v-if="(activeTab <= 2)" @click.prevent="increment()" class="btn-secondary mr-4">Weiter</button>
+                <button v-if="(activeTab == 3)" @click.prevent="submitOrder()" class="btn-secondary mr-4">Abschließen</button>
+                <button @click.prevent="requestReset()" class="btn-secondary block">
                     <svg role="img" aria-labelledby="resetForm" class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <title id="resetForm">Neu starten</title>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -129,11 +130,13 @@ export default {
     },
     
     setup () {
+        // max number of steps
+        const maxSteps = 5;
         // hide all .tab visually.
         // change this with class when activeTab = specific number
         const activeTab = ref(0)
         //console.log(activeTab.value)
-        const progressPercentage = ref(100/6)
+        const progressPercentage = ref(100 / maxSteps)
 
         // const progressText = [
         //     'Schritt 1 von 6',
@@ -155,17 +158,19 @@ export default {
 
         function increment() {
             activeTab.value ++
-            progressPercentage.value += 100/6
+            progressPercentage.value += 100 / maxSteps
         }
 
         function decrement() {
             activeTab.value --
-            progressPercentage.value -= 100/6
+            progressPercentage.value -= 100 / maxSteps
         }
 
         function reset() {
             activeTab.value = 0
-            progressPercentage.value = 100/6
+            progressPercentage.value = 100 / maxSteps
+        }
+
         function requestReset() {
             Modal.methods.fadeIn();
         }
@@ -176,15 +181,19 @@ export default {
 
         return { 
             activeTab,
+            maxSteps,
             progressPercentage,
-            progressText,
+            // progressText,
             increment,
             decrement,
             reset,
+            requestReset,
+            submitOrder,
             violation,
             insurance,
-            urgency,
-            submitOrder
+            urgency
+        }
+    },
     methods: {
         modalResult: function(confirmation) {
             if (confirmation) this.reset();
@@ -193,6 +202,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+label {
+    transition: border .2s ease;
+}
+
 .tab {
     margin-top: 2em;
 }
