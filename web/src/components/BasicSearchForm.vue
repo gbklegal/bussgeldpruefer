@@ -8,6 +8,12 @@
             <img src="/src/assets/img/search.svg" alt="Icon mit Lupe" class="w-5 absolute" />
         </button>
     </div>
+    <div class="relative" v-if="fastSearch">
+        <input type="text" name="search-query" :oninput="oninput" id="fastSearchQuery" placeholder="Nach welchem Thema suchst Du?"
+        class="w-72 mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50">
+        <label for="fastSearchQuery" class="absolute">Nach welchem Thema suchst Du?</label>
+        <img src="/src/assets/img/search.svg" alt="Icon mit Lupe" class="w-5 absolute" />
+    </div>
 </template>
 
 
@@ -41,7 +47,9 @@
 export default {
     name: 'Search',
     props: {
-        url: String
+        url: String,
+        fastSearch: Boolean,
+        oninput: Function,
         noHeader: Boolean
     },
 
