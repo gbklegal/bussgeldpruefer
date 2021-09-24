@@ -90,60 +90,60 @@ const routes = [
         name: 'howto',
         component: HowTo
     },
-    {
-        path: '/profil',
-        name: 'profile',
-        component: Profile,
-        children: [
-            {
-                path: '/profil/posteingang',
-                name: 'profile-mail',
-                component: ProfileMail,
-                children: [
-                    {
-                        path: '/profil/posteingang/gerichtliche-angelegenheiten',
-                        name: 'profile-mail-court',
-                        component: ProfileMailCourt,
-                    },
-                    {
-                        path: '/profil/posteingang/aussergerichtliche-angelegenheiten',
-                        name: 'profile-mail-outside-court',
-                        component: ProfileMailOutsideCourt,
-                    },
-                    {
-                        path: '/profil/posteingang/sonstiges',
-                        name: 'profile-mail-else',
-                        component: ProfileMailElse,
-                    },
-                    {
-                        path: '/profil/posteingang/gesendet',
-                        name: 'profile-mail-sent',
-                        component: ProfileMailSent,
-                    },
-                    {
-                        path: '/profil/posteingang/markiert',
-                        name: 'profile-mail-marked',
-                        component: ProfileMailMarked,
-                    },
-                    {
-                        path: '/profil/posteingang/neue-nachricht',
-                        name: 'profile-mail-new-message',
-                        component: ProfileMailNewMessage,
-                    },
-                ]
-            },
-            {
-                path: '/profil/status',
-                name: 'profile-status',
-                component: ProfileStatus
-            },
-            {
-                path: '/profil/dokumente',
-                name: 'profile-documents',
-                component: ProfileDocuments
-            }
-        ]
-    },
+    // {
+    //     path: '/profil',
+    //     name: 'profile',
+    //     component: Profile,
+    //     children: [
+    //         {
+    //             path: '/profil/posteingang',
+    //             name: 'profile-mail',
+    //             component: ProfileMail,
+    //             children: [
+    //                 {
+    //                     path: '/profil/posteingang/gerichtliche-angelegenheiten',
+    //                     name: 'profile-mail-court',
+    //                     component: ProfileMailCourt,
+    //                 },
+    //                 {
+    //                     path: '/profil/posteingang/aussergerichtliche-angelegenheiten',
+    //                     name: 'profile-mail-outside-court',
+    //                     component: ProfileMailOutsideCourt,
+    //                 },
+    //                 {
+    //                     path: '/profil/posteingang/sonstiges',
+    //                     name: 'profile-mail-else',
+    //                     component: ProfileMailElse,
+    //                 },
+    //                 {
+    //                     path: '/profil/posteingang/gesendet',
+    //                     name: 'profile-mail-sent',
+    //                     component: ProfileMailSent,
+    //                 },
+    //                 {
+    //                     path: '/profil/posteingang/markiert',
+    //                     name: 'profile-mail-marked',
+    //                     component: ProfileMailMarked,
+    //                 },
+    //                 {
+    //                     path: '/profil/posteingang/neue-nachricht',
+    //                     name: 'profile-mail-new-message',
+    //                     component: ProfileMailNewMessage,
+    //                 },
+    //             ]
+    //         },
+    //         {
+    //             path: '/profil/status',
+    //             name: 'profile-status',
+    //             component: ProfileStatus
+    //         },
+    //         {
+    //             path: '/profil/dokumente',
+    //             name: 'profile-documents',
+    //             component: ProfileDocuments
+    //         }
+    //     ]
+    // },
     {
         path: '/ratgeber',
         name: 'blog',
