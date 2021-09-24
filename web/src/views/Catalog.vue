@@ -9,7 +9,7 @@
 
         <div class="flex flex-col md:flex-row mt-5">
             <!-- List of all Catalog Posts -->
-            <nav class="bg-gray-200 rounded-sm md:w-1/3 mb-8 md:mb-0 md:mr-8 p-3" aria-label="In Page Navigation">
+            <nav id="catalog-nav" class="bg-gray-200 rounded-sm md:w-1/3 mb-8 md:mb-0 md:mr-8 p-3" aria-label="In Page Navigation">
                 <div v-if="!hideSkeleton">
                     <Skeleton v-for="i in 20" :key="i" type="navList" />
                 </div>
@@ -50,8 +50,8 @@ export default {
             // display loading skeleton
             this.hideSkeleton = false;
 
-            // let apiURL = this.apiURL + '/docs';
-            let apiURL = 'http://localhost:4000/backend/wp-json/wp/v2/docs?per_page=100&order=asc&orderby=title'; // http://bussgeldpruefer.local
+            let apiURL = this.apiURL + '/docs?per_page=100&order=asc&orderby=title';
+            // let apiURL = 'http://localhost:4000/backend/wp-json/wp/v2/docs?per_page=100&order=asc&orderby=title'; // http://bussgeldpruefer.local
             if (searchQuery) {
                 apiURL += '&search=' + searchQuery;
             }
@@ -93,6 +93,10 @@ export default {
         }
     },
 
+    // computed: {
+        
+    // },
+
     beforeMount() {
         if (this.$route.query.search) {
             let searchQuery = this.$route.query.search;
@@ -106,6 +110,9 @@ export default {
     mounted() {
         window.scrollTo(0, 0);
     },
+
+    created() {
+        console.log(this.fastSearch);
     }
 }
 </script>
