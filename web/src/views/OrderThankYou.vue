@@ -2,7 +2,7 @@
     <div class="container">
         <h1 class="text-secondary">Prüfung Bußgeldbescheid</h1>
         <p>Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden</p>
-        <OrderProgress text="Schritt 6 von 6" percentage="100" />        
+        <OrderProgress :currentNumber="5" :maxNumber="5" percentage="100" />        
 
         <p class="mt-8 text-xl">Geschafft!</p>
         <p class="text-xl">Dein Antrag wurde erfolgreich eingereicht.</p>
