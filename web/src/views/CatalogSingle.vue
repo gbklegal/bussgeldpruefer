@@ -84,8 +84,8 @@ export default {
 
     data() {
         return {
-            apiURL: 'http://bussgeldpruefer.local/backend/wp-json/wp/v2/docs?slug=',
-            // apiURL: global.api.base + '/docs?slug=',
+            apiURL: global.api.base + '/docs?slug=',
+            // apiURL: 'http://bussgeldpruefer.local/backend/wp-json/wp/v2/docs?slug=',
             docSlug: this.$route.params.docSlug,
             docs: [],
             hideSkeleton: false
