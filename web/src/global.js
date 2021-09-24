@@ -11,6 +11,9 @@ export default {
             // return this.base + this.wp + type + (withFilter ? this.filter : '');
         }
     },
+    date: {
+        currentYear: (new Date).getFullYear(),
+    },
     removeHtmlTags: htmlString => {
         return htmlString.replace(/<[^>]*>/gim, '');
     }

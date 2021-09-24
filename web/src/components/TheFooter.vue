@@ -1,6 +1,6 @@
 <template>
     <footer class="px-3 border-t-2 border-primary bg-white pt-2">
-        <p>&copy; BussgeldPruefer</p>
+        <p>&copy; BussgeldPrüfer {{ currentYear }}</p>
         <nav aria-label="secondary navigation">
             <ul>
                 <li>
@@ -37,8 +37,15 @@
     </footer>
 </template>
 <script>
+import global from '../global';
+
 export default {
     name: 'Footer',
+    data: function() {
+        return {
+            currentYear: global.date.currentYear
+        }
+    }
 }
 </script>
 <style scoped>
