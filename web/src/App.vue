@@ -30,6 +30,18 @@ export default {
     SocialMedia,
     Warrants,
   },
+  mounted() {
+    // const nav = document.querySelector('header nav#nav');
+    // const main = document.querySelector('main#main');
+
+    // function calcMainNavDistance() {
+    //   let navHeight = nav.offsetHeight;
+    //   main.style.marginTop = navHeight + 'px';
+    // }
+
+    // window.addEventListener('resize', calcMainNavDistance);
+    // calcMainNavDistance();
+  }
 };
 </script>
 
@@ -47,6 +59,15 @@ export default {
   max-width: 100%;
   position: relative;
 }
+
+/* #nav {
+  background-color: #fff;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+} */
 
 #nav .logo .router-link-exact-active {
   background-color: #fff;
