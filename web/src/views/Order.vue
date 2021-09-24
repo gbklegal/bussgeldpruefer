@@ -1,4 +1,12 @@
 <template>
+    <Modal
+        title="Formular jetzt zurücksetzen?"
+        text="Sind Sie sicher, dass Sie Ihre derzeitige Eingabe zurücksetzten wollen?"
+        button="Ja"
+        cancel="Nein"
+        mode="warning"
+        :callback="modalResult"
+    />
     <div class="container">
         <h1 class="text-secondary">Prüfung Bußgeldbescheid</h1>
         <p>Unverbindliche Prüfung durch Anwalt - Antwort in 24 Stunden</p>
@@ -109,6 +117,7 @@
 </template>
 <script>   
 import OrderProgress from '../components/OrderProgress.vue'
+import Modal from '../components/BasicModal.vue'
 
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
@@ -116,6 +125,7 @@ import { useRouter, useRoute } from 'vue-router'
 export default {
     components: {
         OrderProgress,
+        Modal
     },
     
     setup () {
@@ -156,6 +166,8 @@ export default {
         function reset() {
             activeTab.value = 0
             progressPercentage.value = 100/6
+        function requestReset() {
+            Modal.methods.fadeIn();
         }
 
         function submitOrder() {
@@ -173,6 +185,9 @@ export default {
             insurance,
             urgency,
             submitOrder
+    methods: {
+        modalResult: function(confirmation) {
+            if (confirmation) this.reset();
         }
     }
 }
