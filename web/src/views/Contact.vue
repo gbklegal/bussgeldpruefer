@@ -73,7 +73,7 @@
         </section>
 
         <section class="mt-8">
-            <h2>Du kannst uns gerne auch direktper E-Mail erreichen:</h2>
+            <h2>Du kannst uns gerne auch direkt per E-Mail erreichen:</h2>
             <div>
                 <span class="mr-2">E-mail:</span>
                 <a href="mailto:dialog@bussgeldpruefer.com">dialog@bussgeldpruefer.com</a>
