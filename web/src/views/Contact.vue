@@ -6,51 +6,52 @@
             <h2>Du hast Fragen?</h2>
             <p class="mb-5">Falls noch offene Fragen bestehen, kannst Du uns gerne kontaktieren.</p>
 
-            <form id="contactform" @submit.prevent="redirect">
+            <form id="contactform" @submit.prevent="redirect" class="max-w-lg">
                 <fieldset class="mb-4">
                     <legend class="font-medium">Deine Kontaktdaten</legend>
 
-                    <div class="relative">
-                    <input 
-                        class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                        type="text" name="firstname" id="firstname" required
-                        placeholder="Vorname" v-model="firstName">
-                    <label class="absolute" for="firstname">Vorname</label>
+                    <div class="w-full relative">
+                        <input 
+                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            type="text" name="firstname" id="firstname" required
+                            placeholder="Vorname" v-model="firstName">
+                        <label class="absolute" for="firstname">Vorname</label>
                     </div>
- 
 
-                    <div class="relative">
-                    <input 
-                        class="mt-8 block mb-5 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                        type="text" name="lastname" id="lastname" required
-                        placeholder="Nachname" v-model="lastName">
+                    <div class="w-full relative">
+                        <input 
+                            class="w-full mt-8 block mb-5 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            type="text" name="lastname" id="lastname" required
+                            placeholder="Nachname" v-model="lastName">
                         <label class="absolute" for="lastname">Nachname</label>
                     </div>
 
-
                     <div class="relative">
-                    <input 
-                        class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                        type="email" name="email" id="email" required
-                        placeholder="EMail" v-model="eMail">
-                    <label class="absolute" for="email">E-Mail Adresse</label>
+                        <input 
+                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            type="email" name="email" id="email" required
+                            placeholder="EMail" v-model="eMail">
+                        <label class="absolute" for="email">E-Mail Adresse</label>
                     </div>
 
 
                     <div class="relative">
-                    <input 
-                        class="mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                        type="tel" name="phone" id="phone"
-                        placeholder="Telefonnummer" v-model="phone">
-                    <label class="absolute" for="phone">Telefonnummer</label>
+                        <input 
+                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            type="tel" name="phone" id="phone"
+                            placeholder="Telefonnummer" v-model="phone">
+                        <label class="absolute" for="phone">Telefonnummer</label>
                     </div>
 
                 </fieldset>
 
                 <label class="block font-medium mb-6 mt-5" for="message">Deine Nachricht</label>
                 <textarea 
-                    class="block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                    name="message" id="message" cols="30" rows="10" required v-model="message"></textarea>
+                    class="w-full block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                    name="message" id="message" cols="30" rows="10" required v-model="message"
+                    placeholder="PLACEHOLDER COMING SOON"
+                    ></textarea>
+
                 <fieldset class="mb-4">
                     <div class="mt-4 mb-3">
                         <input type="radio" name="contact-by" id="contact-by-phone" required>
@@ -123,19 +124,23 @@ export default {
 <style lang="scss" scoped>
     // floating labels
     label {
-    top: 0.6rem;
-    left: 0.5rem;
-    transition: all 0.3s ease;
+        top: 0.6rem;
+        left: 0.5rem;
+        transition: all 0.3s ease;
     }
 
     input::placeholder {
-    opacity: 0;
+        opacity: 0;
     }
 
     input:focus + label,
     input:not(:placeholder-shown) + label {
-    top: -1.6rem;
-    left: 0;
-    font-size: 0.8em;
-    } 
+        top: -1.6rem;
+        left: 0;
+        font-size: 0.8em;
+    }
+
+    input[type='radio'] + label {
+        font-size: 1rem;
+    }
 </style>
