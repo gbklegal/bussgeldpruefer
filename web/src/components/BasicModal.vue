@@ -1,5 +1,5 @@
 <template>
-    <div id="modal" class="hidden z-10 inset-0 overflow-y-auto opacity-0 transition-opacity" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div :id="id || 'modal'" class="modal hidden z-10 inset-0 overflow-y-auto opacity-0 transition-opacity" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <!--
             Background overlay, show/hide based on modal state.
@@ -67,19 +67,19 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button @click="modalConfirm" v-if="mode=='warning'" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button @click="modalConfirm(id)" v-if="mode == 'warning' && button" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:ml-3 sm:w-auto sm:text-sm">
                     {{ button }}
                     </button>
-                    <button @click="modalConfirm" v-if="mode=='error'" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button @click="modalConfirm(id)" v-if="mode == 'error' && button" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                     {{ button }}
                     </button>
-                    <button @click="modalConfirm" v-if="mode=='success'" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button @click="modalConfirm(id)" v-if="mode == 'success' && button" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
                     {{ button }}
                     </button>
-                    <button @click="modalConfirm" v-if="mode=='info'" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button @click="modalConfirm(id)" v-if="mode == 'info' && button" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
                     {{ button }}
                     </button>
-                    <button @click="modalDecline" v-if="cancel" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button @click="modalDecline(id)" v-if="cancel" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     {{ cancel }}
                     </button>
                 </div>
@@ -93,6 +93,7 @@
 export default {
     name: 'Modal',
     props: {
+        id: String,
         title: String,
         text: String,
         isHTML: Boolean,
@@ -102,16 +103,18 @@ export default {
         callback: Function
     },
     methods: {
-        fadeIn: function() {
-            let modalElmt = document.querySelector('#modal');
+        fadeIn: function(modalId) {
+            modalId = modalId || 'modal';
+            let modalElmt = document.querySelector('#' + modalId);
             modalElmt.classList.add('fixed', 'ease-out', 'duration-300');
             modalElmt.classList.remove('hidden');
             setTimeout(function() {
                 modalElmt.classList.replace('opacity-0', 'opacity-100');
             }, 1);
         },
-        fadeOut: function() {
-            let modalElmt = document.querySelector('#modal');
+        fadeOut: function(modalId) {
+            modalId = modalId || 'modal';
+            let modalElmt = document.querySelector('#' + modalId);
             modalElmt.classList.remove('opacity-100');
             modalElmt.classList.add('opacity-0', 'ease-in', 'duration-200');
             setTimeout(function() {
@@ -119,14 +122,14 @@ export default {
                 modalElmt.classList.remove('fixed');
             }, 200);
         },
-        modalConfirm: function() {
-            this.fadeOut();
+        modalConfirm: function(modalId) {
+            this.fadeOut(modalId);
             if (this.callback) this.callback(true);
+        },
+        modalDecline: function(modalId) {
+            this.fadeOut(modalId);
             if (this.callback) this.callback(false);
         },
-        modalDecline: function() {
-            this.fadeOut();
-        }
     }
 }
 </script>

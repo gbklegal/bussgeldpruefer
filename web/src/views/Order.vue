@@ -1,5 +1,6 @@
 <template>
     <Modal
+        id="resetFormModal"
         title="Formular jetzt zurücksetzen?"
         text="Sind Sie sicher, dass Sie Ihre derzeitige Eingabe zurücksetzten wollen?"
         button="Ja"
@@ -172,7 +173,7 @@ export default {
         }
 
         function requestReset() {
-            Modal.methods.fadeIn();
+            Modal.methods.fadeIn('resetFormModal');
         }
 
         function submitOrder() {
