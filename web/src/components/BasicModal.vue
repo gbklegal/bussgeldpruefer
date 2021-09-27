@@ -58,7 +58,8 @@
                             {{ title }}
                             </h3>
                             <div class="mt-2">
-                            <p class="text-sm text-gray-500">
+                            <p class="text-sm text-gray-500" v-html="text" v-if="isHTML"></p>
+                            <p class="text-sm text-gray-500" v-if="!isHTML">
                             {{ text }}
                             </p>
                             </div>
@@ -94,6 +95,7 @@ export default {
     props: {
         title: String,
         text: String,
+        isHTML: Boolean,
         button: String,
         cancel: String,
         mode: String,
