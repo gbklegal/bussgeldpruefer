@@ -114,20 +114,22 @@
                 <span>{{ urgency }}</span> -->
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 3)}" class="tab">              
+            <div :class="{'sr-only':(activeTab !== 3)}" class="tab">
                 <label for="document" class="mb-6 text-xl block">Dokumente Hochladen</label>
-                <input type="file" name="document" id="document" multiple>                
+                <input type="file" name="document" id="document" multiple>
             </div>
 
-            <!-- <div :class="{'sr-only':(activeTab !== 4)}" class="tab text-center">
+            <div :class="{'sr-only':(activeTab !== 4)}" class="tab text-center">
                 <p class="mb-6">Um Deinen Bußgeldbescheid prüfen zu lassen <router-link class="underline" to="/login">melde dich an</router-link>. Oder erstelle einen <router-link class="underline" to="/registrieren">Account</router-link>.</p>
-                <p @click="submitOrder()"><br>weiter</p>
-            </div> -->
+                <p>
+                    <a href="#" @click.prevent="submitOrder()" class="text-secondary">submitOrder()</a>
+                </p>
+            </div>
 
             <div class="controls mt-6 flex items-center justify-center">
                 <button v-if="(activeTab >= 1)" @click.prevent="decrement()" class="btn-secondary mr-4">Zurück</button>
-                <button v-if="(activeTab <= 2)" @click.prevent="increment()" class="btn-secondary mr-4">Weiter</button>
-                <button v-if="(activeTab == 3)" @click.prevent="submitOrder()" class="btn-secondary mr-4">Abschließen</button>
+                <button v-if="(activeTab <= maxSteps - 3)" @click.prevent="increment()" class="btn-secondary mr-4">Weiter</button>
+                <button v-if="(activeTab == (maxSteps - 2))" @click.prevent="submitOrder()" class="btn-secondary mr-4">Abschließen</button>
                 <button @click.prevent="requestReset()" class="btn-secondary block">
                     <svg role="img" aria-labelledby="resetForm" class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <title id="resetForm">Neu starten</title>
@@ -139,7 +141,9 @@
 
     </div>
 </template>
-<script>   
+
+
+<script>
 import OrderProgress from '../components/OrderProgress.vue'
 import Modal from '../components/BasicModal.vue'
 
@@ -247,6 +251,8 @@ export default {
     }
 }
 </script>
+
+
 <style lang="scss" scoped>
 .panel {
     padding: 0 18px;
@@ -255,7 +261,27 @@ export default {
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
+
+// floating labels
 label {
+    top: 0.6rem;
+    left: 2rem;
+    transition: all 0.3s ease;
+}
+
+input[type='text']::placeholder {
+    opacity: 0; 
+}
+
+input[type='text']:focus + label,
+input[type='text']:not(:placeholder-shown) + label {
+    top: -1.6rem;
+    left: 1.2rem;
+    font-size: 0.8em;
+}
+
+input[type='radio'] + label {
+    font-size: 1rem;
     transition: border .2s ease;
 }
 
