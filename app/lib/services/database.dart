@@ -208,7 +208,8 @@ class DatabaseMethods {
       "userId": FirebaseAuth.instance.currentUser.uid,
       "fileId": FirebaseAuth.instance.currentUser.uid,
       "signatureFile": _fileURLs,
-      "violationName": violationName
+      "violationName": violationName,
+      "isTest": false
     };
     await FirebaseFirestore.instance
         .collection("orders")
