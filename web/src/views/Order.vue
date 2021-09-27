@@ -65,13 +65,26 @@
                     <legend class="mb-6">Hast du eine Rechtschutzversicherung, die den Bereich Verkehr abdeckt?</legend>
 
                     <label class="block" for="insured">
-                        <input type="radio" name="insurance" id="insured" value="insured" v-model="insurance" class="mb-3">
-                    Ja</label>
+                        <input @click="toggleInsuranceInfo" type="radio" name="insurance" id="insured" value="insured" v-model="insurance">
+                        <span class="p-2 align-middle">Ja</span>
+                    </label>
+
+                    <div class="panel relative ml-2" id="insured-yes">
+                        <input
+                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                            type="text" name="insuranceCompany" id="insuranceCompany" required
+                            placeholder="Name der Rechtschutz-Versicherung">
+                        <label class="absolute mt-8" for="insuranceCompany">Name der Rechtschutz-Versicherung (optional)</label>
+                    </div>
                     
                     <label class="block" for="not-insured">
-                        <input type="radio" name="insurance" id="not-insured" value="not-insured" v-model="insurance">
-                    Nein</label>
+                        <input @click="toggleInsuranceInfo" type="radio" name="insurance" id="not-insured" value="not-insured" v-model="insurance">
+                        <span class="p-2 align-middle">Nein</span>
+                    </label>
+
+                    <div class="panel ml-2" id="insured-no">
                         <p>Sie haben keine Rechtsschutzversicherung? <a class="text-secondary" href="https://www.arag-partner.de/jap_neu/fp/controller?channel=CHANNEL_INTERNET&action=external&productId=100&objectType=OBJECTTYPE_ANTRAG&activityId=%2FANT_NEU_VERK_SOFORT_INTERNET&eTrackerVerificationCode=thx9j9&kvgesellschaft=01&kooporga=255&koopvp=16347&kooppruefziffer=3&koopberechtigungpruefen=0&vertriebskanal=1&relaunch=true&utm_source=bussgelpruefer_com&utm_medium=link&utm_campaign=affiliates-VerSo" target="_blank">Hier</a> können Sie über einen externen Versicherungsvermittler rückwirkend eine Versicherung für Ihre Sache abschließen. Damit vertreten wir Sie vor der Behörde und soweit notwendig auch vor Gericht ohne weitere Kosten. <a class="text-secondary" href="#" @click.prevent="openLegalInfoModal">[i]</a></p>
+                    </div>
                 </fieldset>
 
                 <!-- for debugging
@@ -212,11 +225,36 @@ export default {
     methods: {
         modalResult: function(confirmation) {
             if (confirmation) this.reset();
+        },
+        toggleInsuranceInfo: function(event) {
+            let panelYes = document.querySelector('#insured-yes');
+            let panelNo = document.querySelector('#insured-no');
+            let targetID = event.target.id;
+
+            if (!panelYes || !panelNo) return;
+
+            const hidePanel = panel => panel.style.maxHeight = null;
+            const showPanel = panel => panel.style.maxHeight = panel.scrollHeight + 'px';
+
+            if (targetID == 'insured') {
+                showPanel(panelYes);
+                hidePanel(panelNo);
+            } else {
+                hidePanel(panelYes);
+                showPanel(panelNo);
+            }
         }
     }
 }
 </script>
 <style lang="scss" scoped>
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
 label {
     transition: border .2s ease;
 }
