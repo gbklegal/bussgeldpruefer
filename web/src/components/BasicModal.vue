@@ -121,11 +121,11 @@ export default {
         },
         modalConfirm: function() {
             this.fadeOut();
-            this.callback(true);
+            if (this.callback) this.callback(true);
+            if (this.callback) this.callback(false);
         },
         modalDecline: function() {
             this.fadeOut();
-            this.callback(false);
         }
     }
 }
