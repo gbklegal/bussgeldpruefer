@@ -8,6 +8,14 @@
         mode="warning"
         :callback="modalResult"
     />
+    <Modal
+        id="legalInfoModal"
+        title="Info"
+        text='<p class="pb-4">Die GDF GmbH vermittelt als Betreiberin dieser Webseite selbst keine Versicherung und ist für die Inhalte der verlinkten Webseite nicht verantwortlich.</p><p class="pb-4">Verantwortlicher Versicherungsmakler für das Versicherungsangebot ist:</p><p class="pb-4">Herr Thomas Wirth, Rothenburger Straße 116, 90439 Nürnberg,<br> E-Mail Thomas.Wirth@arag-partner.de<br> Gebundener Versicherungsvermittler nach § 34d Abs.4 GewO</p><p class="pb-4">Deutscher Industrie- und Handelskammertag (DIHK) e.V.<br> Breite Straße 29, 10178 Berlin<br> Telefon 0 18 06 00 58 50 (0,20 EUR/Anruf aus dem deutschen Festnetz; höchstens 60 Cent/Anruf aus  Mobilfunknetzen)<br> www.vermittlerregister.info</p><p class="pb-4">IHK-Register-Nr. D-LDKK-PB9YO-76</p><p class="pb-4">Beschwerde-/Schlichtungsstelle Versicherungsombudsmann e.V.<br> Postfach 080632, 10006 Berlin Telefon 0 18 04 22 44 24,<br> Fax 0 18 04 22 44 25 für 0,20 EUR /Anruf*/Fax<br> * höchstens 0,60 EUR/Min. aus Mobilfunknetzen<br> E-Mail beschwerde@versicherungsombudsmann.de</p>'
+        :isHTML="true"
+        button="schließen"
+        mode="info"
+    />
     <div class="container">
         <h1 class="text-secondary">Prüfung Bußgeldbescheid</h1>
         <p>Unverbindliche Prüfung durch Anwalt - Antwort binnen 24 Stunden</p>
@@ -63,6 +71,7 @@
                     <label class="block" for="not-insured">
                         <input type="radio" name="insurance" id="not-insured" value="not-insured" v-model="insurance">
                     Nein</label>
+                        <p>Sie haben keine Rechtsschutzversicherung? <a class="text-secondary" href="https://www.arag-partner.de/jap_neu/fp/controller?channel=CHANNEL_INTERNET&action=external&productId=100&objectType=OBJECTTYPE_ANTRAG&activityId=%2FANT_NEU_VERK_SOFORT_INTERNET&eTrackerVerificationCode=thx9j9&kvgesellschaft=01&kooporga=255&koopvp=16347&kooppruefziffer=3&koopberechtigungpruefen=0&vertriebskanal=1&relaunch=true&utm_source=bussgelpruefer_com&utm_medium=link&utm_campaign=affiliates-VerSo" target="_blank">Hier</a> können Sie über einen externen Versicherungsvermittler rückwirkend eine Versicherung für Ihre Sache abschließen. Damit vertreten wir Sie vor der Behörde und soweit notwendig auch vor Gericht ohne weitere Kosten. <a class="text-secondary" href="#" @click.prevent="openLegalInfoModal">[i]</a></p>
                 </fieldset>
 
                 <!-- for debugging
@@ -180,6 +189,10 @@ export default {
             router.push({name: 'order-thank-you'})
         }
 
+        function openLegalInfoModal() {
+            Modal.methods.fadeIn('legalInfoModal');
+        }
+
         return { 
             activeTab,
             maxSteps,
@@ -190,6 +203,7 @@ export default {
             reset,
             requestReset,
             submitOrder,
+            openLegalInfoModal,
             violation,
             insurance,
             urgency
