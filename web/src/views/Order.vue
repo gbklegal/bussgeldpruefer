@@ -132,7 +132,7 @@ export default {
     
     setup () {
         // max number of steps
-        const maxSteps = 5;
+        const maxSteps = 6;
         // hide all .tab visually.
         // change this with class when activeTab = specific number
         const activeTab = ref(0)
