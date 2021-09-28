@@ -263,7 +263,7 @@ export default {
 }
 
 // floating labels
-label {
+input[type='text'] + label {
     top: 0.6rem;
     left: 2rem;
     transition: all 0.3s ease;
