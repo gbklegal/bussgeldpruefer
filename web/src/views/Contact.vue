@@ -1,12 +1,18 @@
 <template>
-    <!-- TODO: Logic, firebase -->
+    <Modal
+        title="Fehler"
+        text='Die Anfrage konnte leider nicht versendet werden. Bitte versuche es erneut oder schreibe uns einfach eine E-Mail an <a href="mailto:dialog@bussgeldpruefer.com" class="text-primary">dialog@bussgeldpruefer.com</a>.'
+        :isHTML="true"
+        button="OK"
+        mode="error"
+    />
     <div class="container">
         <h1>Kontakt</h1>
         <section>
             <h2>Du hast Fragen?</h2>
             <p class="mb-5">Falls noch offene Fragen bestehen, kannst Du uns gerne kontaktieren.</p>
 
-            <form id="contactform" @submit.prevent="redirect" class="max-w-lg">
+            <form id="contactform" @submit.prevent="submitContactForm" class="max-w-lg">
                 <fieldset class="mb-4">
                     <legend class="font-medium">Deine Kontaktdaten</legend>
 
@@ -29,8 +35,8 @@
                     <div class="relative">
                         <input 
                             class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
-                            type="email" name="email" id="email" required
-                            placeholder="EMail" v-model="eMail">
+                            type="email" name="email" id="email"
+                            placeholder="E-Mail" v-model="eMail">
                         <label class="absolute" for="email">E-Mail Adresse</label>
                     </div>
 
@@ -49,21 +55,21 @@
                 <textarea 
                     class="w-full block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                     name="message" id="message" cols="30" rows="10" required v-model="message"
-                    placeholder="PLACEHOLDER COMING SOON"
+                    placeholder="Inhalt deiner Nachricht"
                     ></textarea>
 
                 <fieldset class="mb-4">
                     <div class="mt-4 mb-3">
-                        <input type="radio" name="contact-by" id="contact-by-phone" required>
+                        <input type="radio" name="contact-type" id="contact-type-phone" value="Telefon" @click="toggleRequiredContactType" v-model="contactType" required>
                         <label
                             class="pl-2 cursor-pointer"
-                            for="contact-by-phone">Ich möchte <strong>telefonisch</strong> kontaktiert werden.</label>
+                            for="contact-type-phone">Ich möchte <strong>telefonisch</strong> kontaktiert werden.</label>
                     </div>
                     <div class="mb-3">
-                        <input type="radio" name="contact-by" id="contact-by-email" required>
+                        <input type="radio" name="contact-type" id="contact-type-email" value="E-Mail" @click="toggleRequiredContactType" v-model="contactType" required>
                         <label
                             class="pl-2 cursor-pointer"
-                            for="contact-by-email">Ich möchte <strong>per E-Mail</strong> kontaktiert werden.</label>
+                            for="contact-type-email">Ich möchte <strong>per E-Mail</strong> kontaktiert werden.</label>
                     </div>
                 </fieldset>
 
@@ -76,9 +82,9 @@
         <section class="mt-8">
             <h2>Du kannst uns gerne auch direkt per E-Mail erreichen:</h2>
             <div>
-                <span class="mr-2">E-mail:</span>
+                <span class="mr-2">E-Mail:</span>
                 <a href="mailto:dialog@bussgeldpruefer.com">dialog@bussgeldpruefer.com</a>
-            </div>  
+            </div>
             <!--
             <div>
                 <span class="mr-2">Tel:</span>
@@ -90,22 +96,83 @@
 </template>
 
 <script>
+import global from '../global'
+import Modal from '../components/BasicModal.vue';
 import { ref  } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 export default {
+    components: {
+        Modal,
+    },
+
     setup() {
         const firstName = ref('')
         const lastName = ref('')
         const eMail = ref('')
         const phone = ref('')
         const message = ref('')
+        const contactType = ref('')
 
         // router
         const router = useRouter()
 
-        function redirect() {
-            router.push({name: 'contact-thank-you'})
+        function submitContactForm() {
+            const apiUrl = global.api.bgp + '/contactform/contactform.php';
+            let xhr = new XMLHttpRequest();
+            let formData = new FormData();
+
+            // little helper function
+            const checkVal = elmt => {
+                if (elmt.value) {
+                    return elmt.value;
+                }
+                return '/';
+            }
+
+            formData.append('firstname', checkVal(firstname));
+            formData.append('lastname', checkVal(lastName));
+            formData.append('email', checkVal(eMail));
+            formData.append('phone', checkVal(phone));
+            formData.append('message', checkVal(message));
+            formData.append('contactType', checkVal(contactType));
+            formData.append('source', 'Website');
+            formData.append('mailTo', 'roeder@gbk-rae.de'); // only for development (TODO: remove in prod.)
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        let response = JSON.parse(xhr.responseText);
+                        
+                        if (response.sendmail) {
+                            router.push({name: 'contact-thank-you'})
+                        } else {
+                            openContactFormModal();
+                        }
+                    }
+                }
+            };
+            xhr.open('POST', apiUrl, true);
+            xhr.send(formData);
+        }
+
+        function toggleRequiredContactType(elmt) {
+            const targetId = elmt.target.id;
+            const phoneElmt = document.querySelector('#phone');
+            const emailElmt = document.querySelector('#email');
+
+            if (targetId === 'contact-type-phone') {
+                phoneElmt.required = true;
+                emailElmt.required = false;
+            }
+            else if (targetId === 'contact-type-email') {
+                emailElmt.required = true;
+                phoneElmt.required = false;
+            }
+        }
+
+        function openContactFormModal() {
+            Modal.methods.fadeIn();
         }
 
         return {
@@ -114,7 +181,10 @@ export default {
             eMail,
             phone,
             message,
-            redirect
+            contactType,
+            submitContactForm,
+            toggleRequiredContactType,
+            openContactFormModal
         }
     }
 
