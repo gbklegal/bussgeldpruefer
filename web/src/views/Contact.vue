@@ -73,9 +73,12 @@
                     </div>
                 </fieldset>
 
-                <button
-                    class="btn-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                    type="submit">Senden</button>
+                <div>
+                    <button
+                        class="btn-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                        type="submit">Senden</button>
+                    <LoadingCircle class="ml-2" />
+                </div>
             </form>
         </section>
 
@@ -98,12 +101,14 @@
 <script>
 import global from '../global'
 import Modal from '../components/BasicModal.vue';
+import LoadingCircle from '../components/BasicLoadingCircle.vue';
 import { ref  } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 export default {
     components: {
         Modal,
+        LoadingCircle
     },
 
     setup() {
@@ -118,6 +123,7 @@ export default {
         const router = useRouter()
 
         function submitContactForm() {
+            loadingCircle(true);
             const apiUrl = global.api.bgp + '/contactform/contactform.php';
             let xhr = new XMLHttpRequest();
             let formData = new FormData();
@@ -141,6 +147,7 @@ export default {
 
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
+                    loadingCircle(false);
                     if (xhr.status === 200) {
                         let response = JSON.parse(xhr.responseText);
                         
@@ -149,6 +156,8 @@ export default {
                         } else {
                             openContactFormModal();
                         }
+                    } else {
+                        openContactFormModal();
                     }
                 }
             };
@@ -175,6 +184,15 @@ export default {
             Modal.methods.fadeIn();
         }
 
+        function loadingCircle(isVisible) {
+            const loadingCircleElmt = document.querySelector('.loading-circle');
+
+            if (isVisible) {
+                return loadingCircleElmt.style.visibility = 'visible';
+            }
+            return loadingCircleElmt.style.visibility = 'hidden';
+        }
+
         return {
             firstName,
             lastName,
@@ -184,14 +202,18 @@ export default {
             contactType,
             submitContactForm,
             toggleRequiredContactType,
-            openContactFormModal
+            openContactFormModal,
+            loadingCircle
         }
     }
-
 }
 </script>
 
 <style lang="scss" scoped>
+    .loading-circle {
+        visibility: hidden;
+    }
+
     // floating labels
     label {
         top: 0.6rem;
