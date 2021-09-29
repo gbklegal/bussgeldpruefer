@@ -1,5 +1,5 @@
 <template>
-    <div id="loadingCircle" class="inline-block">
+    <div class="loading-circle inline-block">
         <svg class="circular-loader" viewBox="25 25 50 50">
             <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#70c542" stroke-width="4" />
         </svg>
@@ -8,7 +8,11 @@
 
 
 <style>
-.circular-loader {
+.loading-circle {
+    vertical-align: middle;
+}
+
+.loading-circle .circular-loader {
     -webkit-animation: rotate 2s linear infinite;
     animation: rotate 2s linear infinite;
     height: 100%;
@@ -24,13 +28,14 @@
     height: 2.75em;
 }
 
-.loader-path {
+.loading-circle .loader-path {
     stroke-dasharray: 150,200;
     stroke-dashoffset: -10;
     -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     stroke-linecap: round;
 }
+
 @-webkit-keyframes rotate {
     100% {
         -webkit-transform: rotate(360deg);
