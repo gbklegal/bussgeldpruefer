@@ -7,6 +7,8 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'manual.dart';
+
 class QuickCheckScreen extends StatefulWidget {
   QuickCheckScreen({Key key}) : super(key: key);
 
@@ -50,7 +52,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
   List<String> violationNames = [
     'Geschwindig\u2011\nkeit',
     'Rote Ampel',
-    'Abstand',
+    'Abstands',
     'Alkohol',
     'Telefon',
     'Falschparken'
@@ -178,7 +180,23 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _title('1. Wähle Deinen Verstoß aus:'),
+                  new GestureDetector(
+                    onTap: () {
+                      newScreen(
+                        context: context,
+                        screen: ManualScreen(),
+                      );
+                    },
+                    child: Text(
+                      'Was ist ein Quick-Check?',
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        color: Color(0xFF5CC8C5),
+                      ),
+                    ),
+                  ),
+                  _padding(),
+                  _title('Wähle Deinen Verstoß aus:'),
                   Column(
                     children: <Widget>[
                       _padding(),
@@ -221,7 +239,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                     ],
                   ),
                   _padding(),
-                  _title('2. Bist Du selbst gefahren?'),
+                  _title('Bist Du selbst gefahren?'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -251,7 +269,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                   ),
                   _padding(),
                   _title(
-                      'Hast du bereits Zugegeben, dass du selbst gefahren bist?'),
+                      'Hast Du bereits zugegeben, dass Du selbst gefahren bist? '),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -372,7 +390,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                   if (!hideDatePicker) _padding(),
                   if (!hideDatePicker)
                     _title(
-                        'Wann haben Sie das letzte behördliche Schreiben erhalten?'),
+                        'Wann hast Du das letzte behördliche Schreiben erhalten?'),
                   if (!hideDatePicker)
                     TextField(
                       readOnly: true,

@@ -68,7 +68,7 @@ class ManualScreen extends StatelessWidget {
                           children: [
                             CircleNumber('1'),
                             _text(
-                              'Mit Hilfe des Quick-Checks erhältst Du eine unverbindliche Ersteinschätzung deines Falls.',
+                              'Per Quick-Check erhältst Du in weniger als 1 Minute mithilfe unserer KI-basierten Software eine unverbindliche Einschätzung deines Falles.',
                             ),
                           ],
                         ),
@@ -77,7 +77,7 @@ class ManualScreen extends StatelessWidget {
                           children: [
                             CircleNumber('2'),
                             _text(
-                              'Anschließend kannst Du eine verbindliche kostenlose Ersteinschätzung durch unsere Partneranwälte beauftragen',
+                              'Sofort oder nach Deinem Quick-Check kannst Du eine verbindliche kostenlose Ersteinschätzung durch unsere Partneranwälte beauftragen.',
                             ),
                           ],
                         ),
@@ -86,7 +86,7 @@ class ManualScreen extends StatelessWidget {
                           children: [
                             CircleNumber('3'),
                             _text(
-                              'Nach Prüfung Deines Falls entscheidest Du, ob unsere Vertragsanwälte dich gegen Deinen Bußgeldbescheid im Einspruchsverfahren oder Klageverfahren verteidigen.',
+                              'Nach Bewertung und Prüfung Deines Falles entscheidest Du, ob unsere Vertragsanwälte die Verteidigung im Bußgeldverfahren für Dich übernehmen und die Einstellung anstreben sollen.',
                             ),
                           ],
                         ),

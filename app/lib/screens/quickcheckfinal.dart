@@ -43,6 +43,15 @@ class QuickCheckFinalScreen extends StatelessWidget {
           children: <Widget>[
             PageTitle('Quick Check'),
             Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Text(
+                'Fast geschafft!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
               padding: EdgeInsets.fromLTRB(
                 20.0,
                 0.0,
@@ -55,9 +64,6 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     text: TextSpan(
                       style: TextStyle(color: Colors.black, fontSize: 16.0),
                       children: <TextSpan>[
-                        TextSpan(
-                            text: 'Fast geschafft!',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(text: '\nDie Ersteinschätzung war '),
                         TextSpan(text: _translateColor(trafficLightColor)),
                         TextSpan(
@@ -73,8 +79,9 @@ class QuickCheckFinalScreen extends StatelessWidget {
                   _padding(),
                   Image.asset(
                     'assets/images/icons/traffic-light-$trafficLightColor.png',
-                    height: 80,
+                    height: 130,
                   ),
+                  _padding(),
                   Text(
                     'Eine Verteidigung gegen den behaupteten $violationName-Verstoß erscheint $status.*',
                     style: TextStyle(fontSize: 18),
@@ -84,15 +91,8 @@ class QuickCheckFinalScreen extends StatelessWidget {
                   (trafficLightColor == 'red')
                       ? Image.asset('assets/images/icons/sad.png', height: 80)
                       : (trafficLightColor == 'yellow')
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/icons/sad.png',
-                                    height: 80),
-                                Image.asset('assets/images/icons/question.png',
-                                    height: 25),
-                              ],
-                            )
+                          ? Image.asset('assets/images/icons/happy.png',
+                              height: 80)
                           : Image.asset('assets/images/icons/happy.png',
                               height: 80),
                   _padding(),
@@ -121,9 +121,15 @@ class QuickCheckFinalScreen extends StatelessWidget {
                     ),
                   ),
                   _padding(),
-                  Text('Nur 1 Schritt fehlt, um den Bescheid anzufechten'),
                   Text(
-                      '\n- Druch Anwalt geprüft\n- binnen 24h Rückmeldung\n- kostenlose Ersteberatung'),
+                    'Nur 1 Schritt fehlt, um den Bescheid anzufechten',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                      '\n- durch Anwalt geprüft\n- Rückmeldung binnen 24 h\n- kostenlose Erstberatung'),
                   _padding(),
                   Row(
                     children: [

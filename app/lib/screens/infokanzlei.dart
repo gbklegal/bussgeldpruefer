@@ -49,7 +49,7 @@ class InfoKanzleiScreen extends StatelessWidget {
                     children: [
                       _title('Die Kanzlei'),
                       _text(
-                          'Seit vielen Jahren beraten die GBK LEGAL Fachanwaltskanzlei sowie GHR Partnerkanzlein Sachen rund ums Thema Auto und Verkehrsrecht. Unsere Partnerkanzleien sind Experten in allen Rechtsgebieten rund um den Verkehr. Dabei ist ein enger Austausch mit den Mandanten wichtig, um den bestmöglichen Service zu bieten. Unseren Partnerkanzleien ist es wichtig, Dich voll und ganz zu entlasten sowie Angelegenheiten einfach, verständlich zu vermitteln. Führerschein weg? Punkte in Flensburg? Fahrverbot? Als kompetente Berater setzen sich unsere Partnerkanzleien für Dich ein.'),
+                          'Seit vielen Jahren beraten die GBK LEGAL Fachanwaltskanzlei sowie GHR Partnerkanzlei rund ums Thema Auto und Verkehrsrecht. Unsere Partnerkanzleien sind Experten in allen Themen zum Verkehr. Dabei ist uns ein enger Austausch mit den Mandaten stets wichtig, um den bestmöglichen Service zu bieten. Ziel unserer Partnerkanzleien ist es, Dich voll und ganz zu entlasten sowie einfach und verständlich Deinen Fall zu führen. Führerschein weg? Punkte in Flensburg? Fahrverbot? Als kompetente Berater setzen sich unsere Partnerkanzleien für Dich ein.'),
                       SizedBox(height: 16.0),
                     ],
                   ),
@@ -72,7 +72,7 @@ class InfoKanzleiScreen extends StatelessWidget {
                     children: [
                       _title('Wer wir sind'),
                       _text(
-                          'Unsere Partnerkanzleien vertreten Dich deutschlandweit. Sie sind der richtige Ansprechpartner, wenn Du rechtliche Probleme im Verkehr hast, und natürlich in allen anderen Angelegenheiten. Überzeuge Dich selbst von deren Kompetenz.'),
+                          'BussgeldPrüfer wird durch einen gemeinsamen Auftritt verschiedener Dienstleister realisiert. Dabei haben wir nur ein Ziel:\nDir ein umfassendes Informations-Paket zum Thema Bußgeldbescheid mit zahlreichen allgemeinen Tipps zur Verfügung zu stellen.\nRatsuchende können sich vorab über die Thematik informieren und selbst einschätzen, ob sie eine persönliche professionelle und persönliche Beratung und Vertretung in Bußgeldangelegenheiten benötigen. Lass uns Deine Anlaufstelle zum Thema Prüfung Deines Bußgeldbescheides sein!'),
                       SizedBox(height: 16.0),
                     ],
                   ),

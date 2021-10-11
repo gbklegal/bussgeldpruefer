@@ -28,6 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return SizedBox(height: 12.0);
   }
 
+  _padding2() {
+    return SizedBox(height: 6.0);
+  }
+
   _simpleButton(text, [context, screen]) {
     return Container(
       width: double.infinity,
@@ -79,20 +83,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       _padding(),
                       BigButtonWidget(
-                        title: 'Prüfung Bußgeldbescheid',
+                        title: 'Jetzt Bußgeldbescheid prüfen',
                         text:
-                            'kostenlose Erstprüfung durch Anwalt – Antwort in der Regel binnen 24 Stunden',
+                            'Kostenlose Erstprüfung durch Anwalt – Du erhältst eine Antwort in der Regel innerhalb von 24 Stunden',
+                        image: 'assets/images/icons/plus.png',
                         screen: PruefungBussgeldbescheidScreen(),
                         index: 1,
                         flag: 1,
                       ),
-                      _padding(),
-                      BigButtonWidget(
-                          title: 'Bußgeldbescheid erhalten?',
-                          text:
-                              'So gehst du vor, um erfolgreich Einspruch einzulegen',
-                          screen: AblaufScreen(),
-                          flag: 0),
                       _padding(),
                     ],
                   ),
@@ -103,17 +101,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       _title('Hinweise'),
                       _padding(),
+                      BigButtonWidget(
+                          title: 'Bußgeldbescheid erhalten?',
+                          text:
+                              'So gehst Du vor, um erfolgreich Einspruch einzulegen',
+                          screen: AblaufScreen(),
+                          flag: 0),
+                      _padding2(),
+                      _simpleButton(
+                        'Anleitung',
+                        context,
+                        ManualScreen(),
+                      ),
                       _simpleButton(
                           'Bußgeldkatalog', context, BussgeldkatalogScreen()),
                       _simpleButton(
                         'Bußgeld Ratgeber',
                         context,
                         BussgeldratgeberScreen(),
-                      ),
-                      _simpleButton(
-                        'Anleitung',
-                        context,
-                        ManualScreen(),
                       ),
                       _simpleButton(
                         'Deine Experten im Verkehrsrecht',

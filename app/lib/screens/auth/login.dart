@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
               showAlert(),
               _padding(40.0),
               PageTitle('Mein Profil',
-                  'In deinem Profil kannst du auf alle wichtigen Unterlagen jederzeit zugreifen.'),
+                  'Erstelle jetzt ein Profil auf Bußgeldprüfer um sofort loszulegen. In Deinem Profil kannst du auf alle wichtigen Unterlagen jederzeit zugreifen. '),
               Padding(
                 padding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 10.0),
                 child: Form(

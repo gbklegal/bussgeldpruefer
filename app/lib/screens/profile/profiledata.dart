@@ -77,7 +77,7 @@ class ProfileData extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                    'In deinem Profil kannst du auf alle wichtigen Unterlagen jederzeit zugreifen.'),
+                    'In Deinem Profil kannst du auf alle wichtigen Unterlagen jederzeit zugreifen.'),
                 _padding(),
                 _padding(),
                 _imageTextButton(
