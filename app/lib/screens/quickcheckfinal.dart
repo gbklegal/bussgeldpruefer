@@ -112,7 +112,7 @@ class QuickCheckFinalScreen extends StatelessWidget {
                               );
                       },
                       child: Text(
-                        'Prüfung Bußgeldbescheid',
+                        'Jetzt Bußgeldbescheid prüfen lassen',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

@@ -17,6 +17,14 @@ class ManualScreen extends StatelessWidget {
     );
   }
 
+  _image(name) {
+    return Image.asset(
+      name,
+      width: 88,
+      height: 88,
+    );
+  }
+
   _hr() {
     return Column(
       children: [
@@ -66,7 +74,7 @@ class ManualScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            CircleNumber('1'),
+                            _image('assets/images/icons/checklist.png'),
                             _text(
                               'Per Quick-Check erhältst Du in weniger als 1 Minute mithilfe unserer KI-basierten Software eine unverbindliche Einschätzung deines Falles.',
                             ),
@@ -75,7 +83,7 @@ class ManualScreen extends StatelessWidget {
                         _hr(),
                         Row(
                           children: [
-                            CircleNumber('2'),
+                            _image('assets/images/icons/lawyer.png'),
                             _text(
                               'Sofort oder nach Deinem Quick-Check kannst Du eine verbindliche kostenlose Ersteinschätzung durch unsere Partneranwälte beauftragen.',
                             ),
@@ -84,7 +92,7 @@ class ManualScreen extends StatelessWidget {
                         _hr(),
                         Row(
                           children: [
-                            CircleNumber('3'),
+                            _image('assets/images/icons/homesecurity.png'),
                             _text(
                               'Nach Bewertung und Prüfung Deines Falles entscheidest Du, ob unsere Vertragsanwälte die Verteidigung im Bußgeldverfahren für Dich übernehmen und die Einstellung anstreben sollen.',
                             ),

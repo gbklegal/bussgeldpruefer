@@ -125,6 +125,9 @@ flutter:
     - assets/images/icons/plus.png
     - assets/images/icons/assignment.png
     - assets/images/icons/communication.png
+    - assets/images/icons/checklist.png
+    - assets/images/icons/homesecurity.png
+    - assets/images/icons/lawyer.png
     - assets/images/icons/innovation.png
     - assets/images/icons/right.png
     - assets/images/icons/driving-license.png

@@ -3,9 +3,17 @@ import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/contact.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AblaufScreen extends StatelessWidget {
+import 'auth/login.dart';
+
+class AblaufScreen extends StatefulWidget {
+  @override
+  _AblaufScreenState createState() => _AblaufScreenState();
+}
+
+class _AblaufScreenState extends State<AblaufScreen> {
   _image(name) {
     return Image.asset(
       name,
@@ -31,7 +39,7 @@ class AblaufScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             PageTitle('Bußgeldbescheid erhalten?',
-                'So gehst du vor, um erfolgreich Einspruch einzulegen'),
+                'So gehst Du mit BussgeldPrüfer dagegen vor:'),
             Padding(
               padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
               child: Column(
@@ -41,58 +49,88 @@ class AblaufScreen extends StatelessWidget {
                       TableRow(
                         children: [
                           Text(''),
-                          Text('Vorgang'),
-                          Text('Dauer'),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text('Vorgang')),
                         ],
                         decoration: _hr(),
                       ),
                       TableRow(
                         children: [
                           _image('assets/images/icons/assignment.png'),
-                          Text('Einreichung von Dokumente'),
-                          Text('1 Tag'),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text('Einreichung von Dokumente')),
                         ],
                         decoration: _hr(),
                       ),
                       TableRow(
                         children: [
                           _image('assets/images/icons/communication.png'),
-                          Text('Fallbesprechung mit der Kanzlei'),
-                          Text('1 Tag'),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(
+                                  'Anfrage Akteneinsicht und notfalls Einspruch durch Kanzlei')),
                         ],
                         decoration: _hr(),
                       ),
                       TableRow(
                         children: [
                           _image('assets/images/icons/innovation.png'),
-                          Text('Überprüfung / Recherche'),
-                          Text('2 Tag'),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(
+                                  'Überprüfung / anwaltliche Empfehlung fürs weitere Vorgehen')),
                         ],
                         decoration: _hr(),
                       ),
                       TableRow(
                         children: [
                           _image('assets/images/icons/right.png'),
-                          Text('Urteil'),
-                          Text('4 Tage'),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(
+                                  'Entscheidung durch Behörde oder Gericht')),
                         ],
                         decoration: _hr(),
                       ),
                     ],
                   ),
                   SizedBox(height: 20.0),
-                  RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                            text:
-                                'Um einen reibungslosen Ablauf zu gewährleisten, ist es notwendig, dass alle Schritte fristgerecht eingehalten werden.\n')
-                      ],
-                    ),
-                  ),
                   Text(
-                      'Um einen reibungslosen Ablauf zu gewährleisten, ist es notwendig, dass alle Schritte fristgerecht eingehalten werden.'),
-                  Text(''),
+                      'Jetzt schnell beauftragen, bevor Du Rechtsnachteile erleidest.'),
+                  SizedBox(height: 20.0),
+                  FirebaseAuth.instance.currentUser == null
+                      ? SizedBox(
+                          width: 200.0,
+                          child: ElevatedButton(
+                            child: Text('Login'),
+                            style: ElevatedButton.styleFrom(
+                              textStyle: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              primary: Color(0xff5CC8C5),
+                              onPrimary: Colors.white,
+                            ),
+                            onPressed: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (BuildContext context) =>
+                              //             LoginScreen()));
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          LoginScreen()),
+                                  ModalRoute.withName('/'));
+                              setState(() {});
+                            },
+                          ),
+                        )
+                      : SizedBox(),
+                  SizedBox(height: 20.0),
                   SizedBox(
                     width: double.infinity,
                     child: Text(
@@ -103,7 +141,7 @@ class AblaufScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                      'Dann rufe uns an oder kontaktier uns über das Kontaktformular und wir kommen innerhalb von 24 Stunden auf Dich zurück.'),
+                      'Rufe uns an oder kontaktiere uns über das Kontaktformular und wir melden uns in der Regel innerhalb von 24 Stunden bei Dir.'),
                   Text(''),
                   SizedBox(
                     width: double.infinity,
