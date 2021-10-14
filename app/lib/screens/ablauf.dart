@@ -1,7 +1,9 @@
 import 'package:app/constants.dart';
 import 'package:app/functions/newscreen.dart';
 import 'package:app/screens/contact.dart';
+import 'package:app/screens/pruefungbussgeldbescheid.dart';
 import 'package:app/widgets/appbar.dart';
+import 'package:app/widgets/bigbuttonwidget.dart';
 import 'package:app/widgets/pagetitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -100,36 +102,15 @@ class _AblaufScreenState extends State<AblaufScreen> {
                   Text(
                       'Jetzt schnell beauftragen, bevor Du Rechtsnachteile erleidest.'),
                   SizedBox(height: 20.0),
-                  FirebaseAuth.instance.currentUser == null
-                      ? SizedBox(
-                          width: 200.0,
-                          child: ElevatedButton(
-                            child: Text('Login'),
-                            style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              primary: Color(0xff5CC8C5),
-                              onPrimary: Colors.white,
-                            ),
-                            onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (BuildContext context) =>
-                              //             LoginScreen()));
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          LoginScreen()),
-                                  ModalRoute.withName('/'));
-                              setState(() {});
-                            },
-                          ),
-                        )
-                      : SizedBox(),
+                  BigButtonWidget(
+                    title: 'Jetzt Bußgeldbescheid prüfen',
+                    text:
+                        'Kostenlose Erstprüfung durch Anwalt – Du erhältst eine Antwort in der Regel innerhalb von 24 Stunden',
+                    image: 'assets/images/icons/plus.png',
+                    screen: PruefungBussgeldbescheidScreen(),
+                    index: 1,
+                    flag: 1,
+                  ),
                   SizedBox(height: 20.0),
                   SizedBox(
                     width: double.infinity,

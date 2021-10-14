@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:app/provider/apple_sign_in_available.dart';
-import 'package:app/provider/authentication_provider.dart';
 import 'package:app/provider/sign_in_apple.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:app/constants.dart';
 import 'package:app/provider/google_sign_in.dart';
 import 'package:app/helper/helperfunctions.dart';
@@ -22,7 +20,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_buttons/auth_buttons.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../global.dart';
 
@@ -223,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: 200.0,
                 child: ElevatedButton(
-                  child: Text('Login'),
+                  child: Text('Anmelden'),
                   style: ElevatedButton.styleFrom(
                     textStyle: TextStyle(
                       fontSize: 15,
@@ -358,7 +355,6 @@ Future<void> _signInWithApple(BuildContext context, _token) async {
 
     print('uid: ${user.uid}');
   } catch (e) {
-    // TODO: Show alert here
     print(e);
   }
 }

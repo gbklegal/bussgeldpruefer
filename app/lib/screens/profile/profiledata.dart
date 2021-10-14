@@ -105,7 +105,7 @@ class ProfileData extends StatelessWidget {
                 SizedBox(
                   width: 200.0,
                   child: ElevatedButton(
-                    child: Text('Logout'),
+                    child: Text('Ausloggen'),
                     style: ElevatedButton.styleFrom(
                       textStyle: TextStyle(
                         fontSize: 15,
