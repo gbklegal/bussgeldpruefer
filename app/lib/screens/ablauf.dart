@@ -62,7 +62,7 @@ class _AblaufScreenState extends State<AblaufScreen> {
                           _image('assets/images/icons/assignment.png'),
                           Padding(
                               padding: EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text('Einreichung von Dokumente')),
+                              child: Text('Einreichung von Dokumenten')),
                         ],
                         decoration: _hr(),
                       ),
