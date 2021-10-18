@@ -67,16 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         // ignore: unused_local_variable
 
-        QuerySnapshot userInfoSnapshot =
-            await DatabaseMethods().getUserInfo(_email.trim());
-        var firstName = userInfoSnapshot.docs[0]['name']['first'];
-        var lastName = userInfoSnapshot.docs[0]['name']['last'];
-        var email = userInfoSnapshot.docs[0]['email'];
-        HelperFunctions().saveValues(
-          firstName,
-          lastName,
-          email,
-        );
         // Navigator.popUntil(
         //   context,
         //   ModalRoute.withName('/'),
@@ -101,6 +91,16 @@ class _LoginScreenState extends State<LoginScreen> {
           _error = e.message;
         });
       }
+      QuerySnapshot userInfoSnapshot =
+          await DatabaseMethods().getUserInfo(_email.trim());
+      var firstName = userInfoSnapshot.docs[0]['name']['first'];
+      var lastName = userInfoSnapshot.docs[0]['name']['last'];
+      var email = userInfoSnapshot.docs[0]['email'];
+      HelperFunctions().saveValues(
+        firstName,
+        lastName,
+        email,
+      );
     }
   }
 

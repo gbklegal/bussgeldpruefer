@@ -31,6 +31,7 @@ class AuthService {
             "first": appleIdCredential.fullName.givenName,
             "last": appleIdCredential.fullName.familyName
           },
+          "role": 'customer',
           "email": appleIdCredential.email,
           "FCMtoken": token,
         };

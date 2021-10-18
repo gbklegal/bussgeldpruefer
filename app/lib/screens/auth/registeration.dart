@@ -62,6 +62,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             "id": FirebaseAuth.instance.currentUser.uid,
             "name": {"first": _firstName, "last": _lastName},
             "email": _email,
+            "role": 'customer',
             "FCMtoken": _token,
           };
           DatabaseMethods().addUserInfo(userInfoMap);

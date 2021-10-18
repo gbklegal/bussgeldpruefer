@@ -49,6 +49,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       "id": FirebaseAuth.instance.currentUser.uid,
       "name": {"first": firstName, "last": lastName},
       "email": _user.email,
+      "role": 'customer',
       "FCMtoken": _token,
     };
     if (userCredential.additionalUserInfo.isNewUser) {

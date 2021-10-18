@@ -84,7 +84,11 @@ class DatabaseMethods {
   }
 
   Future<List<DocumentSnapshot>> getSuggestions(String suggestion) =>
-      FirebaseFirestore.instance.collection("users").get().then((snap) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .where('role', isEqualTo: 'lawyer')
+          .get()
+          .then((snap) {
         return List.of(snap.docs).where((user) {
           final userLower = user['name'].toString().toLowerCase();
           final queryLower = suggestion.toLowerCase();
