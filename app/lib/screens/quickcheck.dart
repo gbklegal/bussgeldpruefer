@@ -327,7 +327,7 @@ class _QuickCheckScreenState extends State<QuickCheckScreen> {
                     ],
                   ),
                   _padding(),
-                  _title('Hast Du den Verstroß bereits bezahlt?'),
+                  _title('Hast Du den Verstoß bereits bezahlt?'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

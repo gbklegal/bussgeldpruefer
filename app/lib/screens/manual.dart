@@ -1,4 +1,3 @@
-import 'package:app/widgets/circlenumber.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/widgets/pagetitle.dart';
@@ -76,7 +75,7 @@ class ManualScreen extends StatelessWidget {
                           children: [
                             _image('assets/images/icons/checklist.png'),
                             _text(
-                              'Per Quick-Check erhältst Du in weniger als 1 Minute mithilfe unserer KI-basierten Software eine unverbindliche Einschätzung deines Falles.',
+                              'Per Quick-Check erhältst Du in weniger als 1 Minute mithilfe unserer KI-basierten Software eine unverbindliche Einschätzung Deines Falls.',
                             ),
                           ],
                         ),

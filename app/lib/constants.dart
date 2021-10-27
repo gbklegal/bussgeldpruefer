@@ -24,3 +24,6 @@ const String notConnectedInternet =
 class Constants {
   static String myName = "";
 }
+
+var currentVersion = '';
+var latestVersion = '';

@@ -1,5 +1,5 @@
 import 'package:app/constants.dart';
-import 'package:app/models/post.dart';
+import 'package:app/models/docs.dart';
 import 'package:app/services/connectivity.dart';
 import 'package:app/services/http_service.dart';
 import 'package:app/utilities/connection_dialog.dart';
@@ -20,7 +20,7 @@ class BussgeldkatalogScreen extends StatefulWidget {
 class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
     with WidgetsBindingObserver {
   final HttpService httpService = HttpService();
-  List<Post> posts;
+  List<Docs> docs;
   int pageNumber = 1;
   var data;
   RefreshController _refreshController =
@@ -52,11 +52,11 @@ class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     ++pageNumber;
-    data = await httpService.getPosts(pageNumber);
+    data = await httpService.getDocs(pageNumber);
     if (data == null) {
       return _refreshController.loadNoData();
     } else
-      posts += data;
+      docs += data;
 
     if (mounted) setState(() {});
 
@@ -83,12 +83,12 @@ class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
               'In den unterschiedlichen Kategorien findest Du aktuelle Informationen zum Thema Verkehrsrecht. Es wird erklärt wann mit Bußgeldern, Punkten oder sogar Fahrverbot zu rechnen ist.'),
           Expanded(
             child: FutureBuilder(
-              future: httpService.getPosts(pageNumber),
+              future: httpService.getDocs(pageNumber),
               builder:
-                  (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+                  (BuildContext context, AsyncSnapshot<List<Docs>> snapshot) {
                 if (snapshot.hasData) {
                   if (pageNumber == 1) {
-                    posts = snapshot.data;
+                    docs = snapshot.data;
                   }
                   return SmartRefresher(
                     controller: _refreshController,
@@ -116,10 +116,10 @@ class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
                       },
                     ),
                     child: ListView.builder(
-                        itemCount: posts.length,
+                        itemCount: docs.length,
                         itemBuilder: (context, index) {
                           return CatalogTile(
-                            post: posts[index],
+                            docs: docs[index],
                           );
                         }),
                   );
@@ -135,9 +135,9 @@ class _BussgeldkatalogScreenState extends State<BussgeldkatalogScreen>
 }
 
 class CatalogTile extends StatelessWidget {
-  final Post post;
+  final Docs docs;
 
-  CatalogTile({this.post});
+  CatalogTile({this.docs});
 
   @override
   Widget build(BuildContext context) {
@@ -148,13 +148,13 @@ class CatalogTile extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => BussgeldkatalogDetailScreen(post)),
+                builder: (context) => BussgeldkatalogDetailScreen(docs)),
           );
         },
         style: ElevatedButton.styleFrom(padding: EdgeInsets.all(15.0)),
         child: Align(
           alignment: Alignment.centerLeft,
-          child: Text(post.title.rendered),
+          child: Text(docs.title.rendered),
         ),
       ),
     );

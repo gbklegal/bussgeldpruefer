@@ -1,3 +1,4 @@
+import 'package:app/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -79,6 +80,19 @@ class DatabaseMethods {
         .where("email", isEqualTo: email)
         .get()
         .catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  getAppVersions() async {
+    FirebaseFirestore.instance
+        .collection("versions")
+        .doc("versions")
+        .get()
+        .then((value) {
+      latestVersion = value['latest'];
+      print("Latest" + latestVersion);
+    }).catchError((e) {
       print(e.toString());
     });
   }

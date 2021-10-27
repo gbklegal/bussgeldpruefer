@@ -1,4 +1,6 @@
+import 'package:app/constants.dart';
 import 'package:app/screens/ablauf.dart';
+import 'package:app/screens/appversionscreen.dart';
 import 'package:app/screens/bussgeldkatalog.dart';
 import 'package:app/screens/bussgeldratgeber.dart';
 import 'package:app/screens/infokanzlei.dart';
@@ -57,6 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 5), () {
+      if (currentVersion != latestVersion) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => AppVersion()));
+      }
+    });
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(

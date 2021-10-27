@@ -1,6 +1,4 @@
 import 'package:app/constants.dart';
-import 'package:app/functions/newscreen.dart';
-import 'package:app/screens/hiddendev.dart';
 import 'package:app/screens/information.dart';
 import 'package:flutter/material.dart';
 

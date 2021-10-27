@@ -1,7 +1,7 @@
+import 'package:app/constants.dart';
 import 'package:app/global.dart';
 import 'package:app/helper/helperfunctions.dart';
 import 'package:app/provider/apple_sign_in_available.dart';
-import 'package:app/provider/authentication_provider.dart';
 import 'package:app/provider/google_sign_in.dart';
 import 'package:app/provider/sign_in_apple.dart';
 import 'package:app/screens/auth/login.dart';
@@ -9,6 +9,7 @@ import 'package:app/screens/messages/conversationscreen.dart';
 import 'package:app/screens/profile/profiledata.dart';
 import 'package:app/screens/pruefungbussgeldbescheidfinal.dart';
 import 'package:app/services/connectivity.dart';
+import 'package:app/services/database.dart';
 import 'package:app/utilities/theme_data.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app/widgets/appbar.dart';
 import 'package:app/screens/quickcheck.dart';
 import 'package:app/screens/home.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
 // only for development
@@ -30,9 +32,17 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
 }
 
+getVersionData() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String version = packageInfo.version;
+  await DatabaseMethods().getAppVersions();
+  currentVersion = version;
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await getVersionData();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   final appleSignInAvailable = await AppleSignInAvailable.check();
   runApp(
@@ -49,7 +59,8 @@ void main() async {
         create: (_) => AuthService(),
         child: MaterialApp(
           theme: themeData,
-          home: MyApp(), // In prod. MyApp()
+          home: MyApp(),
+          // home: MyApp(), // In prod. MyApp()
           routes: <String, WidgetBuilder>{
             '/screen1': (BuildContext context) => new MyApp(),
             '/screen2': (BuildContext context) =>
