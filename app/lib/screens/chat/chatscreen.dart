@@ -82,7 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       onPressed: () => _typeAheadController.clear(),
                       icon: Icon(Icons.highlight_remove_rounded),
                     ),
-                    hintText: 'Search Username',
+                    hintText: 'Anwälte durchsuchen',
                   ),
                 ),
                 itemBuilder: (context, suggestion) {
