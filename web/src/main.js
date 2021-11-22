@@ -1,8 +1,11 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import './index.css'
+import { createApp } from 'vue';
+import App from './App.vue';
+import './index.css';
 import router from "./router";
 
-createApp(App).use(router).mount('#app')
+router.beforeEach((_to, _from, next) => {
+    window.scrollTo(0, 0);
+    next();
+});
 
-// TODO: https://renatello.com/vue-js-scroll-top/
+createApp(App).use(router).mount('#app');
