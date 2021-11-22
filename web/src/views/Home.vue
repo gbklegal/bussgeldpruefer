@@ -39,7 +39,7 @@
           </router-link>
         </div>
 
-        <router-link class="btn-primary text-white font-normal inline-block mt-10" to="/ratgeber">
+        <router-link class="btn-primary text-white font-normal inline-block mt-10" :to="{ name: 'blog' }">
           mehr erfahren
         </router-link>
       </div>
@@ -49,15 +49,10 @@
     <section>
       <div class="container">
         <h2 class="text-secondary text-center mb-10">Kundenfeedback</h2>
-        <div class="grid sm:grid-cols-3 gap-3 justify-center mb-8">
-          <FeedbackStars :starCount="5" />
-          <FeedbackStars :starCount="5" />
-          <FeedbackStars :starCount="4" />
-        </div>
-        <div>
-          <FeedbackText quote="Ich war anfangs total überfordert, aber das BussgeldPruefer hat mir den gesamten Prozess abgenommen." author="Melis Y." />
-          <FeedbackText quote="Ich war anfangs total überfordert, aber das BussgeldPruefer hat mir den gesamten Prozess abgenommen." author="Melis Y." />
-          <FeedbackText quote="Ich war anfangs total überfordert, aber das BussgeldPruefer hat mir den gesamten Prozess abgenommen." author="Melis Y." />
+        <div class="grid sm:grid-cols-3 gap-20 justify-center mb-8">
+          <FeedbackItem :starCount="5" quote="Ich war anfangs total überfordert, aber das BussgeldPrüfer Team hat mir den gesamten Prozess abgenommen." author="Max B." />
+          <FeedbackItem :starCount="5" quote="Super Service! In wenigen Tagen war alles geregelt - ohne großen Aufwand." author="Hannes K." />
+          <FeedbackItem :starCount="5" quote="Alles Perfekt. Mein Führerschein ist wieder da." author="Michael T." />
         </div>
       </div>
     </section>
@@ -73,8 +68,7 @@ import Steps from '../components/BasicSteps.vue'
 import BlogPreview from '../components/BlogPreview.vue'
 import TextOne from '../components/BasicSuccessOne.vue'
 import Success from '../components/BasicSuccessTwo.vue'
-import FeedbackStars from '../components/FeedbackStars.vue'
-import FeedbackText from '../components/FeedbackText.vue'
+import FeedbackItem from '../components/FeedbackItem.vue'
 import Skeleton from '../components/BasicSkeleton.vue'
 
 export default {
@@ -86,8 +80,7 @@ export default {
     BlogPreview,
     TextOne,
     Success,
-    FeedbackStars,
-    FeedbackText,
+    FeedbackItem,
     Skeleton
   },
 
@@ -125,7 +118,7 @@ export default {
   },
 
   created() {
-    console.log(this.apiURL);
+    // console.log(this.apiURL);
     this.fetchPostData();
   }
 };
