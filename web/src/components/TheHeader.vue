@@ -20,7 +20,7 @@
                     </svg>
                 </button>
                 <div class="navigation-buttons">
-                    <router-link class="btn-primary" :to="{ name: 'order'}">Bussgeldbescheid Prüfung</router-link>
+                    <router-link class="btn-primary" :to="{ name: 'order'}">Bußgeldbescheid Prüfung</router-link>
                     <!-- <router-link class="btn-secondary" :to="{ name: 'login' }">Login</router-link> -->
                 </div>
             <ul class="header-navigation" :class="{ block: menuOpen }">
