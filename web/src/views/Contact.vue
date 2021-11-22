@@ -136,7 +136,7 @@ export default {
                 return '/';
             }
 
-            formData.append('firstname', checkVal(firstname));
+            formData.append('firstname', checkVal(firstName));
             formData.append('lastname', checkVal(lastName));
             formData.append('email', checkVal(eMail));
             formData.append('phone', checkVal(phone));
