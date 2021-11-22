@@ -11,7 +11,11 @@ module.exports = {
         secondary: {
           hover: '#4FB9B5',
           DEFAULT: '#5CC8C5',
-        }
+        },
+        secondaryLight: '#70cecb0d',
+        grey: '#ececec',
+        greyDark: '#3a3a3a',
+        green: '#5cb85c'
       },
       fontFamily: {
         'sans': ['Roboto', 'sans-serif'],
