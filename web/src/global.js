@@ -1,8 +1,8 @@
 export default {
     api: {
-        domain: 'https://xn--bussgeldprfer-5ob.com',
-        base: 'https://xn--bussgeldprfer-5ob.com/bgp/wp-api.php',
-        bgp: 'https://xn--bussgeldprfer-5ob.com/bgp',
+        domain: 'https://bussgeldpruefer.com',
+        bgp: 'https://bussgeldpruefer.com/bgp',
+        base: 'https://bussgeldpruefer.com/bgp/wp-api.php',
         wp: '/wp-json/wp/v2/',
         type: '/posts',
         filter: '?_embed&_fields=id,date,modified,slug,link,title,content,_links,_embedded',
