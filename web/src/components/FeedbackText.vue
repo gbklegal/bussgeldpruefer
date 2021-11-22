@@ -1,7 +1,8 @@
 <template>
-    <div class="mt-5">
-        <p class="inline">"{{ quote }}"</p>
-        <p class="text-sm ml-4 inline">{{ author }}</p>
+    <div class="mt-5 text-justify">
+        <p class="inline ">&#8222;{{ quote }}&#8220;</p>
+        <p class="inline mx-2">&#8722;</p>
+        <p class="text-sm inline">{{ author }}</p>
     </div>
 </template>
 <script>
