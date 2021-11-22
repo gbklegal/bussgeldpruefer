@@ -41,6 +41,10 @@
     <div v-if="type == 'navList'" class="skeleton">
         <div class="skeleton-box w-full h-5 mb-3"></div>
     </div>
+
+    <div v-if="type == 'faqItem'" class="skeleton">
+        <div class="skeleton-box w-full h-10 mt-7"></div>
+    </div>
 </template>
 
 
