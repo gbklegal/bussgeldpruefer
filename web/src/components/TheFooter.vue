@@ -22,8 +22,8 @@
         </nav>
         <div class="footer-contact">
             <div>
-                <span class="mr-2">Email:</span>
-                <a href="mailto:dialog@bussgeldpruefer.com">dialog@bussgeldpruefer.com</a>
+                <span class="mr-2">E-Mail:</span>
+                <a href="mailto:dialog(at)bussgeldpruefer.com" @click.prevent="mailTo">dialog(at)bussgeldpruefer.com</a>
             </div>
             <div>
                 <span class="mr-2">Tel:</span>
@@ -43,7 +43,13 @@ export default {
     name: 'Footer',
     data: function() {
         return {
-            currentYear: global.date.currentYear
+            currentYear: global.date.currentYear,
+        }
+    },
+
+    methods: {
+        mailTo() {
+            global.linkTo_UnCryptMailto('nbjmup;ejbmphAcvtthfmeqsvfgfs/dpn');
         }
     }
 }

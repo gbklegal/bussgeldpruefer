@@ -16,5 +16,22 @@ export default {
     },
     removeHtmlTags: htmlString => {
         return htmlString.replace(/<[^>]*>/gim, '');
+    },
+    /**
+     * encrypt and decrypt mail to
+     * @see https://www.math.uni-hamburg.de/it/dienste/encryptma.html
+     * @param {string} s 
+     * @returns 
+     */
+    linkTo_UnCryptMailto(s) {
+        function unCryptMailto(s) {
+            var n = 0; var r = ''; for (var i = 0; i < s.length; i++) {
+                n = s.charCodeAt(i);
+                if (n >= 8364) { n = 128; } r += String.fromCharCode(n - (1));
+            }
+            return r;
+        }
+
+        location.href = unCryptMailto(s);
     }
 }
