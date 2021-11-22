@@ -19,8 +19,8 @@
         >
           <img
             class="w-56 mx-auto"
-            src="../assets/img/iphone-x-splashscreen.webp"
-            alt="BussgeldPrüfer App auf einem Handy."
+            src="../assets/img/img01_iphone12.png"
+            alt="BussgeldPrüfer App"
           />
           <ul role="list" class="mt-10 mb-3 mx-auto lg:mr-5 sm:self-center">
             <li class="mb-5">Kompetente<br />Beratung</li>
