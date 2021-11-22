@@ -26,13 +26,17 @@
                 <a href="mailto:dialog(at)bussgeldpruefer.com" @click.prevent="mailTo">dialog(at)bussgeldpruefer.com</a>
             </div>
             <div>
-                <span class="mr-2">Tel:</span>
-                <a href="tel:091112345678">0911/12345678</a>
+                <span class="mr-2">Telefon:</span>
+                <a href="tel:091112345678">0911 / 12345678</a>
             </div>
         </div>
         <div class="app">
-            <img class="h-12" src="../assets/img/google-play-badge.png" alt="Jetzt bei Google Play downloaden.">
-            <img class="h-12" src="../assets/img/app-store-badge.png" alt="Laden im App Store.">
+            <a href="https://bussgeldpruefer.app/android" target="_blank" rel="noopener noreferrer">
+                <img class="h-12" src="../assets/img/google-play-badge.png" alt="Jetzt bei Google Play downloaden.">
+            </a>
+            <a href="https://bussgeldpruefer.app/ios" target="_blank" rel="noopener noreferrer">
+                <img class="h-12" src="../assets/img/app-store-badge.png" alt="Laden im App Store.">
+            </a>
         </div>
     </footer>
 </template>
