@@ -1,45 +1,7 @@
 <template>
   <div class="home overflow-hidden">
     <!-- HERO -->
-    <header class="lg:flex w-full overflow-hidden">
-      <div class="first-half my-20 lg:max-w-1/2 lg:grid">
-        <div></div>
-        <div class="container lg:px-0 lg:container-half-left">
-          <h1 class="text-4xl md:text-5xl mb-6">
-            Du bist nur 2 Minuten davon entfernt, deinen Bußgeldbescheid
-            anzufechten.
-          </h1>
-          <p class="text-xl">
-            Hol dir jetzt die BussgeldPrüfer App, um eine unverbindliche
-            Ersteinschätzung zu erhalten – komplett kostenlos.
-          </p>
-        </div>
-      </div>
-
-      <div class="second-half bg-primary w-full my-1 grid">
-        <div class="lg:px-0 container lg:container-half-right">
-          <div class="flex flex-col sm:flex-row justify-center text-white font-light">
-            <img
-              class="w-56 self-center"
-              src="../assets/img/iphone-x-splashscreen.webp"
-              alt="BussgeldPrüfer App auf einem Handy."
-            />
-            <ul
-              role="list"
-              class="text-lg my-10 mb-3 self-center list-disc lg:ml-10 sm:ml-20"
-            >
-              <li class="mb-5">Kostenlose Ersteinschätzung</li>
-              <li class="mb-5">in 90 Sekunden zum Ergebnis</li>
-              <li>Digital ausführbar</li>
-            </ul>
-          </div>
-          <p class="text-center mt-4 text-white font-light">
-            überall - jederzeit - digital
-          </p>
-          <div></div>
-        </div>
-      </div>
-    </header>
+    <Hero />
 
     <CTA
       title="Bußgeldbescheid erhalten?"
@@ -105,6 +67,7 @@
 
 <script>
 import global from '../global';
+import Hero from '../components/TheHero.vue'
 import CTA from '../components/BasicCTA.vue'
 import Steps from '../components/BasicSteps.vue'
 import BlogPreview from '../components/BlogPreview.vue'
@@ -117,6 +80,7 @@ import Skeleton from '../components/BasicSkeleton.vue'
 export default {
   name: 'Home',
   components: {
+    Hero,
     CTA,
     Steps,
     BlogPreview,
