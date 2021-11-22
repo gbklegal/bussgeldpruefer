@@ -8,6 +8,62 @@
 </template>
 
 
+<script>
+import global from '../global';
+import Skeleton from '../components/BasicSkeleton.vue';
+
+export default {
+    components: {
+        Skeleton
+    },
+
+    data() {
+        return {
+            apiURL: global.api.base + '/docs?slug=',
+            docSlug: this.$route.params.docSlug,
+            docs: [],
+            hideSkeleton: false
+        }
+    },
+
+    methods: {
+        fetchDocData: function() {
+            this.hideSkeleton = false;
+            let fields = '&_fields=id,title,content';
+            let apiURL = this.apiURL + this.docSlug + fields;
+
+            console.log(apiURL);
+
+            fetch(apiURL).then(resp => resp.json()).then(docsData => {
+                let docData = docsData[0];
+                let filteredData = {
+                    id: docData.id,
+                    title: docData.title.rendered,
+                    content: docData.content.rendered
+                };
+
+                this.docs.push(filteredData);
+
+                // hide loading circle
+                this.hideSkeleton = true;
+            });
+        },
+        loadTableOfContents: function() {
+            global.tableOfContents({
+                'target': '#toc',
+                'parent': '.catalog-content'
+            });
+        }
+    },
+
+    beforeMount() {
+        this.fetchDocData();
+        console.log(this.docSlug);
+    }
+}
+</script>
+
+
 <style>
 .doc * {
     max-width: 100%;
@@ -71,59 +127,3 @@
     white-space: nowrap;
 } */
 </style>
-
-
-<script>
-import global from '../global';
-import Skeleton from '../components/BasicSkeleton.vue';
-
-export default {
-    components: {
-        Skeleton
-    },
-
-    data() {
-        return {
-            apiURL: global.api.base + '/docs?slug=',
-            // apiURL: 'http://bussgeldpruefer.local/backend/wp-json/wp/v2/docs?slug=',
-            docSlug: this.$route.params.docSlug,
-            docs: [],
-            hideSkeleton: false
-        }
-    },
-
-    methods: {
-        fetchDocData: function() {
-            this.hideSkeleton = false;
-            let apiURL = this.apiURL + this.docSlug;
-
-            console.log(apiURL);
-
-            fetch(apiURL).then(resp => resp.json()).then(docsData => {
-                let docData = docsData[0];
-                let filteredData = {
-                    id: docData.id,
-                    title: docData.title.rendered,
-                    content: docData.content.rendered
-                };
-
-                this.docs.push(filteredData);
-
-                // hide loading circle
-                this.hideSkeleton = true;
-            });
-        },
-        loadTableOfContents: function() {
-            global.tableOfContents({
-                'target': '#toc',
-                'parent': '.catalog-content'
-            });
-        }
-    },
-
-    beforeMount() {
-        this.fetchDocData();
-        console.log(this.docSlug);
-    }
-}
-</script>
