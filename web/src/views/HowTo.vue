@@ -7,7 +7,7 @@
             <div class="how-to-text max-w-3xl">
                 <p class="mb-2">Um erfolgreich gegen den Bußgeldbescheid vorzugehen, klicke auf
                 <router-link class="underline" :to="{ name: 'order' }">
-                Bussgeldbescheid Prüfung</router-link>,
+                Bußgeldbescheid Prüfung</router-link>,
                 damit Deine Daten erfasst werden können.</p>
                 <p class="mb-2">Für die schnelle Bearbeitung Deines Falles brauchen wir mindestens folgende Unterlagen:<br>Bußgeldbescheid, Anhörungsbogen, Vollmacht.</p>
                 <p class="mb-2">Du bist Dir nicht sicher, ob man gegen Deinen Bußgeldbescheid vorgehen kann? Dann nutze den kostenlosen Quick-Check, um in 90 Sekunden zu fahren, ob sich ein Einspruch lohnt.</p>
