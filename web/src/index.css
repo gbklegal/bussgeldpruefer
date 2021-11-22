@@ -39,7 +39,8 @@
         @apply rounded p-1 hover:underline focus:ring focus:border-primary focus:ring-primary focus:ring-opacity-50;
     }
 
-    input[type="radio"] {
+    input[type="radio"],
+    input[type="checkbox"] {
         @apply text-secondary border-2 border-primary
     }
 }
