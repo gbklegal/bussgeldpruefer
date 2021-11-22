@@ -1,5 +1,5 @@
 <template>
-    <details class="bg-gray-200 rounded my-4">
+    <details class="bg-gray-200 rounded my-4" ref="details">
         <summary class="pl-7 cursor-pointer p-2 relative">{{ faqTitle }}</summary>
         <div class="text content mt-2 ml-7 pr-2 pb-2" v-html="faqText"></div>
     </details>
@@ -13,10 +13,9 @@ export default {
         faqText: String,
     },
 
-    created() {
-      document.querySelectorAll('details').forEach((el) => {
-        new Accordion(el);
-      });
+    mounted() {
+      let details = this.$refs.details;
+      new Accordion(details);
     }
 }
 
