@@ -4,7 +4,11 @@ import './index.css';
 import router from "./router";
 
 router.beforeEach((_to, _from, next) => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto'
+    });
     next();
 });
 
