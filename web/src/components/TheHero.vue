@@ -28,7 +28,7 @@
                         <div class="btns-wrapper">
                             <router-link class="btn btn-primary" :to="{ name: 'order' }">Bußgeldbescheid kostenlos prüfen lassen</router-link>
                             <div class="mt-4"></div>
-                            <router-link class="btn btn-secondary" :to="{ name: 'not-found' }">Jetzt den Quick Check machen</router-link>
+                            <a class="btn btn-secondary" href="https://bussgeldpruefer.app/#quickcheck" target="_blank">Jetzt den Quick Check machen</a>
                         </div>
                     </main>
                 </div>
