@@ -184,16 +184,16 @@ const routes = [
                 name: 'catalog-single',
                 component: CatalogSingle
             },
-            {
-                path: '/bussgeldkatalog/alkohol',
-                name: 'catalog-alcohol',
-                component: CatalogSingleAlcohol
-            },
-            {
-                path: '/bussgeldkatalog/else',
-                name: 'catalog-else',
-                component: CatalogSingleElse
-            }
+            // {
+            //     path: '/bussgeldkatalog/alkohol',
+            //     name: 'catalog-alcohol',
+            //     component: CatalogSingleAlcohol
+            // },
+            // {
+            //     path: '/bussgeldkatalog/else',
+            //     name: 'catalog-else',
+            //     component: CatalogSingleElse
+            // }
         ]
     },
     {
@@ -206,10 +206,18 @@ const routes = [
         name: 'order-thank-you',
         component: OrderTankYou
     },
+    // {
+    //     path: '/profile-signup',
+    //     name: 'profile-signup',
+    //     component: ProfileSignUp
+    // },
     {
-        path: '/profile-signup',
-        name: 'profile-signup',
-        component: ProfileSignUp
+        path: '/quickcheck',
+        beforeEnter(to, from) {
+            console.log('to:', to, 'from:', from);
+            let url = 'https://bussgeldpruefer.app/#quickcheck';
+            window.location.href = url;
+        }
     },
     {
         path: '/dev',
