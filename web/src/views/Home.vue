@@ -1,5 +1,5 @@
 <template>
-  <div class="home overflow-hidden">
+  <div class="overflow-hidden home">
     <!-- HERO -->
     <Hero />
 
@@ -15,14 +15,14 @@
     <Success />
 
     <CTA
-      title="Kostenlose Prüfung ob sich ein Einspruch gegen Deinen Bußgeldbescheid lohnt."
+      title="Kostenlose Prüfung, ob sich ein Einspruch gegen Deinen Bußgeldbescheid lohnt."
     />
 
     <!-- BLOG TEASER -->
-    <section class="bg-primary my-1">
-      <div class="container text-white text-center font-light">
-        <h2 class="text-secondary font-normal mb-3">Bußgeld Ratgeber</h2>
-        <p class="text-secondary mb-10">Aktuelle Neuigkeiten, Änderungen &amp; Urteile zum Thema Bußgeld</p>
+    <section class="my-1 bg-primary">
+      <div class="container font-light text-center text-white">
+        <h2 class="mb-3 font-normal text-secondary">Bußgeld Ratgeber</h2>
+        <p class="mb-10 text-secondary">Aktuelle Neuigkeiten, Änderungen &amp; Urteile zum Thema Bußgeld</p>
 
         <div v-if="!hideSkeleton">
           <Skeleton v-for="skeleton in postCount" :key="skeleton" type="blogPreview" />
@@ -39,7 +39,7 @@
           </router-link>
         </div>
 
-        <router-link class="btn-primary text-white font-normal inline-block mt-10" :to="{ name: 'blog' }">
+        <router-link class="inline-block mt-10 font-normal text-white btn-primary" :to="{ name: 'blog' }">
           mehr erfahren
         </router-link>
       </div>
@@ -48,8 +48,8 @@
     <!-- ClientFeedback -->
     <section>
       <div class="container">
-        <h2 class="text-secondary text-center mb-10">Kundenfeedback</h2>
-        <div class="grid sm:grid-cols-3 gap-20 justify-center mb-8">
+        <h2 class="mb-10 text-center text-secondary">Kundenfeedback</h2>
+        <div class="grid justify-center gap-20 mb-8 sm:grid-cols-3">
           <FeedbackItem :starCount="5" quote="Ich war anfangs total überfordert, aber das BussgeldPrüfer Team hat mir den gesamten Prozess abgenommen." author="Max B." />
           <FeedbackItem :starCount="5" quote="Super Service! In wenigen Tagen war alles geregelt - ohne großen Aufwand." author="Hannes K." />
           <FeedbackItem :starCount="5" quote="Alles Perfekt. Mein Führerschein ist wieder da." author="Michael T." />

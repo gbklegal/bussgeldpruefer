@@ -1,28 +1,28 @@
 <template>
-      <section class="success lg:flex w-full overflow-hidden">
-      <div class="first-half my-20 lg:max-w-1/2 lg:grid mb-20 lg:mb-0">
+      <section class="w-full overflow-hidden success lg:flex">
+      <div class="my-20 mb-20 first-half lg:max-w-1/2 lg:grid lg:mb-0">
         <div></div>
         <div class="container lg:pr-0 lg:container-half-left">
-          <h2 class="font-medium mb-10 text-3xl md:text-4xl">
-            Maximiere deine Erfolgsaussichten
+          <h2 class="mb-10 text-3xl font-medium md:text-4xl">
+            Maximiere Deine Erfolgsaussichten
           </h2>
           <p class="">
             Mit dem BussgeldPrüfer erhöhst Du Deine Chance erfolgreich gegen Deinen Bußgeldbescheid vorzugehen. Klicke jetzt auf <router-link :to="{ name: 'order' }" class="underline">“Prüfung
-            Bußgeldbescheid”</router-link> um deinen Bußgeldbescheid anzufechten.
+            Bußgeldbescheid”</router-link> um Deinen Bußgeldbescheid anzufechten.
           </p>
         </div>
       </div>
 
-      <div class="second-half grid bg-primary w-full my-1 text-secondary font-light">
+      <div class="grid w-full my-1 font-light second-half bg-primary text-secondary">
         <div
-          class="container lg:pl-0 lg:container-half-right sm:flex-row-reverse flex flex-col justify-center"
+          class="container flex flex-col justify-center lg:pl-0 lg:container-half-right sm:flex-row-reverse"
         >
           <img
             class="w-56 mx-auto"
             src="../assets/img/img01_iphone12.png"
             alt="BussgeldPrüfer App"
           />
-          <ul role="list" class="mt-10 mb-3 mx-auto lg:mr-5 sm:self-center">
+          <ul role="list" class="mx-auto mt-10 mb-3 lg:mr-5 sm:self-center">
             <li class="mb-5">Kompetente<br />Beratung</li>
             <li class="mb-5">Vollständige<br />Entlastung</li>
             <li>Schnell &amp;<br />Unkompliziert</li>

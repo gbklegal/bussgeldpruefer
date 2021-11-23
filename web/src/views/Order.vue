@@ -11,7 +11,7 @@
     <Modal
         id="legalInfoModal"
         title="Info"
-        text='<p class="pb-4">Die GDF GmbH vermittelt als Betreiberin dieser Webseite selbst keine Versicherung und ist für die Inhalte der verlinkten Webseite nicht verantwortlich.</p><p class="pb-4">Verantwortlicher Versicherungsmakler für das Versicherungsangebot ist:</p><p class="pb-4">Herr Thomas Wirth, Rothenburger Straße 116, 90439 Nürnberg,<br> E-Mail Thomas.Wirth@arag-partner.de<br> Gebundener Versicherungsvermittler nach § 34d Abs.4 GewO</p><p class="pb-4">Deutscher Industrie- und Handelskammertag (DIHK) e.V.<br> Breite Straße 29, 10178 Berlin<br> Telefon 0 18 06 00 58 50 (0,20 EUR/Anruf aus dem deutschen Festnetz; höchstens 60 Cent/Anruf aus  Mobilfunknetzen)<br> www.vermittlerregister.info</p><p class="pb-4">IHK-Register-Nr. D-LDKK-PB9YO-76</p><p class="pb-4">Beschwerde-/Schlichtungsstelle Versicherungsombudsmann e.V.<br> Postfach 080632, 10006 Berlin Telefon 0 18 04 22 44 24,<br> Fax 0 18 04 22 44 25 für 0,20 EUR /Anruf*/Fax<br> * höchstens 0,60 EUR/Min. aus Mobilfunknetzen<br> E-Mail beschwerde@versicherungsombudsmann.de</p>'
+        text='<p class="pb-4">Die GDF GmbH vermittelt als Betreiber dieser Webseite selbst keine Versicherung und ist für die Inhalte der verlinkten Webseite nicht verantwortlich.</p><p class="pb-4">Verantwortlicher Versicherungsmakler für das Versicherungsangebot ist:</p><p class="pb-4">Herr Thomas Wirth, Rothenburger Straße 116, 90439 Nürnberg,<br> E-Mail Thomas.Wirth@arag-partner.de<br> Gebundener Versicherungsvermittler nach § 34d Abs.4 GewO</p><p class="pb-4">Deutscher Industrie- und Handelskammertag (DIHK) e.V.<br> Breite Straße 29, 10178 Berlin<br> Telefon 0 18 06 00 58 50 (0,20 EUR/Anruf aus dem deutschen Festnetz; höchstens 60 Cent/Anruf aus  Mobilfunknetzen)<br> www.vermittlerregister.info</p><p class="pb-4">IHK-Register-Nr. D-LDKK-PB9YO-76</p><p class="pb-4">Beschwerde-/Schlichtungsstelle Versicherungsombudsmann e.V.<br> Postfach 080632, 10006 Berlin Telefon 0 18 04 22 44 24,<br> Fax 0 18 04 22 44 25 für 0,20 EUR /Anruf*/Fax<br> * höchstens 0,60 EUR/Min. aus Mobilfunknetzen<br> E-Mail beschwerde@versicherungsombudsmann.de</p>'
         :isHTML="true"
         button="schließen"
         mode="info"
@@ -30,27 +30,27 @@
                     <div class="grid sm:grid-cols-2 md:grid-cols-3">
 
                         <input type="radio" name="order[violation]" id="speed" value="Geschwindkeit" v-model="violation" class="sr-only">
-                        <label for="speed" class="speed cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary checked:border-secondary">
+                        <label for="speed" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer speed hover:border-secondary checked:border-secondary">
                         <span class="text-xl">zu schnell</span></label>
 
                         <input type="radio" name="order[violation]" id="redlight" value="Rotlicht" v-model="violation" class="sr-only">
-                        <label for="redlight" class="redlight cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
+                        <label for="redlight" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer redlight hover:border-secondary">
                         <span class="text-xl">Rotlicht</span></label>
                         
                         <input type="radio" name="order[violation]" id="distance" value="Abstand" v-model="violation" class="sr-only">
-                        <label for="distance" class="distance cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
+                        <label for="distance" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer distance hover:border-secondary">
                         <span class="text-xl">Abstand</span></label>
 
                         <input type="radio" name="order[violation]" id="alcohol" value="Alkohol" v-model="violation" class="sr-only">
-                        <label for="alcohol" class="alcohol cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
+                        <label for="alcohol" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer alcohol hover:border-secondary">
                         <span class="text-xl">Alkohol</span></label>
 
                         <input type="radio" name="order[violation]" id="phone" value="Telefon" v-model="violation" class="sr-only">
-                        <label for="phone" class="phone cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
+                        <label for="phone" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer phone hover:border-secondary">
                         <span class="text-xl">Telefon</span></label>
 
                         <input type="radio" name="order[violation]" id="parking" value="Parken" v-model="violation" class="sr-only">
-                        <label for="parking" class="parking cursor-pointer m-3 h-40 rounded pt-16 text-center border-4 border-white hover:border-secondary">
+                        <label for="parking" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer parking hover:border-secondary">
                         <span class="text-xl">Parken</span></label>
                     </div>
                 </fieldset>
@@ -58,16 +58,16 @@
 
             <div :class="{'sr-only':(activeTab !== 1)}" class="tab insurance-tab">
                 <fieldset>
-                    <legend class="mb-6">Hast du eine Rechtschutzversicherung, die den Bereich Verkehr abdeckt?</legend>
+                    <legend class="mb-6">Hast Du eine Rechtschutzversicherung, die den Bereich Verkehr abdeckt?</legend>
 
                     <label class="block" for="insured">
                         <input @click="toggleInsuranceInfo" type="radio" name="order[insurance]" id="insured" value="insured" v-model="insurance">
                         <span class="p-2 align-middle">Ja</span>
                     </label>
 
-                    <div class="panel relative ml-2" id="insured-yes">
+                    <div class="relative ml-2 panel" id="insured-yes">
                         <input
-                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                            class="block w-full mt-8 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                             type="text" name="order[insuranceCompany]" id="insuranceCompany" required
                             placeholder="Name der Rechtschutz-Versicherung">
                         <label class="absolute mt-8" for="insuranceCompany">Name der Rechtschutz-Versicherung (optional)</label>
@@ -78,15 +78,15 @@
                         <span class="p-2 align-middle">Nein</span>
                     </label>
 
-                    <div class="panel ml-2" id="insured-no">
-                        <p>Sie haben keine Rechtsschutzversicherung? <a class="text-secondary" href="https://www.arag-partner.de/jap_neu/fp/controller?channel=CHANNEL_INTERNET&action=external&productId=100&objectType=OBJECTTYPE_ANTRAG&activityId=%2FANT_NEU_VERK_SOFORT_INTERNET&eTrackerVerificationCode=thx9j9&kvgesellschaft=01&kooporga=255&koopvp=16347&kooppruefziffer=3&koopberechtigungpruefen=0&vertriebskanal=1&relaunch=true&utm_source=bussgelpruefer_com&utm_medium=link&utm_campaign=affiliates-VerSo" target="_blank">Hier</a> können Sie über einen externen Versicherungsvermittler rückwirkend eine Versicherung für Ihre Sache abschließen. Damit vertreten wir Sie vor der Behörde und soweit notwendig auch vor Gericht ohne weitere Kosten. <a class="text-secondary" href="#" @click.prevent="openLegalInfoModal">[i]</a></p>
+                    <div class="ml-2 panel" id="insured-no">
+                        <p>Du hast keine Rechtsschutzversicherung? <a class="text-secondary" href="https://www.arag-partner.de/jap_neu/fp/controller?channel=CHANNEL_INTERNET&action=external&productId=100&objectType=OBJECTTYPE_ANTRAG&activityId=%2FANT_NEU_VERK_SOFORT_INTERNET&eTrackerVerificationCode=thx9j9&kvgesellschaft=01&kooporga=255&koopvp=16347&kooppruefziffer=3&koopberechtigungpruefen=0&vertriebskanal=1&relaunch=true&utm_source=bussgelpruefer_com&utm_medium=link&utm_campaign=affiliates-VerSo" target="_blank">Hier</a> kannst Du über einen externen Versicherungsvermittler rückwirkend eine Versicherung für Deine Sache abschließen. Damit vertreten wir Dich vor der Behörde und soweit notwendig auch vor Gericht ohne weitere Kosten. <a class="text-secondary" href="#" @click.prevent="openLegalInfoModal"><i class="fas fa-info-circle"></i></a></p>
                     </div>
                 </fieldset>
             </div>
 
             <div :class="{'sr-only':(activeTab !== 2)}" class="tab">
                 <fieldset>
-                    <legend class="mb-6">Welches behördliche Schreiben hast du zuletzt erhalten?</legend>
+                    <legend class="mb-6">Welches behördliche Schreiben hast Du zuletzt erhalten?</legend>
                     <label for="urgency1" class="block mb-3">
                         <input type="radio" name="order[urgency]" id="urgency1" value="1" v-model="urgency">
                     Zeugenfragebogen</label>
@@ -124,38 +124,38 @@
                         </label>
                     </div>
                     
-                    <div class="grid sm:grid-cols-1 md:grid-cols-2 mt-4 gap-2">
-                        <div class="w-full relative">
+                    <div class="grid gap-2 mt-4 sm:grid-cols-1 md:grid-cols-2">
+                        <div class="relative w-full">
                             <input
-                                class="w-full mt-4 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                                class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                                 type="text" name="order[firstname]" id="firstname" required
                                 placeholder="Vorname" v-model="firstName">
                             <label class="absolute" for="firstname">Vorname</label>
                         </div>
-                        <div class="w-full relative">
+                        <div class="relative w-full">
                             <input
-                                class="w-full mt-4 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                                class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                                 type="text" name="order[lastname]" id="lastname" required
                                 placeholder="Nachname" v-model="lastName">
                             <label class="absolute" for="lastname">Nachname</label>
                         </div>
-                        <div class="w-full relative">
+                        <div class="relative w-full">
                             <input
-                                class="w-full mt-4 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                                class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                                 type="text" name="order[address]" id="address" required
                                 placeholder="Straße und Hausnummer" v-model="address">
                             <label class="absolute" for="address">Straße und Hausnummer</label>
                         </div>
-                        <div class="w-full relative">
+                        <div class="relative w-full">
                             <input
-                                class="w-full mt-4 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                                class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                                 type="number" name="order[postcode]" id="postcode" maxlenght="5" minlength="4" required
                                 placeholder="PLZ" v-model="postCode">
                             <label class="absolute" for="postcode">PLZ</label>
                         </div>
-                        <div class="w-full relative">
+                        <div class="relative w-full">
                             <input
-                                class="w-full mt-4 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                                class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                                 type="text" name="order[city]" id="city" required
                                 placeholder="Ort" v-model="city">
                             <label class="absolute" for="city">Ort</label>
@@ -166,17 +166,17 @@
                 <fieldset class="mt-4">
                     <legend>Kontakt</legend>
 
-                    <div class="grid sm:grid-cols-1 md:grid-cols-2 mt-4 gap-2">
-                        <div class="w-full relative">
+                    <div class="grid gap-2 mt-4 sm:grid-cols-1 md:grid-cols-2">
+                        <div class="relative w-full">
                             <input
-                                class="w-full mt-4 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                                class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                                 type="text" name="order[phone]" id="phone" required
                                 placeholder="Telefon" v-model="phone">
                             <label class="absolute" for="phone">Telefon</label>
                         </div>
-                        <div class="w-full relative">
+                        <div class="relative w-full">
                             <input
-                                class="w-full mt-4 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
+                                class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
                                 type="text" name="order[email]" id="email" required
                                 placeholder="E-Mail" v-model="email">
                             <label class="absolute" for="email">E-Mail</label>
@@ -186,7 +186,7 @@
             </div>
 
             <div :class="{'sr-only':(activeTab !== 4)}" class="tab">
-                <label for="document" class="mb-6 text-xl block">Dokumente Hochladen</label>
+                <label for="document" class="block mb-6 text-xl">Dokumente Hochladen</label>
                 <div id="files" class="flex flex-wrap gap-8">
                     <FilePicker name="files[]" />
                     <FilePicker name="files[]" />
@@ -195,7 +195,7 @@
                 </div>
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 5)}" class="tab text-center">
+            <div :class="{'sr-only':(activeTab !== 5)}" class="text-center tab">
                 <label for="terms" class="block mb-3">
                     <input type="checkbox" class="m-3" name="terms" id="terms" v-model="terms">
                     <span>Ich akzeptiere die <a href="/agb/" target="_blank" class="text-secondary">AGB</a> und die <a href="/datenschutz/" target="_blank" class="text-secondary">Hinweise zur Datenverarbeitung</a>.</span>
@@ -205,21 +205,21 @@
                     <span>Ich akzeptiere die Befreiung von der Schweigepflicht</span>
                 </label>
 
-                <p>Hinweis: Für die Kommunikation zwischen bussgeldprüfer.de (GDB L-Tech) und der beauftragten Anwaltskanzlei ist die Entbindung von der Schweigepflicht dringend erforderlich. <a href="/entbindung-von-der-schweigepflicht/" target="_blank" class="text-secondary">hier einsehen</a></p>
+                <p>Hinweis: Für die Kommunikation zwischen BussgeldPrüfer (GDB L-Tech) und der beauftragten Anwaltskanzlei ist die Entbindung von der Schweigepflicht dringend erforderlich. <a href="/entbindung-von-der-schweigepflicht/" target="_blank" class="text-secondary">Hier einsehen</a></p>
             </div>
 
-            <!-- <div :class="{'sr-only':(activeTab !== 5)}" class="tab text-center">
+            <!-- <div :class="{'sr-only':(activeTab !== 5)}" class="text-center tab">
                 <p class="mb-6">Um Deinen Bußgeldbescheid prüfen zu lassen <router-link class="underline" to="/login">melde dich an</router-link>. Oder erstelle einen <router-link class="underline" to="/registrieren">Account</router-link>.</p>
                 <p>
                     <a href="#" @click.prevent="submitOrder()" class="text-secondary">submitOrder()</a>
                 </p>
             </div> -->
 
-            <div class="controls mt-6 flex items-center justify-center">
-                <button v-if="(activeTab >= 1)" @click.prevent="decrement()" class="btn-secondary mr-4">Zurück</button>
-                <button v-if="(activeTab <= maxSteps - 2)" @click.prevent="increment()" class="btn-secondary mr-4">Weiter</button>
-                <button v-if="(activeTab == (maxSteps - 1))" @click.prevent="submitOrder()" class="btn-secondary mr-4">Abschließen</button>
-                <button @click.prevent="requestReset()" class="btn-secondary block">
+            <div class="flex items-center justify-center mt-6 controls">
+                <button v-if="(activeTab >= 1)" @click.prevent="decrement()" class="mr-4 btn-secondary">Zurück</button>
+                <button v-if="(activeTab <= maxSteps - 2)" @click.prevent="increment()" class="mr-4 btn-secondary">Weiter</button>
+                <button v-if="(activeTab == (maxSteps - 1))" @click.prevent="submitOrder()" class="mr-4 btn-secondary">Abschließen</button>
+                <button @click.prevent="requestReset()" class="block btn-secondary">
                     <svg role="img" aria-labelledby="resetForm" class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <title id="resetForm">Neu starten</title>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />

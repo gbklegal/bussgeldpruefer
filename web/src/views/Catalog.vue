@@ -7,9 +7,9 @@
             :fastSearch="true"
         />
 
-        <div class="flex flex-col md:flex-row mt-5">
+        <div class="flex flex-col mt-5 md:flex-row">
             <!-- List of all Catalog Posts -->
-            <nav id="catalog-nav" class="bg-gray-200 rounded-sm md:w-1/3 mb-8 md:mb-0 md:mr-8 p-3" aria-label="In Page Navigation">
+            <nav id="catalog-nav" class="p-3 mb-8 bg-gray-200 rounded-sm md:w-1/3 md:mb-0 md:mr-8" aria-label="In Page Navigation">
                 <div v-if="!hideSkeleton">
                     <Skeleton v-for="i in 20" :key="i" type="navList" />
                 </div>
@@ -20,12 +20,14 @@
                 </ul>
             </nav>
             <!-- Catalog Post -->
-            <div class="md:w-2/3 mb-8 md:mb-0 md:mr-8">
+            <div class="mb-8 md:w-2/3 md:mb-0 md:mr-8" data-empty="Wählen Sie ein Thema auf der linken Seite aus." data-empty-sm="Wählen Sie ein Thema (oben) aus.">
                 <router-view :key="$route.fullPath" />
             </div>
         </div>
     </div>
 </template>
+
+
 <script>
 import global from '../global';
 import Search from '../components/BasicSearchForm.vue';
@@ -109,10 +111,21 @@ export default {
 
     mounted() {
         window.scrollTo(0, 0);
-    },
-
-    created() {
-        console.log(this.fastSearch);
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+@media (min-width: 767px) {
+    [data-empty]:empty::before {
+        content: attr(data-empty);
+    }
+}
+
+@media (max-width: 767px) {
+    [data-empty-sm]:empty::before {
+        content: attr(data-empty-sm);
+    }
+}
+</style>

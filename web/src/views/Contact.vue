@@ -16,17 +16,17 @@
                 <fieldset class="mb-4">
                     <legend class="font-medium">Deine Kontaktdaten</legend>
 
-                    <div class="w-full relative">
+                    <div class="relative w-full">
                         <input 
-                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            class="block w-full mt-8 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                             type="text" name="firstname" id="firstname" required
                             placeholder="Vorname" v-model="firstName">
                         <label class="absolute" for="firstname">Vorname</label>
                     </div>
 
-                    <div class="w-full relative">
+                    <div class="relative w-full">
                         <input 
-                            class="w-full mt-8 block mb-5 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            class="block w-full mt-8 mb-5 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                             type="text" name="lastname" id="lastname" required
                             placeholder="Nachname" v-model="lastName">
                         <label class="absolute" for="lastname">Nachname</label>
@@ -34,7 +34,7 @@
 
                     <div class="relative">
                         <input 
-                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            class="block w-full mt-8 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                             type="email" name="email" id="email"
                             placeholder="E-Mail" v-model="eMail">
                         <label class="absolute" for="email">E-Mail Adresse</label>
@@ -43,7 +43,7 @@
 
                     <div class="relative">
                         <input 
-                            class="w-full mt-8 block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                            class="block w-full mt-8 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                             type="tel" name="phone" id="phone"
                             placeholder="Telefonnummer" v-model="phone">
                         <label class="absolute" for="phone">Telefonnummer</label>
@@ -51,11 +51,11 @@
 
                 </fieldset>
 
-                <label class="block font-medium mb-6 mt-5" for="message">Deine Nachricht</label>
+                <label class="block mt-5 mb-6 font-medium" for="message">Deine Nachricht</label>
                 <textarea 
-                    class="w-full block mb-3 rounded border-primary border-2 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
+                    class="block w-full mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50" 
                     name="message" id="message" cols="30" rows="10" required v-model="message"
-                    placeholder="Inhalt deiner Nachricht"
+                    placeholder="Inhalt Deiner Nachricht"
                     ></textarea>
 
                 <fieldset class="mb-4">
