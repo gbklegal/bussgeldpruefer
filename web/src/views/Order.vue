@@ -16,6 +16,21 @@
         button="schließen"
         mode="info"
     />
+    <Modal
+        id="missingRequiredModal"
+        :title="missingRequiredModalTitle"
+        :text="missingRequiredModalText"
+        :isHTML="true"
+        button="OK"
+        mode="warning"
+    />
+    <Modal
+        id="submitIssueModal"
+        :title="submitIssueModalTitle"
+        text="Fehler beim Versenden der Daten, bitte versuche es erneut."
+        button="OK"
+        mode="error"
+    />
     <div class="container">
         <h1 class="text-secondary">Prüfung Bußgeldbescheid</h1>
         <p>Unverbindliche Prüfung durch Anwalt - Antwort binnen 24 Stunden</p>
@@ -23,58 +38,58 @@
 
             <OrderProgress :currentNumber="activeTab+1" :maxNumber="maxSteps" :percentage="progressPercentage" />
 
-            <div :class="{'sr-only':(activeTab !== 0)}" class="tab">
+            <div :class="{'hidden':(activeTab !== 0)}" class="tab">
                 <fieldset class="first-step">
                     <legend>Wähle den Verstoß aus</legend>
 
-                    <div class="grid sm:grid-cols-2 md:grid-cols-3">
+                    <div class="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
 
-                        <input type="radio" name="order[violation]" id="speed" value="Geschwindkeit" v-model="violation" class="sr-only">
-                        <label for="speed" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer speed hover:border-secondary checked:border-secondary">
-                        <span class="text-xl">zu schnell</span></label>
+                        <input type="radio" name="order[violation]" id="speed" value="Geschwindkeit" v-model="violation" class="hidden" required>
+                        <label for="speed" class="h-40 text-center border-4 border-white rounded cursor-pointer speed hover:border-secondary">
+                        <span class="text-xl">Geschwindkeit</span></label>
 
-                        <input type="radio" name="order[violation]" id="redlight" value="Rotlicht" v-model="violation" class="sr-only">
-                        <label for="redlight" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer redlight hover:border-secondary">
+                        <input type="radio" name="order[violation]" id="redlight" value="Rotlicht" v-model="violation" class="hidden" required>
+                        <label for="redlight" class="h-40 text-center border-4 border-white rounded cursor-pointer redlight hover:border-secondary">
                         <span class="text-xl">Rotlicht</span></label>
                         
-                        <input type="radio" name="order[violation]" id="distance" value="Abstand" v-model="violation" class="sr-only">
-                        <label for="distance" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer distance hover:border-secondary">
+                        <input type="radio" name="order[violation]" id="distance" value="Abstand" v-model="violation" class="hidden" required>
+                        <label for="distance" class="h-40 text-center border-4 border-white rounded cursor-pointer distance hover:border-secondary">
                         <span class="text-xl">Abstand</span></label>
 
-                        <input type="radio" name="order[violation]" id="alcohol" value="Alkohol" v-model="violation" class="sr-only">
-                        <label for="alcohol" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer alcohol hover:border-secondary">
+                        <input type="radio" name="order[violation]" id="alcohol" value="Alkohol" v-model="violation" class="hidden" required>
+                        <label for="alcohol" class="h-40 text-center border-4 border-white rounded cursor-pointer alcohol hover:border-secondary">
                         <span class="text-xl">Alkohol</span></label>
 
-                        <input type="radio" name="order[violation]" id="phone" value="Telefon" v-model="violation" class="sr-only">
-                        <label for="phone" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer phone hover:border-secondary">
+                        <input type="radio" name="order[violation]" id="phone" value="Telefon" v-model="violation" class="hidden" required>
+                        <label for="phone" class="h-40 text-center border-4 border-white rounded cursor-pointer phone hover:border-secondary">
                         <span class="text-xl">Telefon</span></label>
 
-                        <input type="radio" name="order[violation]" id="parking" value="Parken" v-model="violation" class="sr-only">
-                        <label for="parking" class="h-40 pt-16 m-3 text-center border-4 border-white rounded cursor-pointer parking hover:border-secondary">
+                        <input type="radio" name="order[violation]" id="parking" value="Parken" v-model="violation" class="hidden" required>
+                        <label for="parking" class="h-40 text-center border-4 border-white rounded cursor-pointer parking hover:border-secondary">
                         <span class="text-xl">Parken</span></label>
                     </div>
                 </fieldset>
             </div>   
 
-            <div :class="{'sr-only':(activeTab !== 1)}" class="tab insurance-tab">
+            <div :class="{'hidden':(activeTab !== 1)}" class="tab insurance-tab">
                 <fieldset>
                     <legend class="mb-6">Hast Du eine Rechtschutzversicherung, die den Bereich Verkehr abdeckt?</legend>
 
                     <label class="block" for="insured">
-                        <input @click="toggleInsuranceInfo" type="radio" name="order[insurance]" id="insured" value="insured" v-model="insurance">
+                        <input @click="toggleInsuranceInfo" type="radio" name="order[insured]" id="insured" value="Ja" v-model="insurance" required>
                         <span class="p-2 align-middle">Ja</span>
                     </label>
 
                     <div class="relative ml-2 panel" id="insured-yes">
                         <input
                             class="block w-full mt-8 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                            type="text" name="order[insuranceCompany]" id="insuranceCompany" required
+                            type="text" name="order[insurance_company]" id="insuranceCompany"
                             placeholder="Name der Rechtschutz-Versicherung">
                         <label class="absolute mt-8" for="insuranceCompany">Name der Rechtschutz-Versicherung (optional)</label>
                     </div>
                     
                     <label class="block" for="not-insured">
-                        <input @click="toggleInsuranceInfo" type="radio" name="order[insurance]" id="not-insured" value="not-insured" v-model="insurance">
+                        <input @click="toggleInsuranceInfo" type="radio" name="order[insured]" id="not-insured" value="Nein" v-model="insurance" required>
                         <span class="p-2 align-middle">Nein</span>
                     </label>
 
@@ -84,7 +99,7 @@
                 </fieldset>
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 2)}" class="tab">
+            <div :class="{'hidden':(activeTab !== 2)}" class="tab">
                 <fieldset>
                     <legend class="mb-6">Welches behördliche Schreiben hast Du zuletzt erhalten?</legend>
                     <label for="urgency1" class="block mb-3">
@@ -105,21 +120,21 @@
                 </fieldset>
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 3)}" class="tab address-tab">
+            <div :class="{'hidden':(activeTab !== 3)}" class="tab address-tab">
                 <fieldset>
                     <legend>Anschrift</legend>
 
                     <div class="mt-2">
                         <label class="inline-block mr-3">
-                            <input type="radio" name="order[salutation]" value="Herr" required="">
+                            <input type="radio" name="order[salutation]" value="Herr" v-model="salutation" required>
                             <span class="pl-1">Herr</span>
                         </label>
                         <label class="inline-block mr-3">
-                            <input type="radio" name="order[salutation]" value="Frau" required="">
+                            <input type="radio" name="order[salutation]" value="Frau" v-model="salutation" required>
                             <span class="pl-1">Frau</span>
                         </label>
                         <label class="inline-block">
-                            <input type="radio" name="order[salutation]" value="Keine Angabe" required="">
+                            <input type="radio" name="order[salutation]" value="Keine Angabe" v-model="salutation" required>
                             <span class="pl-1">Keine Angabe</span>
                         </label>
                     </div>
@@ -128,37 +143,37 @@
                         <div class="relative w-full">
                             <input
                                 class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                                type="text" name="order[firstname]" id="firstname" required
-                                placeholder="Vorname" v-model="firstName">
-                            <label class="absolute" for="firstname">Vorname</label>
+                                type="text" name="order[firstname]" id="firstname"
+                                placeholder="Vorname" v-model="firstName" required>
+                            <label class="absolute pointer-events-none" for="firstname">Vorname</label>
                         </div>
                         <div class="relative w-full">
                             <input
                                 class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                                type="text" name="order[lastname]" id="lastname" required
-                                placeholder="Nachname" v-model="lastName">
-                            <label class="absolute" for="lastname">Nachname</label>
+                                type="text" name="order[lastname]" id="lastname"
+                                placeholder="Nachname" v-model="lastName" required>
+                            <label class="absolute pointer-events-none" for="lastname">Nachname</label>
                         </div>
                         <div class="relative w-full">
                             <input
                                 class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                                type="text" name="order[address]" id="address" required
-                                placeholder="Straße und Hausnummer" v-model="address">
-                            <label class="absolute" for="address">Straße und Hausnummer</label>
+                                type="text" name="order[address]" id="address"
+                                placeholder="Straße und Hausnummer" v-model="address" required>
+                            <label class="absolute pointer-events-none" for="address">Straße und Hausnummer</label>
                         </div>
                         <div class="relative w-full">
                             <input
                                 class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                                type="number" name="order[postcode]" id="postcode" maxlenght="5" minlength="4" required
-                                placeholder="PLZ" v-model="postCode">
-                            <label class="absolute" for="postcode">PLZ</label>
+                                type="number" name="order[postcode]" id="postcode" maxlenght="5" minlength="4"
+                                placeholder="PLZ" v-model="postCode" required>
+                            <label class="absolute pointer-events-none" for="postcode">PLZ</label>
                         </div>
                         <div class="relative w-full">
                             <input
                                 class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                                type="text" name="order[city]" id="city" required
-                                placeholder="Ort" v-model="city">
-                            <label class="absolute" for="city">Ort</label>
+                                type="text" name="order[city]" id="city"
+                                placeholder="Ort" v-model="city" required>
+                            <label class="absolute pointer-events-none" for="city">Ort</label>
                         </div>
                     </div>
                 </fieldset>
@@ -170,22 +185,22 @@
                         <div class="relative w-full">
                             <input
                                 class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                                type="text" name="order[phone]" id="phone" required
-                                placeholder="Telefon" v-model="phone">
-                            <label class="absolute" for="phone">Telefon</label>
+                                type="text" name="order[phone]" id="phone"
+                                placeholder="Telefon" v-model="phone" required>
+                            <label class="absolute pointer-events-none" for="phone">Telefon</label>
                         </div>
                         <div class="relative w-full">
                             <input
                                 class="block w-full mt-4 mb-3 border-2 rounded border-primary focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50"
-                                type="text" name="order[email]" id="email" required
-                                placeholder="E-Mail" v-model="email">
-                            <label class="absolute" for="email">E-Mail</label>
+                                type="text" name="order[email]" id="email"
+                                placeholder="E-Mail" v-model="email" required>
+                            <label class="absolute pointer-events-none" for="email">E-Mail</label>
                         </div>
                     </div>
                 </fieldset>
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 4)}" class="tab">
+            <div :class="{'hidden':(activeTab !== 4)}" class="tab">
                 <label for="document" class="block mb-6 text-xl">Dokumente Hochladen</label>
                 <div id="files" class="flex flex-wrap gap-8">
                     <FilePicker name="files[]" />
@@ -195,7 +210,7 @@
                 </div>
             </div>
 
-            <div :class="{'sr-only':(activeTab !== 5)}" class="text-center tab">
+            <div :class="{'hidden':(activeTab !== 5)}" class="text-center tab">
                 <label for="terms" class="block mb-3">
                     <input type="checkbox" class="m-3" name="terms" id="terms" v-model="terms">
                     <span>Ich akzeptiere die <a href="/agb/" target="_blank" class="text-secondary">AGB</a> und die <a href="/datenschutz/" target="_blank" class="text-secondary">Hinweise zur Datenverarbeitung</a>.</span>
@@ -205,10 +220,10 @@
                     <span>Ich akzeptiere die Befreiung von der Schweigepflicht</span>
                 </label>
 
-                <p>Hinweis: Für die Kommunikation zwischen BussgeldPrüfer (GDB L-Tech) und der beauftragten Anwaltskanzlei ist die Entbindung von der Schweigepflicht dringend erforderlich. <a href="/entbindung-von-der-schweigepflicht/" target="_blank" class="text-secondary">Hier einsehen</a></p>
+                <p>Hinweis: Für die Kommunikation zwischen BussgeldPrüfer (GDF GmbH) und der beauftragten Anwaltskanzlei ist die Entbindung von der Schweigepflicht dringend erforderlich. <a href="/entbindung-von-der-schweigepflicht/" target="_blank" class="text-secondary">Hier einsehen</a></p>
             </div>
 
-            <!-- <div :class="{'sr-only':(activeTab !== 5)}" class="text-center tab">
+            <!-- <div :class="{'hidden':(activeTab !== 5)}" class="text-center tab">
                 <p class="mb-6">Um Deinen Bußgeldbescheid prüfen zu lassen <router-link class="underline" to="/login">melde dich an</router-link>. Oder erstelle einen <router-link class="underline" to="/registrieren">Account</router-link>.</p>
                 <p>
                     <a href="#" @click.prevent="submitOrder()" class="text-secondary">submitOrder()</a>
@@ -217,7 +232,7 @@
 
             <div class="flex items-center justify-center mt-6 controls">
                 <button v-if="(activeTab >= 1)" @click.prevent="decrement()" class="mr-4 btn-secondary">Zurück</button>
-                <button v-if="(activeTab <= maxSteps - 2)" @click.prevent="increment()" class="mr-4 btn-secondary">Weiter</button>
+                <button v-if="(activeTab <= maxSteps - 2)" @click.prevent="stepNext()" class="mr-4 btn-secondary">Weiter</button>
                 <button v-if="(activeTab == (maxSteps - 1))" @click.prevent="submitOrder()" class="mr-4 btn-secondary">Abschließen</button>
                 <button @click.prevent="requestReset()" class="block btn-secondary">
                     <svg role="img" aria-labelledby="resetForm" class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -226,6 +241,12 @@
                     </svg>
                 </button>
             </div>
+
+            <div class="mt-8 text-center">
+                <LoadingCircle v-if="showLoadingCircle" />
+            </div>
+
+            <input type="hidden" name="order[p_id]" :value="publisherId">
         </form>
 
     </div>
@@ -233,42 +254,49 @@
 
 
 <script>
+import global from '../global';
 import OrderProgress from '../components/OrderProgress.vue'
 import Modal from '../components/BasicModal.vue'
 import FilePicker from '../components/FilePicker.vue'
+import LoadingCircle from '../components/BasicLoadingCircle.vue'
 
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+// import { useRouter, useRoute } from 'vue-router'
 
 export default {
     components: {
         OrderProgress,
         Modal,
-        FilePicker
+        FilePicker,
+        LoadingCircle
+    },
+
+    data() {
+        return {
+            submitIssueModalTitle: 'Fehler',
+            showLoadingCircle: false,
+            publisherId: ''
+        }
+    },
+
+    mounted() {
+        this.publisherId = this.$route.query.p_id ?? '';
     },
 
     setup () {
         // max number of steps
-        const maxSteps = 6; // 7
+        const maxSteps = 6 // 7
         // hide all .tab visually.
         // change this with class when activeTab = specific number
         const activeTab = ref(0) // 0
         //console.log(activeTab.value)
         const progressPercentage = ref(100 / maxSteps)
 
-        // const progressText = [
-        //     'Schritt 1 von 6',
-        //     'Schritt 2 von 6',
-        //     'Schritt 3 von 6',
-        //     'Schritt 4 von 6',
-        //     'Schritt 5 von 6',
-        //     'Schritt 6 von 6'
-        // ]
-
         // form data:
         const violation = ref('')
         const insurance = ref('')
         const urgency = ref('')
+        const salutation = ref('')
         const firstName = ref('')
         const lastName = ref('')
         const address = ref('')
@@ -280,8 +308,15 @@ export default {
         const confidentiality = ref('')
 
         // router
-        const router = useRouter()
-        const route = useRoute()
+        // const router = useRouter()
+        // const route = useRoute()
+
+        /**
+         * @param {number} tabNumber
+         */
+        function setActiveTab( tabNumber ) {
+            activeTab.value = tabNumber;
+        }
 
         function increment() {
             activeTab.value ++
@@ -296,78 +331,114 @@ export default {
         function reset() {
             activeTab.value = 0
             progressPercentage.value = 100 / maxSteps
+
+            violation.value = ''
+            insurance.value = ''
+            urgency.value = ''
+            salutation.value = ''
+            firstName.value = ''
+            lastName.value = ''
+            address.value = ''
+            postCode.value = ''
+            city.value = ''
+            phone.value = ''
+            email.value = ''
+            terms.value = ''
+            confidentiality.value = ''
+
+            orderForm.reset()
         }
 
         function requestReset() {
             Modal.methods.fadeIn('resetFormModal');
         }
 
-        function previewImage(event) {
-            let reader = new FileReader();
-            reader.onload = function() {
-                let img = new Image();
-                img.style.display = 'block';
-                img.src = reader.result;
-                event.target.parentNode.appendChild(img);
+        function stepNext() {
+            if (checkRequired())
+                increment();
+        }
+
+        let missingRequiredModalTitle = ref('');
+        let missingRequiredModalText = ref('');
+
+        /**
+         * @param {int} currentStep (optional)
+         */
+        function checkRequired( currentStep = activeTab.value + 1 ) {
+            let missingItems = [];
+
+            function checkVal( obj ) {
+                return (!!obj.value);
             }
-            reader.readAsDataURL(event.target.files[0]);
-        }
 
-        function addFile() {
-            let files = document.querySelector('#files');
-            let newFileWrapper = document.createElement('div');
-            newFileWrapper.className = 'file';
-            newFileWrapper.style.cssText = 'display: inline-block';
-            let newFileLabel = document.createElement('label');
-            newFileLabel.style.cssText = 'display: inline-flex; width: 200px; height: 200px; border: 2px solid #000; align-items: center; overflow: hidden;';
-            let newFile = document.createElement('input');
-            newFile.style.display = 'none';
-            newFile.type = 'file';
-            newFile.accept = 'image/png, image/jpeg, image/gif';
-            newFile.name = 'files[]';
+            switch (currentStep) {
+                case 1:
+                    if (!checkVal(violation))
+                        missingItems.push('Verstoß');
+                    break;
 
-            newFileLabel.appendChild(newFile);
-            newFileWrapper.appendChild(newFileLabel);
+                case 2:
+                    if (!checkVal(insurance))
+                        missingItems.push('Rechtschutzversicherung');
+                    break;
 
-            newFile.click();
-            newFile.onchange = this.previewImage;
+                case 3:
+                    if (!checkVal(urgency))
+                        missingItems.push('behördliches Schreiben');
+                    break;
 
-            files.appendChild(newFileWrapper);
-        }
+                case 4:
+                    if (!checkVal(salutation))
+                        missingItems.push('Anrede');
+                    if (!checkVal(firstName))
+                        missingItems.push('Vorname');
+                    if (!checkVal(lastName))
+                        missingItems.push('Nachname');
+                    if (!checkVal(address))
+                        missingItems.push('Straße und Hausnummer');
+                    if (!checkVal(postCode))
+                        missingItems.push('PLZ');
+                    if (!checkVal(city))
+                        missingItems.push('Ort');
+                    if (!checkVal(phone))
+                        missingItems.push('Telefon');
+                    if (!checkVal(email))
+                        missingItems.push('E-Mail');
+                    break;
 
-        function submitOrder() {
-            // temp. will be changed in prod. - only for demo
-            router.push({name: 'order-thank-you'});
-            return;
+                // step 5 is optional (files)
 
-            let apiKey = '69890b3c0363ec96b7a61dc3be84f3ae55d960bce0d393cb661faaa5ff8dc1bb';
-            // let url = 'http://localhost:4000/api.php?submit_form';
-            let url = 'http://localhost:4000/api.php?demo';
-            let form = orderForm;
-            let formData = new FormData(form);
-            let xhr = new XMLHttpRequest();
+                case 6:
+                    if (!checkVal(terms))
+                        missingItems.push('AGB und Hinweise zur Datenverarbeitung');
+                    if (!checkVal(confidentiality))
+                        missingItems.push('Befreiung von der Schweigepflicht');
+                    break;
+            }
 
-            formData.append('api_key', apiKey);
+            if (missingItems.length === 0)
+                return true;
 
-            xhr.open('POST', url, true);
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        let response = JSON.parse(xhr.responseText);
-                        console.log(response);
-                    }
-                }
-            };
-            xhr.send(formData);
+            missingRequiredModalTitle.value = 'Folgende Angabe fehlt noch:';
+            if (missingItems.length > 1)
+                missingRequiredModalTitle.value = 'Folgende Angaben fehlen noch:';
 
-            // router.push({name: 'order-thank-you'})
+            missingRequiredModalText.value = '';
+            missingItems.forEach(missingItem => {
+                missingRequiredModalText.value += `- ${missingItem}<br>`;
+            });
+
+            // show modal
+            Modal.methods.fadeIn('missingRequiredModal');
+
+            return false;
         }
 
         function openLegalInfoModal() {
             Modal.methods.fadeIn('legalInfoModal');
         }
 
-        return { 
+        return {
             activeTab,
             maxSteps,
             progressPercentage,
@@ -375,14 +446,17 @@ export default {
             increment,
             decrement,
             reset,
+            missingRequiredModalTitle,
+            missingRequiredModalText,
             requestReset,
-            previewImage,
-            addFile,
-            submitOrder,
+            stepNext,
+            checkRequired,
+            // submitOrder,
             openLegalInfoModal,
             violation,
             insurance,
             urgency,
+            salutation,
             firstName,
             lastName,
             address,
@@ -415,6 +489,59 @@ export default {
                 hidePanel(panelYes);
                 showPanel(panelNo);
             }
+        },
+
+        submitOrder() {
+            if (!this.checkRequired()) return;
+
+            this.$router.push({
+                name: 'order-thank-you',
+                query: {
+                    order_number: '20210003-4269',
+                    p_id: '4269'
+                }
+            });
+
+            // show loading circle
+            this.showLoadingCircle = true;
+
+            let apiKey = '69890b3c0363ec96b7a61dc3be84f3ae55d960bce0d393cb661faaa5ff8dc1bb';
+            let url = global.api.bgp + '/order-form/api.php?submit_form';
+            // let url = 'http://localhost:4000/api.php?submit_form';
+            // let url = 'http://localhost:4000/api.php?demo';
+            let form = orderForm;
+            let formData = new FormData(form);
+            let xhr = new XMLHttpRequest();
+
+            formData.append('api_key', apiKey);
+
+            xhr.open('POST', url, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    // hide loading circle
+                    this.showLoadingCircle = false;
+
+                    if (xhr.status === 200) {
+                        console.log(xhr); // TODO: remove this line
+
+                        let response = JSON.parse(xhr.responseText);
+
+                        if (response.error === false)
+                            // redirect to the thank you page
+                            this.$router.push({
+                                name: 'order-thank-you',
+                                query: {
+                                    order_number: response.order_number,
+                                    p_id: response.publisher_id
+                                }
+                            });
+                    } else {
+                        this.submitIssueModalTitle = 'Fehler (Code ' + xhr.status + ')';
+                        Modal.methods.fadeIn('submitIssueModal');
+                    }
+                }
+            };
+            xhr.send(formData);
         }
     }
 }
@@ -439,10 +566,6 @@ input {
     &[type='number'] {
         -moz-appearance: textfield;
     }
-
-    // &[type='file'] {
-    //     display: none !important;
-    // }
 }
 
 // floating labels
@@ -512,10 +635,12 @@ legend {
     background-position: center;
     background-size: cover;
     position: relative;
+    display: inline-grid;
+    place-items: center;
 
     &::after {
         position: absolute;
-        content: "";
+        content: '';
         top: 0;
         left: 0;
         width: 100%;
@@ -525,14 +650,13 @@ legend {
     }
 
     span {
-        z-index: 99;
-        opacity: 1;
+        z-index: 1;
         position: relative;
     }
+}
 
-    input[type=radio]:checked + label {
-        border-color: #5CC8C5;
-    }
+input[type='radio']:checked + label {
+    border-color: #5CC8C5;
 }
 
 .speed {
@@ -557,23 +681,5 @@ legend {
 
 .parking {
     background-image: url('../assets/img/parking.jpg');
-}
-
-
-#files {
-    .file {
-        label[data-v-3c1ef684] {
-            display: inline-flex;
-            width: 200px;
-            height: 200px;
-            border: 2px solid #000;
-            align-items: center;
-            overflow: hidden;
-            
-            img {
-                display: block;
-            }
-        }
-    }
 }
 </style>
