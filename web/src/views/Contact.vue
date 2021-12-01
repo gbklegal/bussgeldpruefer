@@ -60,16 +60,16 @@
 
                 <fieldset class="mb-4">
                     <div class="mt-4 mb-3">
-                        <input type="radio" name="contact-type" id="contact-type-phone" value="Telefon" @click="toggleRequiredContactType" v-model="contactType" required>
-                        <label
-                            class="pl-2 cursor-pointer"
-                            for="contact-type-phone">Ich möchte <strong>telefonisch</strong> kontaktiert werden.</label>
-                    </div>
-                    <div class="mb-3">
                         <input type="radio" name="contact-type" id="contact-type-email" value="E-Mail" @click="toggleRequiredContactType" v-model="contactType" required>
                         <label
                             class="pl-2 cursor-pointer"
                             for="contact-type-email">Ich möchte <strong>per E-Mail</strong> kontaktiert werden.</label>
+                    </div>
+                    <div class="mb-3">
+                        <input type="radio" name="contact-type" id="contact-type-phone" value="Telefon" @click="toggleRequiredContactType" v-model="contactType" required>
+                        <label
+                            class="pl-2 cursor-pointer"
+                            for="contact-type-phone">Ich möchte <strong>telefonisch</strong> kontaktiert werden.</label>
                     </div>
                 </fieldset>
 
@@ -103,7 +103,7 @@ import global from '../global'
 import Modal from '../components/BasicModal.vue';
 import LoadingCircle from '../components/BasicLoadingCircle.vue';
 import { ref  } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
     components: {
