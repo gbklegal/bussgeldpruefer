@@ -8,19 +8,19 @@
     }
 
     .container {
-        @apply px-3 py-11 max-w-screen-md mx-auto;
+        @apply max-w-screen-md px-3 mx-auto py-11;
     }
 
     .container-half-left {
-        @apply max-w-screen-sm px-3 py-11 ml-auto;
+        @apply max-w-screen-sm px-3 ml-auto py-11;
     }
 
     .container-half-right {
-        @apply max-w-screen-sm px-3 py-11 mr-auto;
+        @apply max-w-screen-sm px-3 mr-auto py-11;
     }
 
     h1 {
-        @apply font-medium mb-6 text-3xl md:text-4xl;
+        @apply mb-6 text-3xl font-medium md:text-4xl;
     }
 
     h2 {
@@ -36,7 +36,7 @@
     }
 
     nav li a {
-        @apply rounded p-1 hover:underline focus:ring focus:border-primary focus:ring-primary focus:ring-opacity-50;
+        @apply p-1 rounded hover:underline focus:ring focus:border-primary focus:ring-primary focus:ring-opacity-50;
     }
 
     input[type="radio"],
@@ -48,11 +48,11 @@
 @layer components {
     .btn-primary,
     .btn-theme-primary {
-        @apply bg-secondary rounded border-2 border-secondary hover:bg-secondary-hover hover:border-secondary-hover shadow text-white py-2 px-1 focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50;
+        @apply px-1 py-2 text-white border-2 rounded shadow bg-secondary border-secondary hover:bg-secondary-hover hover:border-secondary-hover focus:ring focus:border-secondary focus:ring-secondary focus:ring-opacity-50;
     }
 
     .btn-secondary {
-        @apply border-2 bg-white border-primary rounded hover:text-white hover:bg-primary-hover hover:border-primary-hover py-2 px-1 shadow focus:ring focus:border-primary focus:ring-primary focus:ring-opacity-50;
+        @apply px-1 py-2 bg-white border-2 rounded shadow border-primary hover:text-white hover:bg-primary-hover hover:border-primary-hover focus:ring focus:border-primary focus:ring-primary focus:ring-opacity-50;
     }
 
 }
