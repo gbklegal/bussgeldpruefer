@@ -1,0 +1,61 @@
+// HEADER
+h2,
+.h2 {
+    font-weight: 700;
+    font-size: 36px;
+}
+
+h3,
+.h3 {
+    font-weight: 500;
+    font-size: 30px;
+}
+
+h4,
+.h4 {
+    font-weight: 400;
+    font-size: 24px;
+}
+
+// PARAGRAPH
+p,
+.p {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+// ANCHOR
+a {
+    color: var(--clr-primary);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// HORIZONTAL RULE
+hr {
+    border: 1px solid var(--clr-grey-light);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+@media (min-width: $br-phone) {
+    // HEADER
+    h2,
+    .h2 {
+        font-size: 48px;
+    }
+
+    h3,
+    .h3 {
+        font-size: 36px;
+    }
+
+    h4,
+    .h4 {
+        font-size: 30px;
+    }
+}
