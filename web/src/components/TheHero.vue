@@ -1,5 +1,5 @@
 <template>
-    <header class="w-full bg-secondaryLight py-12" id="hero">
+    <header class="w-full py-12 bg-secondaryLight" id="hero">
         <div class="container">
             <div class="hero-inner">
                 <div>
@@ -49,6 +49,7 @@
     position: relative;
 
     &::before {
+        z-index: -1;
         position: absolute;
         top: auto;
         left: 0;
@@ -60,6 +61,7 @@
     }
 
     &::after {
+        z-index: -1;
         position: absolute;
         top: 0;
         right: 0;
