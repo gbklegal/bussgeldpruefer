@@ -18,7 +18,7 @@ import Footer from "./components/TheFooter.vue";
 import Badge from "./components/TheBadge.vue";
 import BackToTop from "./components/TheBackToTop.vue";
 import SocialMedia from "./components/BasicSocialMedia.vue";
-import Warrants from "./components/BasicWarrants.vue";
+import Certificates from "./components/BasicCertificates.vue";
 
 export default {
   name: "App",
@@ -28,7 +28,7 @@ export default {
     Badge,
     BackToTop,
     SocialMedia,
-    Warrants,
+    Certificates,
   },
   data() {
     return {
