@@ -18,21 +18,23 @@ import BlogAuthor from './views/BlogAuthor.vue'
 import FAQ from './views/FAQ.vue'
 import Topics from './views/Topics.vue'
 import SignUp from './views/SignUp.vue'
-import CatalogSingleAlcohol from './views/CatalogSingleAlcohol.vue'
-import CatalogSingleElse from './views/CatalogSingleElse.vue'
+// import CatalogSingleAlcohol from './views/CatalogSingleAlcohol.vue'
+// import CatalogSingleElse from './views/CatalogSingleElse.vue'
 import TopicsSingle from './views/TopicsSingle.vue'
 import OrderTankYou from './views/OrderThankYou.vue'
-import ProfileSignUp from './views/ProfileSignUp.vue'
-import ProfileMail from './views/ProfileMail.vue'
-import ProfileStatus from './views/ProfileStatus.vue'
-import ProfileDocuments from './views/ProfileDocuments.vue'
-import ProfileMailCourt from './views/ProfileMailCourt.vue'
-import ProfileMailOutsideCourt from './views/ProfileMailOutsideCourt.vue'
-import ProfileMailElse from './views/ProfileMailElse.vue'
-import ProfileMailSent from './views/ProfileMailSent.vue'
-import ProfileMailMarked from './views/ProfileMailMarked.vue'
-import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
+// import ProfileSignUp from './views/ProfileSignUp.vue'
+// import ProfileMail from './views/ProfileMail.vue'
+// import ProfileStatus from './views/ProfileStatus.vue'
+// import ProfileDocuments from './views/ProfileDocuments.vue'
+// import ProfileMailCourt from './views/ProfileMailCourt.vue'
+// import ProfileMailOutsideCourt from './views/ProfileMailOutsideCourt.vue'
+// import ProfileMailElse from './views/ProfileMailElse.vue'
+// import ProfileMailSent from './views/ProfileMailSent.vue'
+// import ProfileMailMarked from './views/ProfileMailMarked.vue'
+// import ProfileMailNewMessage from './views/ProfileMailNewMessage.vue'
 import ContactThankYou from './views/ContactThankYou.vue'
+// import FaLanding from './views/FaLanding.vue'
+import ReleaseObligation from './views/ReleaseObligation.vue'
 
 import DEV from './views/DEV.vue'
 
@@ -76,9 +78,10 @@ const routes = [
         component: Privacy
     },
     {
-        path: '/rechtliche-hinweise',
+        path: '/agb',
         name: 'terms-of-service',
-        component: TermsOfService
+        component: TermsOfService,
+        alias: '/rechtliche-hinweise'
     },
     {
         path: '/login',
@@ -202,7 +205,8 @@ const routes = [
         component: TopicsSingle
     },
     {
-        path: '/order-thank-you',
+        // path: '/order-thank-you',
+        path: '/danke-fuer-deine-bestellung',
         name: 'order-thank-you',
         component: OrderTankYou
     },
@@ -211,10 +215,20 @@ const routes = [
     //     name: 'profile-signup',
     //     component: ProfileSignUp
     // },
+    // {
+    //     path: '/fa-landing',
+    //     name: 'fa-landing',
+    //     component: FaLanding
+    // },
+    {
+        path: '/entbindung-von-der-schweigepflicht',
+        name: 'release-obligation',
+        component: ReleaseObligation
+    },
     {
         path: '/quickcheck',
         beforeEnter(to, from) {
-            console.log('to:', to, 'from:', from);
+            // console.log('to:', to, 'from:', from);
             let url = 'https://bussgeldpruefer.app/#quickcheck';
             window.location.href = url;
         }
