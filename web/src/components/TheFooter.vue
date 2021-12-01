@@ -2,7 +2,7 @@
     <footer class="px-3 border-t-2 border-primary bg-white pt-2">
         <p>&copy; BussgeldPrüfer {{ currentYear }}</p>
         <nav aria-label="secondary navigation">
-            <ul>
+            <ul v-if="!isLimitedView">
                 <li>
                    <router-link :to="{ name: 'partners' }">Partnerprogramm</router-link>
                 </li>
@@ -17,6 +17,14 @@
                 </li>
                 <li>
                     <router-link :to="{ name: 'terms-of-service' }">Rechtliche Hinweise</router-link>
+                </li>
+            </ul>
+            <ul v-if="isLimitedView">
+                <li>
+                    <router-link :to="{ name: 'legal-contact', query: { 'frame_mode': null } }">Impressum</router-link>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'privacy', query: { 'frame_mode': null } }">Datenschutz</router-link>
                 </li>
             </ul>
         </nav>
@@ -45,7 +53,15 @@ import global from '../global';
 
 export default {
     name: 'Footer',
-    data: function() {
+
+    props: {
+        isLimitedView: {
+            default: false,
+            type: Boolean
+        }
+    },
+
+    data() {
         return {
             currentYear: global.date.currentYear,
         }
