@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
-
-  <head>
+<head>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,35 +12,67 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <title>BussgeldPrüfer</title>
-  </head>
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/icons/site.webmanifest">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#183b63">
+    <link rel="shortcut icon" href="/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="BussgeldPr&uuml;fer">
+    <meta name="application-name" content="BussgeldPr&uuml;fer">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 
-  <body>
+    <meta name="robots" content="max-image-preview:large">
+    <link rel="canonical" href="https://bussgeldpruefer.com/">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:site_name" content="BussgeldPrüfer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="BussgeldPrüfer - Verkehrverstöße prüfen lassen!">
+    <meta property="og:url" content="https://bussgeldpruefer.com/">
+    <meta property="og:image" content="/icons/share-thumbnail.png">
+    <meta property="og:image:secure_url" content="/icons/share-thumbnail.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@bussgeldpruefer">
+    <meta name="twitter:domain" content="bussgeldpruefer.com">
+    <meta name="twitter:title" content="BussgeldPrüfer - Verkehrverstöße prüfen lassen!">
+    <meta name="twitter:image" content="/icons/share-thumbnail.png">
+    <meta name="google" content="nositelinkssearchbox">
+
+    <!-- TODO: add tracking, social cards (twitter, open graph), description, keywords -->
+
+    <title>BussgeldPrüfer</title>
+
+</head>
+<body class="bg-white">
+
     <div id="app"></div>
+
     <script type="module" src="/src/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
     <script>
-    window.cookieconsent.initialise({
-      "palette": {
-        "popup": {
-          "background": "#eaecf5",
-          "text": "#181919"
-        },
-        "button": {
-          "background": "#5cc8c5",
-          "text": "#ffffff"
-        }
-      },
-      "theme": "classic",
-      "position": "bottom-right",
-      "content": {
-        "message": "Diese Website verwendet Cookies, um Ihnen das beste Erlebnis auf unserer Website zu bieten.",
-        "dismiss": "Einverstanden!",
-        "link": "Mehr erfahren.",
-        "href": "/datenschutz"
-      }
-    });
+        window.cookieconsent.initialise({
+            "palette": {
+                "popup": {
+                "background": "#eaecf5",
+                "text": "#181919"
+                },
+                "button": {
+                "background": "#5cc8c5",
+                "text": "#ffffff"
+                }
+            },
+            "theme": "classic",
+            "position": "bottom-right",
+            "content": {
+                "message": "Diese Website verwendet Cookies, um Ihnen das beste Erlebnis auf unserer Website zu bieten.",
+                "dismiss": "Einverstanden!",
+                "link": "Mehr erfahren.",
+                "href": "/datenschutz"
+            }
+        });
     </script>
-  </body>
 
+</body>
 </html>
