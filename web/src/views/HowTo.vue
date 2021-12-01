@@ -16,7 +16,7 @@
         </section>
 
         <section class="grid my-14">
-            <img class="w-32 h-32 mx-auto border-4 border-white rounded-full" src="../assets/img/communication.svg" alt="Icon mit Personen.">
+            <img class="w-32 h-32 mx-auto border-4 border-white rounded-full" src="../assets/img/communication.svg" alt="Icon mit Personen">
             <h2 class="text-secondary">Fallbesprechung mit Partnerkanzlei</h2>
             <div class="max-w-3xl how-to-text">
                 <p class="mb-2">Wenn alle nötigen Dokumente eingereicht wurden, wird ein Verkehrsrecht-Anwalt Deinen Fall kostenlos ersteinschätzen und sich bei Dir melden. Die Beratung ist in jedem Fall unverbindlich. Du kannst danach selbst entscheiden, ob Du gegen deinen Bußgeldbescheid vorgehen möchtest oder nicht.</p>
@@ -27,7 +27,7 @@
         </section>
 
         <section class="grid my-14">
-            <img class="w-32 h-32 mx-auto border-4 border-white rounded-full" src="../assets/img/innovation.svg" alt="Icon mit Lupe.">
+            <img class="w-32 h-32 mx-auto border-4 border-white rounded-full" src="../assets/img/innovation.svg" alt="Icon mit Lupe">
             <h2 class="text-secondary">Überprüfung</h2>
             <div class="max-w-3xl process-text">
                 <p class="mb-2">Im dritten Schritt hast Du eingewilligt rechtlich gegen Deinen Bußgeldbescheid vorzugehen. Der Verkehrsrechtanwalt wird Deinen Fall vor der Behörde, und auch notfalls vor Gericht auf der Basis der Verteidigungsstrategie verteidigen.</p>
@@ -36,7 +36,7 @@
         </section>
 
         <section class="grid my-14">
-            <img class="w-32 h-32 mx-auto border-4 border-white rounded-full" src="../assets/img/sentence.svg" alt="Icon mit Richterhammer.">
+            <img class="w-32 h-32 mx-auto border-4 border-white rounded-full" src="../assets/img/sentence.svg" alt="Icon mit Richterhammer">
             <h2 class="text-secondary">Urteil</h2>
             <div class="max-w-3xl process-text">
                 <p class="mb-2">Sobald eine Entscheidung oder Urteil gefallen ist, wirst Du sofort benachrichtigt. In der BussgeldPrüfer App wirst Du immer über den aktuellen Stand Deines Verfahrens informiert.</p>
@@ -44,7 +44,7 @@
             </div>
         </section>
     </div>
-    <CTA title="Kostenlose Prüfung ob sich ein Einspruch gegen Deinen Bußgeldbescheid lohnt." />
+    <CTA title="Kostenlose Prüfung ob sich ein Einspruch gegen Deinen Bußgeldbescheid lohnt" />
 </template>
 
 <script>
