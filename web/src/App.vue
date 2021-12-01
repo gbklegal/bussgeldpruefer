@@ -1,14 +1,14 @@
 <template>
   <div class="text-primary">
-    <Header />
+    <Header v-if="!isFrameMode" :isLimitedView="isLimitedView" />
     <main id="main">
       <router-view />
-      <SocialMedia />
-      <Warrants />
+      <SocialMedia v-if="!isFrameMode" />
+      <Certificates v-if="!isFrameMode" />
       <!-- <Badge /> -->
-      <BackToTop />
+      <BackToTop v-if="!isFrameMode" />
     </main>
-    <Footer />
+    <Footer v-if="!isFrameMode" :isLimitedView="isLimitedView" />
   </div>
 </template>
 
@@ -29,6 +29,30 @@ export default {
     BackToTop,
     SocialMedia,
     Warrants,
+  },
+  data() {
+    return {
+      isFrameMode: false,
+      isLimitedView: false,
+    }
+  },
+  watch: {
+    '$route': {
+        handler(route) {
+          // check if query frame_mode is set
+          // app_mode is deprecated
+          let isFrameMode = (route.query.frame_mode === null || route.query.app_mode === null);
+          let routeName = route.name;
+
+          if (routeName === 'fa-landing') {
+            this.isFrameMode = true;
+            this.isLimitedView = true;
+          }
+
+          if (isFrameMode === true)
+            this.isFrameMode = isFrameMode;
+        }
+      }
   },
   mounted() {
     // const nav = document.querySelector('header nav#nav');
