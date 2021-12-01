@@ -33,5 +33,19 @@ export default {
         }
 
         location.href = unCryptMailto(s);
-    }
+    },
+    /**
+     * Make an ID for an element
+     * @see https://github.com/halfmoonui/halfmoon/blob/92aa9c4579776636893a952c0da0f7e1fd51ef1d/js/halfmoon.js#L135
+     * @param {number} length
+     */
+    makeId: function (length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    },
 }
